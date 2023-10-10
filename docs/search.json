@@ -32,14 +32,14 @@
     "href": "00-welcome.html#course-slides",
     "title": "The Art & Science of Data Visualization",
     "section": "Course Slides",
-    "text": "Course Slides\nz3tt.github.io/dataviz-ugi/\n   → 01-dataviz.html   → 02-concepts-pt1.html   → 03-concepts-pt2.html   → 04-annotations.html   → 05-layout.html   → 06-programing.html"
+    "text": "Course Slides\n z3tt.github.io/dataviz-ugi/\n   → 01-dataviz.html   → 02-concepts-pt1.html   → 03-concepts-pt2.html   → 04-annotations.html   → 05-layout.html   → 06-programing.html"
   },
   {
     "objectID": "00-welcome.html#course-materials-scripts-data-font-files",
     "href": "00-welcome.html#course-materials-scripts-data-font-files",
     "title": "The Art & Science of Data Visualization",
-    "section": "Course Materials (Scripts, Data, Font Files)",
-    "text": "Course Materials (Scripts, Data, Font Files)\ncedricscherer.com/files/materials.zip"
+    "section": "Course Materials: Scripts, Data & Font Files",
+    "text": "Course Materials: Scripts, Data & Font Files\n cedricscherer.com/files/materials.zip"
   },
   {
     "objectID": "06-programing.html#setup",
@@ -481,5 +481,12 @@
     "title": "The Art & Science of Data Visualization",
     "section": "Custom Theme",
     "text": "Custom Theme\n\ntheme_nba <- function(base_size = 18, base_family = \"College Block\", \n                      base_line_size = base_size/22, base_rect_size = base_size/22,\n                      team = \"Bulls\") {\n  \n  if(!team %in% c(\"Bulls\", \"Lakers\", \"Nuggets\", \"Celtics\", \"Knicks\", \"Heat\", \"Hornets\", \"Sixers\", \"Timberwolves\", \"Pelicans\", \"Suns\")) stop('team should be one of \"Bulls\", \"Lakers\", \"Nuggets\", \"Celtics\", \"Knicks\", \"Heat\", \"Hornets\", \"Sixers\", \"Timberwolves\", \"Pelicans\", or \"Suns\".')\n  \n  colors <- data.frame(\n    Bulls = c(\"#CE1141\", \"#FFFFFF\", \"#000000\"),\n    Lakers = c(\"#552583\", \"#FDB927\", \"#000000\"),\n    Nuggets = c(\"#8B2131\", \"#FEC524\", \"#0E2240\"),\n    Celtics = c(\"#007A33\", \"#FFFFFF\", \"#BA9653\"),\n    Knicks = c(\"#006BB6\", \"#F58426\", \"#BEC0C2\"),\n    Heat = c(\"#000000\", \"#F9A01B\", \"#98002E\"),\n    Hornets = c(\"#1D1160\", \"#A1A1A4\", \"#00788C\"),\n    Sixers = c(\"#006BB6\", \"#ED174C\", \"#002B5C\"),\n    Timberwolves = c(\"#0C2340\", \"#78BE20\", \"#9EA2A2\"),\n    Pelicans = c(\"#0C2340\", \"#C8102E\", \"#85714D\"),\n    Suns = c(\"#1D1160\", \"#E56020\", \"#63727A\")\n  )\n  colors <- unname(colors[, team])\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n           base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme( \n      plot.title = element_text(size = rel(2), color = colors[2], margin = margin(b = base_size/2)),\n      plot.subtitle = element_text(color = colors[3], margin = margin(t = -base_size/4, b = base_size/2)),\n      plot.caption = element_text(color = colors[3], size = rel(.7), hjust = 0),\n      plot.title.position = \"plot\",\n      plot.caption.position = \"plot\",\n      axis.title = element_text(color = colors[2]),\n      axis.title.x = element_text(hjust = 1, margin = margin(t = base_size/2)),\n      axis.title.y = element_text(hjust = 1, margin = margin(r = base_size/2)),\n      axis.text = element_text(color = colors[3]),\n      axis.ticks = element_line(color = colors[3]),\n      panel.background = element_rect(fill = \"#dfbb85\", color = \"white\", linewidth = base_size/4), \n      panel.border = element_rect(fill = NA, color = colors[3], linewidth = base_size/10), \n      plot.background = element_rect(fill = colors[1], color = colors[3], linewidth = base_size/4), \n      legend.background = element_rect(fill = \"transparent\", color = colors[3]),\n      legend.justification = \"top\",\n      strip.text = element_text(size = rel(1.25), color = colors[2]),\n      panel.grid.major = element_line(color = \"white\"),\n      panel.grid.minor = element_blank(),\n      plot.margin = margin(rep(base_size, 4))\n    )\n}"
+  },
+  {
+    "objectID": "00-welcome.html#course-materials-slides",
+    "href": "00-welcome.html#course-materials-slides",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Course Materials: Slides",
+    "text": "Course Materials: Slides\n z3tt.github.io/dataviz-ugi/\n   → 01-dataviz.html   → 02-concepts-pt1.html   → 03-concepts-pt2.html   → 04-annotations.html   → 05-layout.html   → 06-programing.html"
   }
 ]

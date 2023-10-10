@@ -113,9 +113,10 @@ execute:
 
 ------------------------------------------------------------------------
 
-## Course Slides
+## Course Materials: Slides
 
-<b style='font-family:spline sans mono;font-size:42pt;font-weight:700;'>z3tt.github.io/dataviz-ugi/</b>
+<br>
+<b style='font-family:spline sans mono;font-size:36pt;font-weight:700;'>z3tt.github.io/dataviz-ugi/</b>
 
 <span style='font-family:spline sans mono;font-size:30pt;'>
 &emsp;&emsp;&rarr; 01-dataviz.html<br>
@@ -130,9 +131,10 @@ execute:
 
 ------------------------------------------------------------------------
 
-## Course Materials (Scripts, Data, Font Files)
+## Course Materials: Scripts, Data & Font Files
 
-<b style='font-family:spline sans mono;font-size:42pt;font-weight:700;'>cedricscherer.com/files/materials.zip</b>
+<br>
+<b style='font-family:spline sans mono;font-size:36pt;font-weight:700;'>cedricscherer.com/files/materials.zip</b>
 
 
 
