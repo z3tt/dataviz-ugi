@@ -488,5 +488,838 @@
     "title": "The Art & Science of Data Visualization",
     "section": "Course Materials: Slides",
     "text": "Course Materials: Slides\n z3tt.github.io/dataviz-ugi/\n   → 01-dataviz.html   → 02-concepts-pt1.html   → 03-concepts-pt2.html   → 04-annotations.html   → 05-layout.html   → 06-programing.html"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-office",
+    "href": "01-dataviz.html#dataviz-office",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: eazybi"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-science",
+    "href": "01-dataviz.html#dataviz-science",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: Ranganathan et al. 2014"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-dashboard",
+    "href": "01-dataviz.html#dataviz-dashboard",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: datameer.com"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-beach",
+    "href": "01-dataviz.html#dataviz-beach",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: “Perpetual Plastic” by Liina Klauss, Skye Morét & Moritz Stefaner"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-artistic",
+    "href": "01-dataviz.html#dataviz-artistic",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: “Patchwork Kingdoms” by Nadieh Bremer"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-history-minard-napoleon",
+    "href": "01-dataviz.html#dataviz-history-minard-napoleon",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Carte figurative des pertes successives en hommes de l’Armée Française dans la campagne de Russie 1812–1813” by Charles Joseph Minard (1869)"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-history-minard-napoleon-hannibal",
+    "href": "01-dataviz.html#dataviz-history-minard-napoleon-hannibal",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Carte figurative des pertes successives en hommes de l’Armée qu’Annibal conduisit d’Espagne en Italie en traversant les Gaules (selon Polybe)” (top) and “Carte figurative des pertes successives en hommes de l’Armée Française dans la campagne de Russie 1812–1813” (bottom) by Charles Joseph Minard (1869)\n\nshows the force levels of the armies of Hannibal (218 BC) and Napoleon (1812-1813), respectively\n\n\nsome data visualization practioners call it (one of) the best statistical drawings ever created"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-history-minard-paris",
+    "href": "01-dataviz.html#dataviz-history-minard-paris",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Carte figurative et approximative des poids des bestiaux venus á Paris sur les chemins de fer en 1862” by Charles Joseph Minard (1864)"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-history-minard-canal",
+    "href": "01-dataviz.html#dataviz-history-minard-canal",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Tableau figuratif du mouvement commercial du Canal du Centre en 1844” by Charles Joseph Minard (1845)"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-history-minard-canal-quote",
+    "href": "01-dataviz.html#dataviz-history-minard-canal-quote",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Tableau figuratif du mouvement commercial du Canal du Centre en 1844” by Charles Joseph Minard (1845)"
+  },
+  {
+    "objectID": "01-dataviz.html#mental-calendar-exercise",
+    "href": "01-dataviz.html#mental-calendar-exercise",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "If the year is a circle—where’s March and December in your mind?\n\n\n\n\n\n\nImagine you had to create a polar representation of the months.\nDraw a circle and indicate the position of March and December.\nUse an arrow to illustrate the direciton of time.\nCompare the results with your neighbors."
+  },
+  {
+    "objectID": "01-dataviz.html#mental-calendar-results-1",
+    "href": "01-dataviz.html#mental-calendar-results-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Wheel diagram of 76,922 placements of the months of December and March on the circumference of an empty circle.Graphics by Henrik Lied at NRKbeta. Laeng & Hofseth, Front Psychol. 2019"
+  },
+  {
+    "objectID": "01-dataviz.html#mental-calendar-results-2",
+    "href": "01-dataviz.html#mental-calendar-results-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Proportion of respondents choosing opposite direction of time on the year’s wheel. Graphics by Vidar Kvien, NRK. Laeng & Hofseth, Front Psychol. 2019"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-history-nightingale-coxcomb",
+    "href": "01-dataviz.html#dataviz-history-nightingale-coxcomb",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Diagram of the causes and mortality in the army in the East” (a so-called coxcomb diagram) by Florence Nightingale (1858)"
+  },
+  {
+    "objectID": "01-dataviz.html#dataviz-history-nightingale-bars",
+    "href": "01-dataviz.html#dataviz-history-nightingale-bars",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Relative mortality of the army at home and of the English male population at corresponding ages” by Florence Nightingale (1858)"
+  },
+  {
+    "objectID": "01-dataviz.html#datasaurus-dots",
+    "href": "01-dataviz.html#datasaurus-dots",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "#| label: datasaurus-dozen-prep\n#| include: false\n#| cache: false\nlibrary(ggplot2)\nlibrary(patchwork)\n\ntheme_set(theme_light(base_family = \"Asap SemiCondensed\"))\ntheme_update(\n  strip.text = element_blank(),\n  panel.grid = element_blank(),\n  panel.spacing = unit(.8, \"lines\"),\n  plot.title = ggtext::element_markdown(\n    family = \"Asap\", size = 36, hjust = .5, face = \"bold\", \n    margin = margin(t = 10)\n  ),\n  plot.subtitle = ggtext::element_markdown(\n    size = 20, hjust = .5, face = \"italic\", lineheight = 1.2, \n    margin = margin(t = 15, b = 25)\n  ),\n  plot.caption = element_text(color = \"grey35\", size = 12, hjust = .5),\n  plot.background = element_rect(fill = \"#f8f8f8\", color = NA),\n  panel.border = element_rect(linewidth = rel(1.5))\n)\n\nsaurus <- readr::read_csv(here::here(\"data\", \"datasaurus.csv\"))\n\nfacet <- \n  saurus |> \n  dplyr::filter(dataset != \"dino\") |> \n  dplyr::mutate(dataset = factor(\n    dataset, levels = c(\"h_lines\", \"v_lines\", \"high_lines\", \n                        \"wide_lines\", \"slant_up\", \"slant_down\", \n                        \"dots\", \"away\", \"circle\", \n                        \"bullseye\", \"x_shape\", \"star\")\n  )) |> \n  ggplot(aes(x, y)) +\n    facet_wrap(~ dataset, nrow = 2) +\n    scale_x_continuous(guide = \"none\", name = NULL) + \n    scale_y_continuous(guide = \"none\", name = NULL)\n\ndino <-\n  ggplot(dplyr::filter(saurus, dataset == \"dino\"), aes(x, y)) +\n    facet_wrap(~ dataset) + \n    scale_x_continuous(guide = \"none\", name = NULL) + \n    scale_y_continuous(guide = \"none\", name = NULL)\n\ntitle <- \"The Datasaurus (*Anscombosaurus spec.*) Dozen</b>\"\nsubtitle <- \"is a set of 13 different datasets with nigh-identical summary statistics, which could lead one to believe the<br>datasets are quite similar. After visualizing the data, it becomes clear that the datasets are markedly different.\"\ncaption <- \"Source: “Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing” by Justin Matejka & George Fitzmaurice (2017)\""
+  },
+  {
+    "objectID": "01-dataviz.html#anscombes-quartet",
+    "href": "01-dataviz.html#anscombes-quartet",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Anscombe’s Quartet",
+    "text": "Anscombe’s Quartet\n\n\nSource: Matejka & Fitzmaurice (2017)"
+  },
+  {
+    "objectID": "01-dataviz.html#visualize-your-data-1",
+    "href": "01-dataviz.html#visualize-your-data-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Visualize Your Data!",
+    "text": "Visualize Your Data!\n\n\n\n\n\n“Russian elections once again had a suspiciously neat result” by The Economist\n\n\n\n When Dmitry Kobak and Sergey Shpilkin […] analysed the results, they found that an unusually high number of turnout and vote-share results were multiples of five (eg, 50%, 55%, 60%), a tell-tale sign of manipulation."
+  },
+  {
+    "objectID": "01-dataviz.html#visualize-your-data-2",
+    "href": "01-dataviz.html#visualize-your-data-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Visualize Your Data!",
+    "text": "Visualize Your Data!\n\n\n\n\n\n“Russian elections once again had a suspiciously neat result” by The Economist\n\n\n\n When Dmitry Kobak and Sergey Shpilkin […] analysed the results, they found that an unusually high number of turnout and vote-share results were multiples of five (eg, 50%, 55%, 60%), a tell-tale sign of manipulation."
+  },
+  {
+    "objectID": "01-dataviz.html#success-failure",
+    "href": "01-dataviz.html#success-failure",
+    "title": "The Art & Science of Data Visualization",
+    "section": "A good data visualization can mean the difference between success and failure.",
+    "text": "A good data visualization can mean the difference between success and failure.\n\n\n\nCommunicating complex findings and phenomena\nRaising money for an organization, event or department\nPresenting at a board or conference\nHelping businesses and institutions to make informed decisions\nProviding guidance for improvement\n…\nGetting your point across!"
+  },
+  {
+    "objectID": "01-dataviz.html#what-makes-a-good-data-visualization",
+    "href": "01-dataviz.html#what-makes-a-good-data-visualization",
+    "title": "The Art & Science of Data Visualization",
+    "section": "What Makes a Good Data Visualization?",
+    "text": "What Makes a Good Data Visualization?\n\n\n  → Integrity (information)\n\n\n  → Story (interestingness)\n\n\n  → Goal (usefulness)\n\n\n  → Visual Form (beauty)"
+  },
+  {
+    "objectID": "01-dataviz.html#integrity-of-information",
+    "href": "01-dataviz.html#integrity-of-information",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Integrity of Information",
+    "text": "Integrity of Information\n   — data quality:   → guesstimation, precision, and failures   → miscalculations and errors   → incomplete data and missing values   → summaries and aggregations \n\n   — only a subset:   → not crime but reported crime*   → historical or present state \n* or rats, UFO sightings, …"
+  },
+  {
+    "objectID": "01-dataviz.html#typology-of-information-graphics",
+    "href": "01-dataviz.html#typology-of-information-graphics",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Typology of Information Graphics",
+    "text": "Typology of Information Graphics\n\nIs the information conceptual or measurable?\n → Type of information: depict information schematically <> convert information into visual forms\n\n\nIs the aim to explore or to explain the information?\n → Purpose of the graphic: facilitate discovery <> communicate information"
+  },
+  {
+    "objectID": "01-dataviz.html#viz-vertices-1",
+    "href": "01-dataviz.html#viz-vertices-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Vertices of Visualization” by Alberto Cairo, personal communication (modified version)"
+  },
+  {
+    "objectID": "01-dataviz.html#viz-vertices-2",
+    "href": "01-dataviz.html#viz-vertices-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Vertices of Visualization” by Alberto Cairo, personal communication (modified version)"
+  },
+  {
+    "objectID": "01-dataviz.html#viz-vertices-3",
+    "href": "01-dataviz.html#viz-vertices-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Vertices of Visualization” by Alberto Cairo, personal communication (modified version)"
+  },
+  {
+    "objectID": "01-dataviz.html#who-what-how",
+    "href": "01-dataviz.html#who-what-how",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Audience (who)\n\nTo whom are you communicating?\nWhat do they already know?\nWhat is your position and relationship?"
+  },
+  {
+    "objectID": "01-dataviz.html#who-what-how-2",
+    "href": "01-dataviz.html#who-what-how-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Audience (who)\n\nTo whom are you communicating?\nWhat do they already know?\nWhat is your position and relationship?\n\nContent (what)\n\nWhat do you want them to know or do?\nHow will you communicate with them?\nWhat tone do you want your communication to set?"
+  },
+  {
+    "objectID": "01-dataviz.html#perception-0",
+    "href": "01-dataviz.html#perception-0",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Scheme by Andy Kirk (modified)"
+  },
+  {
+    "objectID": "01-dataviz.html#perception-1",
+    "href": "01-dataviz.html#perception-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Scheme by Andy Kirk (modified)"
+  },
+  {
+    "objectID": "01-dataviz.html#perception-2",
+    "href": "01-dataviz.html#perception-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Scheme by Andy Kirk (modified)"
+  },
+  {
+    "objectID": "01-dataviz.html#perception-3",
+    "href": "01-dataviz.html#perception-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Scheme by Andy Kirk (modified)"
+  },
+  {
+    "objectID": "01-dataviz.html#chart-choice-story-migrants-arrows-color",
+    "href": "01-dataviz.html#chart-choice-story-migrants-arrows-color",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“How maps in the media make us more negative about migrants” by Maite Vermeulen, Leon de Korte & Henk van Houtum"
+  },
+  {
+    "objectID": "01-dataviz.html#chart-choice-story-migrants-title",
+    "href": "01-dataviz.html#chart-choice-story-migrants-title",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“How maps in the media make us more negative about migrants” by Maite Vermeulen, Leon de Korte & Henk van Houtum"
+  },
+  {
+    "objectID": "01-dataviz.html#chart-choice-story-migrants-arrows-smaller",
+    "href": "01-dataviz.html#chart-choice-story-migrants-arrows-smaller",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“How maps in the media make us more negative about migrants” by Maite Vermeulen, Leon de Korte & Henk van Houtum"
+  },
+  {
+    "objectID": "01-dataviz.html#chart-choice-story-migrants-scale",
+    "href": "01-dataviz.html#chart-choice-story-migrants-scale",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“How maps in the media make us more negative about migrants” by Maite Vermeulen, Leon de Korte & Henk van Houtum"
+  },
+  {
+    "objectID": "01-dataviz.html#who-what-how-3",
+    "href": "01-dataviz.html#who-what-how-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Audience (who)\n\nTo whom are you communicating?\nWhat do they already know?\nWhat is your position and relationship?\n\nContent (what)\n\nWhat do you want them to know or do?\nHow will you communicate with them?\nWhat tone do you want your communication to set?\n\nEvidence (how)\n\nWhat data is available to make my point?"
+  },
+  {
+    "objectID": "01-dataviz.html#context-prepare-yourself",
+    "href": "01-dataviz.html#context-prepare-yourself",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Context: Prepare Yourself",
+    "text": "Context: Prepare Yourself\n\n\n\nWhat is the one key massage they should take home?\nWhat (background) information is essential? What’s irrelevant?\nWhat are potential biases of (some of) the audience?\nWhat factors could weaken your case? Can we address them proactively?"
+  },
+  {
+    "objectID": "01-dataviz.html#same-data-different-encodings",
+    "href": "01-dataviz.html#same-data-different-encodings",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Same Data, Different Encodings",
+    "text": "Same Data, Different Encodings"
+  },
+  {
+    "objectID": "01-dataviz.html#same-data-different-encodings-1",
+    "href": "01-dataviz.html#same-data-different-encodings-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Same Data, Different Encodings",
+    "text": "Same Data, Different Encodings"
+  },
+  {
+    "objectID": "01-dataviz.html#encodings-judgements-yau",
+    "href": "01-dataviz.html#encodings-judgements-yau",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: “Data Points” by Nathan Yau (p. 104)"
+  },
+  {
+    "objectID": "01-dataviz.html#encodings-judgements-cairo",
+    "href": "01-dataviz.html#encodings-judgements-cairo",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Cleveland’s and McGill’s Scale of Perpetual Elementary TasksSource: “The Functional Art” by Alberto Cairo (p. 120)"
+  },
+  {
+    "objectID": "01-dataviz.html#encodings-judgements-accurate",
+    "href": "01-dataviz.html#encodings-judgements-accurate",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Cleveland’s and McGill’s Scale of Perpetual Elementary TasksSource: “The Functional Art” by Alberto Cairo (p. 120)"
+  },
+  {
+    "objectID": "01-dataviz.html#always-start-at-zero",
+    "href": "01-dataviz.html#always-start-at-zero",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Always Start at Zero?",
+    "text": "Always Start at Zero?\n\n\nSource: “Hands-On Data Visualization” by Jack Dougherty & Ilya Ilyankou\nMore on the topic: Correl, Bertini & Francoeri 2020 and Witt (2019)"
+  },
+  {
+    "objectID": "01-dataviz.html#always-start-at-zero-1",
+    "href": "01-dataviz.html#always-start-at-zero-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Always Start at Zero?",
+    "text": "Always Start at Zero?"
+  },
+  {
+    "objectID": "01-dataviz.html#always-start-at-zero-2",
+    "href": "01-dataviz.html#always-start-at-zero-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Always Start at Zero?",
+    "text": "Always Start at Zero?"
+  },
+  {
+    "objectID": "01-dataviz.html#always-start-at-zero-3",
+    "href": "01-dataviz.html#always-start-at-zero-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Always Start at Zero?",
+    "text": "Always Start at Zero?\n\n\nSource: “Hands-On Data Visualization” by Jack Dougherty & Ilya Ilyankou"
+  },
+  {
+    "objectID": "01-dataviz.html#encodings-position-baseline-golden-ratio",
+    "href": "01-dataviz.html#encodings-position-baseline-golden-ratio",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: Francis Gagnon"
+  },
+  {
+    "objectID": "01-dataviz.html#encodings-judgements-generic",
+    "href": "01-dataviz.html#encodings-judgements-generic",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Cleveland’s and McGill’s Scale of Perpetual Elementary TasksSource: “The Functional Art” by Alberto Cairo (p. 120)"
+  },
+  {
+    "objectID": "01-dataviz.html#scmp-area-fail-1",
+    "href": "01-dataviz.html#scmp-area-fail-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Russia attacks Ukraine” by SCMP Graphic (South China Morning Post)"
+  },
+  {
+    "objectID": "01-dataviz.html#scmp-area-fail-2",
+    "href": "01-dataviz.html#scmp-area-fail-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Russia attacks Ukraine” by SCMP Graphic (South China Morning Post)"
+  },
+  {
+    "objectID": "01-dataviz.html#scmp-area-fail-3",
+    "href": "01-dataviz.html#scmp-area-fail-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Russia attacks Ukraine” by SCMP Graphic (South China Morning Post)"
+  },
+  {
+    "objectID": "01-dataviz.html#scmp-area-fix-2",
+    "href": "01-dataviz.html#scmp-area-fix-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Ukraine’s military spending was less than a 14th of Russia’s in 2020."
+  },
+  {
+    "objectID": "01-dataviz.html#same-data-different-palettes",
+    "href": "01-dataviz.html#same-data-different-palettes",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Same Data, Different Palettes",
+    "text": "Same Data, Different Palettes"
+  },
+  {
+    "objectID": "01-dataviz.html#same-data-different-palettes-1",
+    "href": "01-dataviz.html#same-data-different-palettes-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Same Data, Different Palettes",
+    "text": "Same Data, Different Palettes"
+  },
+  {
+    "objectID": "01-dataviz.html#same-data-different-palettes-2",
+    "href": "01-dataviz.html#same-data-different-palettes-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Same Data, Different Palettes",
+    "text": "Same Data, Different Palettes"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types",
+    "href": "01-dataviz.html#color-palette-types",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types",
+    "text": "Color Palette Types"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types-dark-equals-more",
+    "href": "01-dataviz.html#color-palette-types-dark-equals-more",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types: Dark Equals More (?)",
+    "text": "Color Palette Types: Dark Equals More (?)"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types-dark-equals-more-1",
+    "href": "01-dataviz.html#color-palette-types-dark-equals-more-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types: Dark Equals More (?)",
+    "text": "Color Palette Types: Dark Equals More (?)"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types-1",
+    "href": "01-dataviz.html#color-palette-types-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types",
+    "text": "Color Palette Types"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types-sequential-or-diverging",
+    "href": "01-dataviz.html#color-palette-types-sequential-or-diverging",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types: Sequential or Diverging?",
+    "text": "Color Palette Types: Sequential or Diverging?"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types-diverging-on-dark",
+    "href": "01-dataviz.html#color-palette-types-diverging-on-dark",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types: Diverging on Dark",
+    "text": "Color Palette Types: Diverging on Dark"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types-midpoint",
+    "href": "01-dataviz.html#color-palette-types-midpoint",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types: Midpoint",
+    "text": "Color Palette Types: Midpoint"
+  },
+  {
+    "objectID": "01-dataviz.html#color-palette-types-2",
+    "href": "01-dataviz.html#color-palette-types-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Color Palette Types",
+    "text": "Color Palette Types"
+  },
+  {
+    "objectID": "01-dataviz.html#chart-selection-helpers-3",
+    "href": "01-dataviz.html#chart-selection-helpers-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: Data to Viz"
+  },
+  {
+    "objectID": "01-dataviz.html#chart-selection-helpers-4",
+    "href": "01-dataviz.html#chart-selection-helpers-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: Data to Viz"
+  },
+  {
+    "objectID": "01-dataviz.html#barbar-charts-weissgerber-0",
+    "href": "01-dataviz.html#barbar-charts-weissgerber-0",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Weissgerber et al. (2015) PLoS Biology"
+  },
+  {
+    "objectID": "01-dataviz.html#barbar-charts-weissgerber-1",
+    "href": "01-dataviz.html#barbar-charts-weissgerber-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Modified from Weissgerber et al. (2015) PLoS Biology"
+  },
+  {
+    "objectID": "01-dataviz.html#barbar-charts-weissgerber-2",
+    "href": "01-dataviz.html#barbar-charts-weissgerber-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Modified from Weissgerber et al. (2015) PLoS Biology"
+  },
+  {
+    "objectID": "01-dataviz.html#barbar-charts-weissgerber-3",
+    "href": "01-dataviz.html#barbar-charts-weissgerber-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Modified from Weissgerber et al. (2015) PLoS Biology"
+  },
+  {
+    "objectID": "01-dataviz.html#barbar-charts-weissgerber-4",
+    "href": "01-dataviz.html#barbar-charts-weissgerber-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Modified from Weissgerber et al. (2015) PLoS Biology"
+  },
+  {
+    "objectID": "01-dataviz.html#barbar-charts-weissgerber-5",
+    "href": "01-dataviz.html#barbar-charts-weissgerber-5",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Modified from Weissgerber et al. (2015) PLoS Biology"
+  },
+  {
+    "objectID": "01-dataviz.html#overplotting-issue",
+    "href": "01-dataviz.html#overplotting-issue",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Overplotting Issue",
+    "text": "Overplotting Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#overplotting-issue-1",
+    "href": "01-dataviz.html#overplotting-issue-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Overplotting Issue",
+    "text": "Overplotting Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#overplotting-issue-2",
+    "href": "01-dataviz.html#overplotting-issue-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Overplotting Issue",
+    "text": "Overplotting Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#overplotting-issue-3",
+    "href": "01-dataviz.html#overplotting-issue-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Overplotting Issue",
+    "text": "Overplotting Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#overplotting-issue-4",
+    "href": "01-dataviz.html#overplotting-issue-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Overplotting Issue",
+    "text": "Overplotting Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#spaghetti-plot-issue",
+    "href": "01-dataviz.html#spaghetti-plot-issue",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Spaghetti Plot Issue",
+    "text": "Spaghetti Plot Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#spaghetti-plot-issue-1",
+    "href": "01-dataviz.html#spaghetti-plot-issue-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Spaghetti Plot Issue",
+    "text": "Spaghetti Plot Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#spaghetti-plot-issue-2",
+    "href": "01-dataviz.html#spaghetti-plot-issue-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Spaghetti Plot Issue",
+    "text": "Spaghetti Plot Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#spaghetti-plot-issue-3",
+    "href": "01-dataviz.html#spaghetti-plot-issue-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Spaghetti Plot Issue",
+    "text": "Spaghetti Plot Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#spaghetti-plot-issue-4",
+    "href": "01-dataviz.html#spaghetti-plot-issue-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Spaghetti Plot Issue",
+    "text": "Spaghetti Plot Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#small-multiples-minard",
+    "href": "01-dataviz.html#small-multiples-minard",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Carte figurative et approximative des quantités de coton brut importées en Europe en 1858, en 1864 et en 1865” by Charles Joseph Minard (1866)"
+  },
+  {
+    "objectID": "01-dataviz.html#stacked-bars-issue",
+    "href": "01-dataviz.html#stacked-bars-issue",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Stacked Bars Issue",
+    "text": "Stacked Bars Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#stacked-bars-issue-1",
+    "href": "01-dataviz.html#stacked-bars-issue-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Stacked Bars Issue",
+    "text": "Stacked Bars Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#stacked-bars-issue-2",
+    "href": "01-dataviz.html#stacked-bars-issue-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Stacked Bars Issue",
+    "text": "Stacked Bars Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#stacked-bars-issue-3",
+    "href": "01-dataviz.html#stacked-bars-issue-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Stacked Bars Issue",
+    "text": "Stacked Bars Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#stacked-bars-issue-4",
+    "href": "01-dataviz.html#stacked-bars-issue-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Stacked Bars Issue",
+    "text": "Stacked Bars Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#skewed-data-issue",
+    "href": "01-dataviz.html#skewed-data-issue",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Skewed Data Issue",
+    "text": "Skewed Data Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#skewed-data-issue-1",
+    "href": "01-dataviz.html#skewed-data-issue-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Skewed Data Issue",
+    "text": "Skewed Data Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#skewed-data-issue-2",
+    "href": "01-dataviz.html#skewed-data-issue-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Skewed Data Issue",
+    "text": "Skewed Data Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#skewed-data-issue-3",
+    "href": "01-dataviz.html#skewed-data-issue-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Skewed Data Issue",
+    "text": "Skewed Data Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#skewed-data-issue-4",
+    "href": "01-dataviz.html#skewed-data-issue-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Skewed Data Issue",
+    "text": "Skewed Data Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#skewed-data-issue-5",
+    "href": "01-dataviz.html#skewed-data-issue-5",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Skewed Data Issue",
+    "text": "Skewed Data Issue"
+  },
+  {
+    "objectID": "01-dataviz.html#dual-axis-issue",
+    "href": "01-dataviz.html#dual-axis-issue",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Dual Axis Issue",
+    "text": "Dual Axis Issue\nExamples by Lisa Charlotte Muth, DataWrapper Blog"
+  },
+  {
+    "objectID": "01-dataviz.html#dual-axis-issue-1",
+    "href": "01-dataviz.html#dual-axis-issue-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Dual Axis Issue",
+    "text": "Dual Axis Issue\n\n\nSource: Spurious Correlations"
+  },
+  {
+    "objectID": "01-dataviz.html#dual-axis-issue-2",
+    "href": "01-dataviz.html#dual-axis-issue-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Dual Axis Issue",
+    "text": "Dual Axis Issue\n\nSource: Lisa Charlotte Muth, DataWrapper Blog"
+  },
+  {
+    "objectID": "01-dataviz.html#dual-axis-issue-3",
+    "href": "01-dataviz.html#dual-axis-issue-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Dual Axis Issue",
+    "text": "Dual Axis Issue\n\nSource: Lisa Charlotte Muth, DataWrapper Blog"
+  },
+  {
+    "objectID": "01-dataviz.html#dual-axis-issue-4",
+    "href": "01-dataviz.html#dual-axis-issue-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Dual Axis Issue",
+    "text": "Dual Axis Issue\n\n\nSource: Lisa Charlotte Muth, DataWrapper Blog"
+  },
+  {
+    "objectID": "01-dataviz.html#dual-axis-issue-5",
+    "href": "01-dataviz.html#dual-axis-issue-5",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Dual Axis Issue",
+    "text": "Dual Axis Issue\n\n\nSource: Lisa Charlotte Muth, DataWrapper Blog"
+  },
+  {
+    "objectID": "01-dataviz.html#power-of-annotation-iib-blank",
+    "href": "01-dataviz.html#power-of-annotation-iib-blank",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "David McCandless & Lee Byron, Information is Beautiful (modified)"
+  },
+  {
+    "objectID": "01-dataviz.html#power-of-annotation-iib",
+    "href": "01-dataviz.html#power-of-annotation-iib",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "David McCandless & Lee Byron, Information is Beautiful"
+  },
+  {
+    "objectID": "01-dataviz.html#annotations-playfair",
+    "href": "01-dataviz.html#annotations-playfair",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Time series with annotations by William Playfair from “The Commercial and Political Atlas and Statistical Breviary” (1786)"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-1",
+    "href": "01-dataviz.html#assist-viewer-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Frankfurt vies for UK banking jobs post-Brexit” by Alan Smith & Laura Noonan (Financial Times)"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-1-hl",
+    "href": "01-dataviz.html#assist-viewer-1-hl",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Frankfurt vies for UK banking jobs post-Brexit” by Alan Smith & Laura Noonan (Financial Times)"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-2",
+    "href": "01-dataviz.html#assist-viewer-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Yearly Fluctuations in Area of Arctic Covered by Ice” by Derek Watkins (New York Times)"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-2-hl-1",
+    "href": "01-dataviz.html#assist-viewer-2-hl-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Yearly Fluctuations in Area of Arctic Covered by Ice” by Derek Watkins (New York Times)"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-2-hl-2",
+    "href": "01-dataviz.html#assist-viewer-2-hl-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Yearly Fluctuations in Area of Arctic Covered by Ice” by Derek Watkins (New York Times)"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-3",
+    "href": "01-dataviz.html#assist-viewer-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“100 Years of Streamflow Drought”, in collaboration with USGS"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-3-hl",
+    "href": "01-dataviz.html#assist-viewer-3-hl",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“100 Years of Streamflow Drought”, in collaboration with USGS"
+  },
+  {
+    "objectID": "01-dataviz.html#assist-viewer-5",
+    "href": "01-dataviz.html#assist-viewer-5",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: Jan Kühn"
+  },
+  {
+    "objectID": "01-dataviz.html#guide-assist-illustration-1",
+    "href": "01-dataviz.html#guide-assist-illustration-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "{fig-align=“center”}"
+  },
+  {
+    "objectID": "01-dataviz.html#guide-assist-illustration-2",
+    "href": "01-dataviz.html#guide-assist-illustration-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "“Not my Cup of Coffee” (#TidyTuesday Contribution)"
+  },
+  {
+    "objectID": "01-dataviz.html#wrap-up-wp-air-quality",
+    "href": "01-dataviz.html#wrap-up-wp-air-quality",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Source: “Clearing the Air” by Adam Ginsburg (Washington Post)"
+  },
+  {
+    "objectID": "01-dataviz.html#wrap-up-wp-air-quality-notes",
+    "href": "01-dataviz.html#wrap-up-wp-air-quality-notes",
+    "title": "The Art & Science of Data Visualization",
+    "section": "",
+    "text": "Notes by Francis Gagnon (Voilà)"
+  },
+  {
+    "objectID": "01-dataviz.html#exercise-1",
+    "href": "01-dataviz.html#exercise-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nDiscuss the following graphic.\n\nWhat is the main message?\nDoes the chart type work?\nIs there a better chart type?\nDraw an alternative version(s) using different chart type(s)."
+  },
+  {
+    "objectID": "01-dataviz.html#exercise-1-1",
+    "href": "01-dataviz.html#exercise-1-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nMarket share of visits to social network sites in November 2017,found in the blog post on “Why you shouldn’t use pie charts” by The University of Melbourne"
+  },
+  {
+    "objectID": "01-dataviz.html#exercise-1-2",
+    "href": "01-dataviz.html#exercise-1-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nTake notes on the following fun graphic.\n\nWhat is the take-home message you learn from the chart.\nWhat are elements used to guide and assist the viewer?\nDoes the graphic work for you?"
+  },
+  {
+    "objectID": "01-dataviz.html#exercise-2",
+    "href": "01-dataviz.html#exercise-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\n\nSource: “How hot dog contestants went from eating 10 to 76 hot dogs in 10 minutes” by Carson TerBush (Washington Post)\n\n\n\n\n\nCédric Scherer // Data Visualization & Information Design"
   }
 ]
