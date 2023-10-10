@@ -1,0 +1,1579 @@
+---
+title: "The Art & Science of <br>Data Visualization "
+subtitle: "<span style='font-size:1.5em;'>Engaging and Reproducible Graphics with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Working with Layouts and Compositions</span></span>"
+author: "<b style='color:#28a87d;'><a href='https://www.cedricscherer.com'>Dr. Cédric Scherer</a></b>&ensp;**//**&ensp;RTG-UGI Workshop&ensp;**//**&ensp;October 2023"
+format:
+  revealjs:
+    theme: slides.scss
+    logo: img/logo.png
+    footer: '**[Cédric Scherer](https://cedricscherer.com)** // Data Visualization & Information Design'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 4
+      buttons: true
+    pause: true
+    mainfont: Asap SemiCondensed
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 5
+  fig-height: 6
+---
+
+
+## Setup
+
+```{r}
+#| label: prep
+library(ggplot2)
+library(dplyr)
+library(stringr)
+
+bikes <- readr::read_csv(
+  here::here("data", "london-bikes-custom.csv"),
+  col_types = "Dcfffilllddddc"
+)
+
+bikes$season <- forcats::fct_inorder(bikes$season)
+
+theme_set(theme_light(base_size = 14, base_family = "Asap SemiCondensed"))
+
+theme_update(
+  panel.grid.minor = element_blank(),
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot"
+)
+```
+
+
+
+# Legend Placement <br>and Styling
+
+
+
+## Discrete Legend
+
+```{r}
+#| label: legend-discrete-default
+#| output-location: column
+#| code-line-numbers: "6|1,9"
+pal <- c("#3c89d9", "#1ec99b", "#F7B01B", "#a26e7c")
+
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_color_manual(values = pal)
+```
+
+
+
+## Continuous Legend
+
+```{r}
+#| label: legend-continuous-default
+#| output-location: column
+#| code-line-numbers: "4|7"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c()
+```
+
+
+
+## Legend Position
+
+```{r}
+#| label: legend-position-bottom
+#| output-location: column
+#| code-line-numbers: "8,9,10"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c() +
+  theme(
+    legend.position = "bottom"
+  )
+```
+
+
+
+## Legend Justification
+
+```{r}
+#| label: legend-position-bottom-left
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c() +
+  theme(
+    legend.position = "bottom",
+    legend.justification = "left"
+  )
+```
+
+
+
+## Legend Position
+
+```{r}
+#| label: legend-position-inside
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c() +
+  theme(
+    legend.position = c(.25, .85)
+  )
+```
+
+
+
+## Legend Direction
+
+```{r}
+#| label: legend-position-inside-horizontal
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c() +
+  theme(
+    legend.position = c(.25, .85),
+    legend.direction = "horizontal"
+  )
+```
+
+
+
+## Legend Types
+
+```{r}
+#| label: legend-guide-quotes
+#| output-location: column
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    guide = "colorbar"
+  ) +
+  theme(
+    legend.position = c(.25, .85),
+    legend.direction = "horizontal"
+  )
+```
+
+
+
+## Legend Types
+
+```{r}
+#| label: legend-guide-quotes-colorsteps
+#| output-location: column
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    guide = "colorsteps"
+  ) +
+  theme(
+    legend.position = c(.25, .85),
+    legend.direction = "horizontal"
+  )
+```
+
+
+
+## Legend Types
+
+```{r}
+#| label: legend-guide-binned-scale
+#| output-location: column
+#| code-line-numbers: "7"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_b(
+    guide = "colorsteps"
+  ) +
+  theme(
+    legend.position = c(.25, .85),
+    legend.direction = "horizontal"
+  )
+```
+
+
+
+## Legend Types
+
+```{r}
+#| label: legend-guide-function-colorsteps
+#| output-location: column
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_b(
+    guide = guide_colorsteps()
+  ) +
+  theme(
+    legend.position = c(.25, .85),
+    legend.direction = "horizontal"
+  )
+```
+
+
+
+## Legend Styling
+
+```{r}
+#| label: legend-guide-function-adjust-title
+#| output-location: column
+#| code-line-numbers: "9,10"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_b(
+    guide = guide_colorsteps(
+      title.position = "top",
+      title.hjust = .5
+    )
+  ) +
+  theme(
+    legend.position = c(.25, .85),
+    legend.direction = "horizontal"
+  )
+```
+
+
+
+## Legend Styling
+
+```{r}
+#| label: legend-guide-function-customize
+#| output-location: column
+#| code-line-numbers: "11,12,13,14"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_b(
+    guide = guide_colorsteps(
+      title.position = "top",
+      title.hjust = .5,
+      show.limits = TRUE,
+      frame.colour = "black",
+      frame.linewidth = 3,
+      barwidth = unit(8, "lines")
+    )
+  ) +
+  theme(
+    legend.position = c(.25, .85),
+    legend.direction = "horizontal"
+  )
+```
+
+
+
+## Legend Styling
+
+```{r}
+#| label: legend-guide-function-customize-ticks
+#| output-location: column
+#| code-line-numbers: "19|7,10,16,17|8,9|13,14,15"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    breaks = 3:10*10,
+    limits = c(30, 100),
+    guide = guide_colorbar(
+      title.position = "top",
+      title.hjust = .5,
+      ticks.linewidth = 3,
+      barwidth = unit(20, "lines"),
+      barheight = unit(.6, "lines")
+    )
+  ) +
+  theme(
+    legend.position = "top"
+  )
+```
+
+
+
+## Legend Styling
+
+```{r}
+#| label: legend-guide-function-customize-ticks-limits
+#| output-location: column
+#| code-line-numbers: "14,15"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    breaks = 3:10*10,
+    limits = c(30, 100),
+    guide = guide_colorbar(
+      title.position = "top",
+      title.hjust = .5,
+      ticks.linewidth = 3,
+      draw.ulim = FALSE,
+      draw.llim = FALSE,
+      barwidth = unit(20, "lines"),
+      barheight = unit(.6, "lines")
+    )
+  ) +
+  theme(
+    legend.position = "top"
+  )
+```
+
+
+
+## Legend Styling
+
+```{r}
+#| label: legend-guide-function-customize-ticks-no
+#| output-location: column
+#| code-line-numbers: "13"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count,
+        color = humidity)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    breaks = 3:10*10,
+    limits = c(30, 100),
+    guide = guide_colorbar(
+      title.position = "top",
+      title.hjust = .5,
+      ticks = FALSE,
+      barwidth = unit(20, "lines"),
+      barheight = unit(.6, "lines")
+    )
+  ) +
+  theme(
+    legend.position = "top"
+  )
+```
+
+
+
+## Legend with Color Shading
+
+```{r}
+#| label: legend-shades
+#| output-location: column
+#| code-line-numbers: "1,2,3|5,6,7,8,9,10,11,12,13,14,15,16,17|18,19,20,21,22,23,24|25,26,27,28,29|30,31,32,33,34|35|36,37,38,39"
+library(colorspace)
+shades <- c(lighten(pal, .3),
+                  darken(pal, .3))
+
+g <-
+  bikes %>%
+  arrange(day_night, date) %>%
+  mutate(
+    season_day = paste(
+      str_to_title(season), day_night
+    ),
+    season_day = forcats::fct_inorder(season_day)
+  ) %>%
+  ggplot(
+    aes(x = season, y = count,
+        fill = season_day)
+  ) +
+  stat_summary(
+    geom = "col", fun = sum,
+    position = position_dodge2(
+      width = .2, padding = .1
+    )
+  ) +
+  scale_fill_manual(
+    values = shades, name = NULL
+  ) +
+  scale_x_discrete(
+    labels = str_to_title
+  ) +
+  scale_y_continuous(
+    labels = scales::comma_format(),
+    expand = c(0, 0),
+    limits = c(NA, 4500000)
+  ) +
+  labs(x = NULL, y = "Reported bike shares") +
+  theme(
+    panel.grid.major.x = element_blank(),
+    axis.title = element_blank()
+  )
+
+g
+```
+
+
+
+## Legend on Top
+
+```{r}
+#| label: legend-shades-legend-top
+#| fig-width: 9
+#| fig-align: "center"
+#| code-line-numbers: "2"
+g +
+  theme(legend.position = "top")
+```
+
+
+
+## Resort Legend
+
+```{r}
+#| label: legend-shades-legend-byrow
+#| fig-width: 9
+#| fig-align: "center"
+#| code-line-numbers: "2"
+g +
+  guides(fill = guide_legend(byrow = TRUE)) +
+  theme(legend.position = "top")
+```
+
+
+
+## Key Glyphs
+
+```{r}
+#| label: legend-glyph-prep
+#| output-location: column
+#| code-line-numbers: "1,2,3,4,5,6|7,8,9,10,11|12,13,14,15|16,17,18"
+ggplot(
+    bikes,
+    aes(x = lubridate::week(date),
+        y = count,
+        color = day_night)
+  ) +
+  stat_summary(
+    geom = "line",
+    fun = sum,
+    size = 1
+  ) +
+  scale_color_manual(
+    values = c("#28A87D", "#663399"),
+    name = NULL
+  ) +
+  theme(
+    legend.text = element_text(size = 16)
+  )
+```
+
+
+
+## Key Glyphs
+
+```{r}
+#| label: legend-glyph-timeseries
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = lubridate::week(date),
+        y = count,
+        color = day_night)
+  ) +
+  stat_summary(
+    geom = "line",
+    fun = sum,
+    key_glyph = "timeseries",
+    size = 1
+  ) +
+  scale_color_manual(
+    values = c("#28A87D", "#663399"),
+    name = NULL
+  ) +
+  theme(
+    legend.text = element_text(size = 16)
+  )
+```
+
+
+
+## Key Glyphs
+
+```{r}
+#| label: legend-glyph-vline
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = lubridate::week(date),
+        y = count,
+        color = day_night)
+  ) +
+  stat_summary(
+    geom = "line",
+    fun = sum,
+    key_glyph = "vline",
+    size = 1
+  ) +
+  scale_color_manual(
+    values = c("#28A87D", "#663399"),
+    name = NULL
+  ) +
+  theme(
+    legend.text = element_text(size = 16)
+  )
+```
+
+
+
+# Composing ggplot's
+
+
+
+------------------------------------------------------------------------
+
+![Illustration by [Allison Horst](https://github.com/allisonhorst/stats-illustrations)](img/layout/ah_patchwork.jpg){fig-align="center" fig-alt="Allison Horsts monster illustration of the patchwork extension package."}
+
+
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+### Graphic
+
+```{r}
+#| label: patchwork-p1
+#| fig-width: 10
+#| fig-height: 5.8
+#| echo: false
+theme_set(theme_minimal(base_size = 18, base_family = "Pally"))
+theme_update(
+  text = element_text(family = "Pally"),
+  panel.grid = element_blank(),
+  axis.text = element_text(color = "grey50", size = 12),
+  axis.title = element_text(color = "grey40", face = "bold"),
+  axis.title.x = element_text(margin = margin(t = 12)),
+  axis.title.y = element_text(margin = margin(r = 12)),
+  axis.line = element_line(color = "grey80", size = .4),
+  legend.text = element_text(color = "grey50", size = 12),
+  plot.tag = element_text(size = 40, margin = margin(b = 15)),
+  plot.background = element_rect(fill = "white", color = "white")
+)
+
+bikes_sorted <-
+  bikes %>%
+  filter(!is.na(weather_type)) %>%
+  group_by(weather_type) %>%
+  mutate(sum = sum(count)) %>%
+  ungroup() %>%
+  mutate(
+    weather_type = forcats::fct_reorder(
+      str_to_title(str_wrap(weather_type, 5)), sum
+    )
+  )
+
+p1 <- ggplot(
+    bikes_sorted,
+    aes(x = weather_type, y = count, color = weather_type)
+  ) +
+  geom_hline(yintercept = 0, color = "grey80", size = .4) +
+  stat_summary(
+    geom = "point", fun = "sum", size = 12
+  ) +
+  stat_summary(
+    geom = "linerange", ymin = 0, fun.max = function(y) sum(y),
+    size = 2, show.legend = FALSE
+  ) +
+  coord_flip(ylim = c(0, NA), clip = "off") +
+  scale_y_continuous(
+    expand = c(0, 0), limits = c(0, 8500000),
+    labels = scales::comma_format(scale = .0001, suffix = "K")
+  ) +
+  scale_color_viridis_d(
+    option = "magma", direction = -1, begin = .1, end = .9, name = NULL,
+    guide = guide_legend(override.aes = list(size = 7))
+  ) +
+  labs(
+    x = NULL, y = "Sum of reported bike shares", tag = "P1",
+  ) +
+  theme(
+    axis.line.y = element_blank(),
+    axis.text.y = element_text(family = "Pally", color = "grey50", face = "bold",
+                               margin = margin(r = 15), lineheight = .9)
+  )
+
+p1
+```
+
+### Code
+
+```{r}
+#| label: patchwork-p1
+#| eval: false
+#| purl: false
+```
+:::
+
+
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+### Graphic
+
+```{r}
+#| label: patchwork-p2
+#| fig-width: 10
+#| fig-height: 5.8
+#| echo: false
+p2 <- bikes_sorted %>%
+  filter(season == "winter", is_weekend == TRUE, day_night == "night") %>%
+  group_by(weather_type, .drop = FALSE) %>%
+  mutate(id = row_number()) %>%
+  ggplot(
+      aes(x = weather_type, y = id, color = weather_type)
+    ) +
+    geom_point(size = 4.5) +
+    scale_color_viridis_d(
+      option = "magma", direction = -1, begin = .1, end = .9, name = NULL,
+      guide = guide_legend(override.aes = list(size = 7))
+    ) +
+    labs(
+      x = NULL, y = "Reported bike shares on\nweekend winter nights", tag = "P2",
+    ) +
+    coord_cartesian(ylim = c(.5, NA), clip = "off")
+
+p2
+```
+
+### Code
+
+```{r}
+#| label: patchwork-p2
+#| eval: false
+#| purl: false
+```
+:::
+
+
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+### Graphic
+
+```{r}
+#| label: patchwork-p3
+#| fig-width: 10
+#| fig-height: 5.8
+#| echo: false
+my_colors <- c("#cc0000", "#000080")
+
+p3 <- bikes %>%
+  group_by(week = lubridate::week(date), day_night, year) %>%
+  summarize(count = sum(count)) %>%
+  group_by(week, day_night) %>%
+  mutate(avg = mean(count)) %>%
+  ggplot(aes(x = week, y = count, group = interaction(day_night, year))) +
+    geom_line(color = "grey65", size = 1) +
+    geom_line(aes(y = avg, color = day_night), stat = "unique", size = 1.7) +
+    annotate(
+      geom = "text", label = c("Day", "Night"), color = my_colors,
+      x = c(5, 18), y = c(125000, 29000), size = 8, fontface = "bold", family = "Pally"
+    ) +
+    scale_x_continuous(breaks = c(1, 1:10*5)) +
+    scale_y_continuous(labels = scales::comma_format()) +
+    scale_color_manual(values = my_colors, guide = "none") +
+    labs(
+      x = "Week of the Year", y = "Reported bike shares\n(cumulative # per week)", tag = "P3",
+    )
+
+p3
+```
+
+### Code
+
+```{r}
+#| label: patchwork-p3
+#| eval: false
+#| purl: false
+```
+:::
+
+
+
+## {patchwork}
+
+```{r}
+#| label: patchwork-composition
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+#| code-line-numbers: "3|2,3"
+# install.packages("patchwork")
+library(patchwork)
+(p1 + p2) / p3
+```
+
+
+
+## "Collect Guides"
+
+```{r}
+#| label: patchwork-composition-guides
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+(p1 + p2) / p3 + plot_layout(guides = "collect")
+```
+
+
+
+## Apply Theming
+
+```{r}
+#| label: patchwork-composition-guides-just
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+((p1 + p2) / p3 & theme(legend.justification = "top")) + plot_layout(guides = "collect")
+```
+
+
+
+## Apply Theming
+
+```{r}
+#| label: patchwork-composition-legend-off
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+(p1 + p2) / p3 & theme(legend.position = "none", plot.background = element_rect(color = "black", size = 3))
+```
+
+
+
+## Adjust Widths and Heights
+
+```{r}
+#| label: patchwork-composition-heights-widths
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+#| code-line-numbers: "2"
+((p1 + p2) / p3 & theme(legend.position = "none")) +
+  plot_layout(heights = c(.2, .1), widths = c(2, 1))
+```
+
+
+
+## Use A Custom Layout
+
+```{r}
+#| label: patchwork-composition-design
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+#| code-line-numbers: "1,2,3,4|5"
+picasso <- "
+AAAAAA#BBBB
+CCCCCCCCC##
+CCCCCCCCC##"
+(p1 + p2 + p3 & theme(legend.position = "none")) + plot_layout(design = picasso)
+```
+
+
+
+## Add Labels
+
+```{r}
+#| label: patchwork-composition-labs-prep
+pl1 <- p1 + labs(tag = NULL, title = "Plot One") + theme(legend.position = "none")
+pl2 <- p2 + labs(tag = NULL, title = "Plot Two") + theme(legend.position = "none")
+pl3 <- p3 + labs(tag = NULL, title = "Plot Three") + theme(legend.position = "none")
+```
+
+
+
+## Add Labels
+
+```{r}
+#| label: patchwork-composition-labs
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+#| code-line-numbers: "2"
+(pl1 + pl2) / pl3 +
+  plot_annotation(tag_levels = "1", tag_prefix = "P", title = "An overarching title for all 3 plots, placed on the very top while all other titles are sitting below the tags.")
+```
+
+
+
+## Add Text
+
+::: panel-tabset
+### Graphic
+
+```{r}
+#| label: patchwork-composition-textbox-prep
+#| echo: false
+#| fig-width: 9
+#| fig-height: 4.5
+#| fig-align: "center"
+text <- tibble(
+  x = 0, y = 0, label = "Lorem ipsum dolor sit amet, **consectetur adipiscing elit**, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation <b style='color:#000080;'>ullamco laboris nisi</b> ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat <b style='color:#cc0000;'>cupidatat non proident</b>, sunt in culpa qui officia deserunt mollit anim id est laborum."
+)
+
+pt <- ggplot(text, aes(x = x, y = y)) +
+  ggtext::geom_textbox(
+    aes(label = label),
+    box.color = NA, width = unit(23, "lines"),
+    family = "Pally", color = "grey40", size = 6.5, lineheight = 1.4
+  ) +
+  coord_cartesian(expand = FALSE, clip = "off") +
+  theme_void()
+
+pt
+```
+
+
+
+### Code
+
+```{r}
+#| label: patchwork-composition-textbox-prep
+#| eval: false
+#| purl: false
+```
+:::
+
+
+
+## Add Text
+
+```{r}
+#| label: patchwork-composition-textbox
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+(p1 + pt) / p3
+```
+
+
+
+## Add Inset Plots
+
+```{r}
+#| label: patchwork-composition-inset-1
+#| fig-width: 12
+#| fig-height: 7
+#| fig-align: "center"
+pl1 + inset_element(pl2, l = .6, b = .1, r = 1, t = .6)
+```
+
+
+
+## Add Inset Plots
+
+```{r}
+#| label: patchwork-composition-inset-2
+#| fig-width: 12
+#| fig-height: 7
+#| fig-align: "center"
+pl1 + inset_element(pl2, l = .6, b = 0, r = 1, t = .5, align_to = 'full')
+```
+
+
+
+## Add Inset Plots
+
+```{r}
+#| label: patchwork-composition-inset-3
+#| fig-width: 15
+#| fig-height: 12
+#| fig-align: "center"
+(pl1 + inset_element(pl2, l = .6, b = .1, r = 1, t = .6) + pt) / pl3
+```
+
+
+
+## <b style='color:#663399;'>Recap</b>
+
+::: recap
+::: incremental
+-  **guides** are the combination of scales and legends
+-  legends can be either modified with the **`guide_*`** function in **`scale_*()`** or **`guides()`**  and with the **`theme()`** component
+qualitative
+-  ... while quantitative guides are **`colorbar`**, **`colorsteps`** or **`bins`**
+-  **`{patchwork}`** is the most modern and simplest way to compose plots
+    -  use `+`, `/` and `|` to combine plots
+    -  use `plot_layout()` to adjust the layout, widths and heights
+    -  use `plot_annotation()` to add tags and general labels
+    - use `inset_element()` to add inset graphics
+:::
+:::
+
+
+
+# Exercises
+
+
+
+## Exercise 1
+
+::: question
+-   **Create the following penguins visualization, as close as possible**.
+:::
+
+```{r}
+#| label: exercise-1-penguins
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 13
+#| fig-height: 6.8
+library(palmerpenguins)
+
+theme_set(theme_minimal(
+  base_size = 16, base_family = "Asap SemiCondensed"
+))
+
+theme_update(
+  plot.title = ggtext::element_textbox_simple(
+    size = 20, margin = margin(15, 0, 15, 0),
+    padding = margin(rep(12, 4)), fill = "grey90", r = unit(9, "pt")
+  ),
+  plot.title.position = "plot",
+  plot.caption = ggtext::element_markdown(
+    size = 10, color = "grey50", margin = margin(12, 0, 6, 0)
+  ),
+  plot.caption.position = "plot",
+  plot.tag = element_text(margin = margin(b = 0, l = 15)),
+  plot.background = element_rect(color = "#f8f8f8", fill = "#f8f8f8"),
+  panel.grid.minor = element_blank(),
+  legend.position = "none",
+  axis.title.x = element_text(margin = margin(t = 10)),
+  axis.title.y = element_text(margin = margin(r = 10))
+)
+
+penguin_cols <- c("#FF8C00", "#159090", "#A034F0")
+
+penguins$species <- factor(penguins$species, levels = c("Adelie", "Gentoo", "Chinstrap"))
+
+p1 <- ggplot(
+    penguins,
+    aes(x = species, fill = species)
+  ) +
+  geom_bar() +
+  stat_count(
+    geom = "text",
+    aes(label = stat(count)),
+    vjust = 1.5, size = 5, color = "white", 
+    family = "Tabular", fontface = "bold"
+  ) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    guide = "none",
+    limits = c(0, 168)
+  ) +
+  scale_fill_manual(
+    values = penguin_cols
+  ) +
+  labs(
+    x = "Pygoscelis spec.", y = NULL 
+  ) +
+  theme(
+    panel.grid.major = element_blank(),
+    axis.title.x = element_text(face = "italic")
+  )
+
+p2 <- ggplot(
+    penguins,
+    aes(x = island, fill = island)
+  ) +
+  geom_bar() +
+  stat_count(
+    geom = "text",
+    aes(label = stat(count)),
+    vjust = 1.5, size = 5, color = "white", 
+    family = "Tabular", fontface = "bold"
+  ) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    guide = "none",
+    limits = c(0, 168)
+  ) +
+  scale_fill_manual(
+    values = c("#9294BE", "#D4B7A9", "#CF98A3")
+  ) +
+  labs(
+    x = "Island", y = NULL 
+  ) +
+  theme(panel.grid.major = element_blank())
+
+p3 <- ggplot(
+    penguins,
+    aes(x = flipper_length_mm, y = body_mass_g, color = species)
+  ) +
+  geom_point(size = 3.5, color = "black") + 
+  geom_point(size = 3, color = "white") + 
+  geom_point(size = 2, alpha = .3) + 
+  stat_smooth(
+    method = "lm", se = FALSE,
+    show.legend = FALSE
+  ) +
+  coord_cartesian(
+    clip = "off", 
+    expand = FALSE, 
+    xlim = c(171, 232)
+  ) +
+  scale_x_continuous(labels = function(x) paste(x, "mm")) +
+  scale_y_continuous(labels = function(y) paste(y / 1000, "kg")) +
+  scale_color_manual(
+    values = penguin_cols
+  ) +
+  labs(
+    x = "Flipper length", y = "Body mass" 
+  ) 
+
+
+library(patchwork)
+
+((p1 / p2) | p3) +
+  plot_layout(widths = c(.4, 1)) + 
+  plot_annotation(
+    title = "Individual counts per species (A) and island (B) as well as the relationship of physiological metrics (C) for adult *Pygoscelis spec.* penguins, measured between 2007 and 2009 near Palmer Station, Antarctica.", caption = "Horst AM, Hill AP, Gorman KB (2020). <span style='font-family:tabular;'>palmerpenguins</span> R package version 0.1.0",
+    tag_levels = "A", tag_suffix = "."
+  )
+```
+
+
+
+## Exercise 2
+
+::: question
+-   **Create the following gapminder visualization, as close as possible**.
+:::
+
+```{r}
+#| label: exercise-2-gapminder
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 13
+#| fig-height: 6.8
+library(gapminder)
+
+gm2007 <- filter(gapminder, year == 2007)
+
+ggplot(gm2007, aes(x = gdpPercap, y = lifeExp,
+                   color = continent, size = pop)) +
+  geom_point(alpha = .5, stroke = .5) +
+  coord_cartesian(expand = FALSE, clip = "off") +
+  scale_x_log10(breaks = c(500, 1000, 2000, 4000, 8000, 16000, 32000),
+                labels = scales::label_dollar(accuracy = 1), name = "GDP per capita") +
+  scale_color_manual(values = continent_colors, name = "Region:",
+                     guide = guide_legend(override.aes = list(size = 5))) +
+  scale_size(range = c(3, 30), name = "Population:", breaks = c(10, 100, 1000)*1000000, 
+             labels = scales::label_comma(scale = 1 / 10^6, suffix = "M")) +
+  labs(y = "Life expectancy", title = "Health & Income of Nations in 2007", caption = "Source: Gapminder project") +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
+  theme(panel.grid.minor = element_blank(),
+        plot.title = element_text(face = "bold", hjust = .5, size = rel(1.7), family = "Hepta Slab"),
+        plot.title.position = "plot",
+        legend.position = c(.9, .35),
+        legend.background = element_rect(color = "grey87"),
+        legend.box.just = "right",
+        plot.margin = margin(25, 40, 25, 25))
+```
+
+
+---
+
+![](https://s3.eu-west-1.amazonaws.com/static.gapminder.org/GapminderMedia/wp-uploads/20161215191134/countries_health_wealth_2016_v13.jpg){fig-align="center" fig-width="35%" fig-alt="An updated version of the gapminder visualization as a poster, showing the 2015 data in a new design."}
+
+
+
+# Solution Exercise 1 {background-color="#e6d9f2"}
+
+
+
+## Exercise 1
+
+::: question
+-   **Create the following penguins visualization, as close as possible**.
+:::
+
+```{r}
+#| label: exercise-1-penguins
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 13
+#| fig-height: 6.8
+```
+
+
+
+## Prepare the Data Set
+
+```{r}
+#| label: prepare-data-exercise
+#| eval: false
+#| purl: false
+library(palmerpenguins)
+
+penguin_cols <- c("#FF8C00", "#159090", "#A034F0")
+
+penguins$species <- factor(penguins$species, levels = c("Adelie", "Gentoo", "Chinstrap"))
+```
+
+
+
+## Prepare Theming
+
+```{r}
+#| label: prepare-theme-exercise
+#| eval: false
+#| purl: false
+theme_set(theme_minimal(
+  base_size = 16, base_family = "Asap SemiCondensed"
+))
+
+theme_update(
+  plot.title = ggtext::element_textbox_simple(
+    size = 20, margin = margin(15, 0, 15, 0),
+    padding = margin(rep(12, 4)), fill = "grey90"
+  ),
+  plot.title.position = "plot",
+  plot.caption = ggtext::element_markdown(
+    size = 10, color = "grey50", margin = margin(12, 0, 6, 0)
+  ),
+  plot.caption.position = "plot",
+  plot.tag = element_text(margin = margin(b = 0, l = 15)),
+  plot.background = element_rect(color = "#f8f8f8", fill = "#f8f8f8"),
+  panel.grid.minor = element_blank(),
+  legend.position = "none",
+  axis.title.x = element_text(margin = margin(t = 10)),
+  axis.title.y = element_text(margin = margin(r = 10))
+)
+```
+
+
+
+## Create Bar Plot Species
+
+```{r}
+#| label: layout-exercise-ex-1-1
+#| eval: false
+#| purl: false
+p1 <- ggplot(
+    penguins,
+    aes(x = species, fill = species)
+  ) +
+  geom_bar() +
+  stat_count(
+    geom = "text",
+    aes(label = stat(count)),
+    vjust = 1.5, size = 5, color = "white", 
+    family = "Tabular", fontface = "bold"
+  ) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    guide = "none",
+    limits = c(0, 168)
+  ) +
+  scale_fill_manual(
+    values = penguin_cols
+  ) +
+  labs(
+    x = "Pygoscelis spec.", y = NULL 
+  ) +
+  theme(
+    panel.grid.major = element_blank(),
+    axis.title.x = element_text(face = "italic")
+  )
+
+p1
+```
+
+
+
+## Create Bar Plot Species
+
+```{r}
+#| label: layout-exercise-ex-1-1
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 3.7
+#| fig-height: 3.6
+```
+
+
+
+## Create Bar Plot Islands
+
+```{r}
+#| label: layout-exercise-ex-1-2
+#| eval: false
+#| purl: false
+p2 <- ggplot(
+    penguins,
+    aes(x = island, fill = island)
+  ) +
+  geom_bar() +
+  stat_count(
+    geom = "text",
+    aes(label = stat(count)),
+    vjust = 1.5, size = 5, color = "white", 
+    family = "Tabular", fontface = "bold"
+  ) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    guide = "none",
+    limits = c(0, 168)
+  ) +
+  scale_fill_manual(
+    values = c("#9294BE", "#D4B7A9", "#CF98A3")
+  ) +
+  labs(
+    x = "Island", y = NULL 
+  ) +
+  theme(panel.grid.major = element_blank())
+
+p2
+```
+
+
+
+## Create Bar Plot Islands
+
+```{r}
+#| label: layout-exercise-ex-1-2
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 3.7
+#| fig-height: 3.6
+```
+
+
+
+## Create Scatter Plot
+
+```{r}
+#| label: layout-exercise-ex-1-3
+#| eval: false
+#| purl: false
+p3 <- ggplot(
+    penguins,
+    aes(x = flipper_length_mm, y = body_mass_g, 
+        color = species)
+  ) +
+  geom_point(size = 3.5, color = "black") + 
+  geom_point(size = 3, color = "white") + 
+  geom_point(size = 2, alpha = .3) + 
+  stat_smooth(
+    method = "lm", se = FALSE,
+    show.legend = FALSE
+  ) +
+  coord_cartesian(
+    clip = "off", expand = FALSE, xlim = c(171, 232)
+  ) +
+  scale_x_continuous(
+    labels = function(x) paste(x, "mm")
+  ) +
+  scale_y_continuous(
+    labels = function(y) paste(y / 1000, "kg")
+  ) +
+  scale_color_manual(
+    values = `penguin_cols`
+  ) +
+  labs(
+    x = "Flipper length", y = "Body mass" 
+  ) 
+
+p3
+```
+
+
+
+## Create Scatter Plot
+
+```{r}
+#| label: layout-exercise-ex-1-3
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 9.3
+#| fig-height: 7.2
+```
+
+
+
+## Create Plot Composition
+
+```{r}
+#| label: layout-exercise-ex-1-4
+#| eval: false
+#| purl: false
+library(patchwork)
+
+((p1 / p2) | p3) +
+  plot_layout(widths = c(.4, 1)) + 
+  plot_annotation(
+    title = "Individual counts per species (A) and island (B) as well as the relationship of physiological metrics (C) for adult *Pygoscelis spec.* penguins, measured between 2007 and 2009 near Palmer Station, Antarctica.", caption = "Horst AM, Hill AP, Gorman KB (2020). <span style='font-family:tabular;'>palmerpenguins</span> R package version 0.1.0",
+    tag_levels = "A", tag_suffix = "."
+  )
+```
+
+
+
+## Create Plot Composition
+
+```{r}
+#| label: layout-exercise-ex-1-4
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+```
+
+
+
+# Solution Exercise 2 {background-color="#e6d9f2"}
+
+
+
+## Exercise 2
+
+::: question
+-   **Create the following gapminder visualization, as close as possible**.
+:::
+
+```{r}
+#| label: exercise-2-gapminder
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 13
+#| fig-height: 6.8
+```
+
+
+## The Data
+
+<b style='font-size:2.3rem;'>The famous [Gapminder](https://www.gapminder.org/) data set</b>
+
+-   life expectancy, GDP per capita, and population by country
+-   contains complete data covering the years 1952-2007 in 5-year steps
+
+```{r}
+#| label: data-import-gapminder
+#| class-output: hscroll
+#| purl: false
+library(gapminder)
+
+gapminder
+```
+
+
+
+## Data Preparation
+
+```{r}
+#| label: data-subset-1-print
+#| purl: false
+#| code-line-numbers: "3"
+(gm2007 <- filter(gapminder, year == 2007))
+```
+
+
+
+## Basic Bubble Plot
+
+```{r}
+#| label: basic-ggplot-gapminder
+#| eval: false
+#| purl: false
+#| code-line-numbers: "1|2,3|4"
+ggplot(data = gm2007) + 
+  aes(x = log10(gdpPercap), y = lifeExp, 
+      color = continent, size = pop) +
+  geom_point(alpha = .5) 
+```
+
+
+---
+
+```{r}
+#| label: basic-ggplot-gapminder
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 14
+#| fig-height: 9.5
+```
+
+
+
+## Adjust Scales
+
+```{r}
+#| label: polished-ggplot-gapminder-scales
+#| eval: false
+#| purl: false
+#| code-line-numbers: "4,5|6,7|8,9"
+ggplot(gm2007, aes(x = gdpPercap, y = lifeExp,
+                   color = continent, size = pop)) +
+  geom_point(alpha = .5, stroke = .5) +
+  scale_x_log10(breaks = c(500, 1000, 2000, 4000, 8000, 16000, 32000),
+                labels = scales::label_dollar(accuracy = 1), name = "GDP per capita") +
+  scale_color_manual(values = continent_colors, name = "Region:",
+                     guide = guide_legend(override.aes = list(size = 5))) +
+  scale_size(range = c(3, 30), name = "Population:", breaks = c(10, 100, 1000)*1000000, 
+             labels = scales::label_comma(scale = 1 / 10^6, suffix = "M"))
+```
+
+
+---
+
+```{r}
+#| label: polished-ggplot-gapminder-scales
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 14
+#| fig-height: 9.5
+```
+
+
+
+## Turn Clipping Off
+
+```{r}
+#| label: polished-ggplot-gapminder-coord
+#| eval: false
+#| purl: false
+#| code-line-numbers: "11|1"
+gm <-
+  ggplot(gm2007, aes(x = gdpPercap, y = lifeExp,
+                   color = continent, size = pop)) +
+  geom_point(alpha = .5, stroke = .5) +
+  scale_x_log10(breaks = c(500, 1000, 2000, 4000, 8000, 16000, 32000),
+                labels = scales::label_dollar(accuracy = 1), name = "GDP per capita") +
+  scale_color_manual(values = continent_colors, name = "Region:",
+                     guide = guide_legend(override.aes = list(size = 5))) +
+  scale_size(range = c(3, 30), name = "Population:", breaks = c(10, 100, 1000)*1000000, 
+             labels = scales::label_comma(scale = 1 / 10^6, suffix = "M")) +
+  coord_cartesian(expand = FALSE, clip = "off")
+
+gm
+```
+
+
+---
+
+```{r}
+#| label: polished-ggplot-gapminder-coord
+#| echo: false
+#| purl: false
+#| fig-pos: "center"
+#| fig-width: 14
+#| fig-height: 9.5
+```
+
+
+
+## Polish Plot
+
+```{r}
+#| label: polished-ggplot-gapminder-labs-theme
+#| eval: false
+#| purl: false
+#| code-line-numbers: "2,3|4|5,6,7,8,9,10"
+g +
+  labs(y = "Life expectancy", title = "Health & Income of Nations in 2007", 
+       caption = "Source: Gapminder project") +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
+  theme(panel.grid.minor = element_blank(),
+        plot.title = element_text(face = "bold", hjust = .5, size = rel(1.7), family = "Hepta Slab"),
+        plot.title.position = "plot",
+        legend.position = c(.9, .35),
+        legend.background = element_rect(color = "grey87"),
+        legend.box.just = "right",
+        plot.margin = margin(25, 40, 25, 25))
+```
+
+
+---
+
+```{r}
+#| label: polished-ggplot-gapminder-labs-theme
+#| echo: false
+#| purl: false
+#| fig-width: 14
+#| fig-height: 9.5
+```
+

@@ -1,5 +1,5 @@
 ---
-title: "The Art & Science of<br>Data Visualization"
+title: "The Art & Science of <br>Data Visualization "
 subtitle: "<span style='font-size:1.5em;'>Engaging and Reproducible Graphics with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Welcome!</span></span>"
 author: "<b style='color:#28a87d;'><a href='https://www.cedricscherer.com'>Dr. Cédric Scherer</a></b>&ensp;**//**&ensp;RTG-UGI Workshop&ensp;**//**&ensp;October 2023"
 format:
@@ -112,6 +112,34 @@ execute:
 -   When did you use R for the first time?
 -   How much experience do you have with ggplot?
 -   Which R package are you looking forward to try?
+
+
+
+------------------------------------------------------------------------
+
+## Course Slides
+
+<b style='font-family:spline sans mono;font-size:46pt;font-weight:700;'>z3tt.github.io/datavizugi/</b>
+
+<span style='font-family:spline sans mono;font-size:36pt;'>
+&emsp;&emsp;&rarr; 01-dataviz.html<br>
+&emsp;&emsp;&rarr; 02-concepts-pt1.html<br>
+&emsp;&emsp;&rarr; 03-concepts-pt2.html<br>
+&emsp;&emsp;&rarr; 04-annotations.html<br>
+&emsp;&emsp;&rarr; 05-layout.html<br>
+&emsp;&emsp;&rarr; 06-programing.html
+</span>
+
+
+
+------------------------------------------------------------------------
+
+## Course Materials (Scripts, Data, Font Files)
+
+<b style='font-family:spline sans mono;font-size:46pt;font-weight:700;'>z3tt.github.io/datavizugi/</b>
+
+
+
 
 
 

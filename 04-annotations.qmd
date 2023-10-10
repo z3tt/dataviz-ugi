@@ -1,0 +1,1866 @@
+---
+title: "The Art & Science of <br>Data Visualization "
+subtitle: "<span style='font-size:1.5em;'>Engaging and Reproducible Graphics with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Working with Labels and Annotations</span></span>"
+author: "<b style='color:#28a87d;'><a href='https://www.cedricscherer.com'>Dr. Cédric Scherer</a></b>&ensp;**//**&ensp;RTG-UGI Workshop&ensp;**//**&ensp;October 2023"
+format:
+  revealjs:
+    theme: slides.scss
+    logo: img/logo.png
+    footer: '**[Cédric Scherer](https://cedricscherer.com)** // Data Visualization & Information Design'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 4
+      buttons: true
+    pause: true
+    mainfont: Asap SemiCondensed
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 5
+  fig-height: 6
+---
+
+## Setup
+
+```{r}
+#| label: prep
+#| cache: false
+library(ggplot2)
+library(dplyr)
+library(stringr)
+
+bikes <- readr::read_csv(
+  here::here("data", "london-bikes-custom.csv"),
+  col_types = "Dcfffilllddddc"
+)
+
+bikes$season <- forcats::fct_inorder(bikes$season)
+
+theme_set(theme_light(base_size = 14, base_family = "Asap SemiCondensed"))
+
+theme_update(
+  panel.grid.minor = element_blank(),
+  legend.position = "top"
+)
+```
+
+
+
+# Labels + `theme()`
+
+
+
+## Working with Labels
+
+```{r}
+#| label: ggplot-labs-bundled-extended
+#| cache: false
+#| output-location: column
+#| code-line-numbers: "9,10,11,12,13,14,15,16,17"
+g <- ggplot(
+    bikes,
+    aes(x = temp, y = count,
+        color = season)
+  ) +
+  geom_point(
+    alpha = .5
+  ) +
+  labs(
+    x = "Temperature (°C)",
+    y = "Reported bike shares",
+    title = "TfL bike sharing trends",
+    subtitle = "Reported bike rents versus temperature in London",
+    caption = "Data: TfL",
+    color = "Season:",
+    tag = "1."
+  )
+
+g
+```
+
+
+
+## Customize Labels via \`theme()\`
+
+```{r}
+#| label: ggplot-theme-title
+#| output-location: column
+g + theme(
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot"
+)
+```
+
+## Customize Labels via \`theme()\`
+
+```{r}
+#| label: ggplot-labs-theme-element-text
+#| output-location: column
+#| code-line-numbers: "4,5,6"
+g + theme(
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot",
+  axis.text = element_text(
+    color = "#28a87d"
+  )
+)
+```
+
+
+## Customize Labels via \`theme()\`
+
+```{r}
+#| label: ggplot-labs-theme-element-text-more
+#| output-location: column
+#| code-line-numbers: "6,7,8|9,10,11,12"
+g + theme(
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot",
+  axis.text = element_text(
+    color = "#28a87d",
+    family = "Spline Sans Mono",
+    face = "italic",
+    lineheight = 1.3, # no effect here
+    angle = 45,
+    hjust = 1,
+    vjust = 0,
+    margin = margin(10, 0, 20, 0)
+  )
+)
+```
+
+
+## Customize Labels via \`theme()\`
+
+```{r}
+#| label: ggplot-labs-theme-element-text-no-effect
+#| output-location: column
+#| code-line-numbers: "10,11,12"
+g + theme(
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot",
+  axis.text = element_text(
+    color = "#28a87d",
+    family = "Spline Sans Mono",
+    face = "italic",
+    lineheight = 1.3, # no effect here
+    angle = 45,
+    hjust = 1, # no effect here
+    vjust = 0, # no effect here
+    margin = margin(10, 0, 20, 0) # no effect here
+  )
+)
+```
+
+
+## Customize Labels via \`theme()\`
+
+```{r}
+#| label: ggplot-labs-theme-element-text-x
+#| output-location: column
+#| code-line-numbers: "14,15,16,17,18"
+g + theme(
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot",
+  axis.text = element_text(
+    color = "#28a87d",
+    family = "Spline Sans Mono",
+    face = "italic",
+    lineheight = 1.3, # no effect here
+    angle = 45,
+    hjust = 1, # no effect here
+    vjust = 0, # no effect here
+    margin = margin(10, 0, 20, 0) # no effect here
+  ),
+  axis.text.x = element_text(
+    hjust = 1,
+    vjust = 0,
+    margin = margin(10, 0, 20, 0) # trbl
+  )
+)
+```
+
+
+## Customize Labels via \`theme()\`
+
+```{r}
+#| label: ggplot-labs-theme-element-text-tag
+#| output-location: column
+#| code-line-numbers: "14,15,16"
+g + theme(
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot",
+  axis.text = element_text(
+    color = "#28a87d",
+    family = "Spline Sans Mono",
+    face = "italic",
+    lineheight = 1.3, # no effect here
+    angle = 45,
+    hjust = 1, # no effect here
+    vjust = 0, # no effect here
+    margin = margin(10, 0, 20, 0) # no effect here
+  ),
+  plot.tag = element_text(
+    margin = margin(0, 12, -8, 0) # trbl
+  )
+)
+```
+
+
+## Customize Labels via \`theme()\`
+
+```{r}
+#| label: ggplot-labs-theme-element-text-debug
+#| output-location: column
+#| code-line-numbers: "13,17"
+g + theme(
+  plot.title = element_text(face = "bold"),
+  plot.title.position = "plot",
+  axis.text = element_text(
+    color = "#28a87d",
+    family = "Spline Sans Mono",
+    face = "italic",
+    hjust = 1,
+    vjust = 0,
+    angle = 45,
+    lineheight = 1.3, # no effect here
+    margin = margin(10, 0, 20, 0), # no effect here
+    debug = TRUE
+  ),
+  plot.tag = element_text(
+    margin = margin(0, 12, -8, 0), # trbl
+    debug = TRUE
+  )
+)
+```
+
+
+
+# Labels + `scale_*()`
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-continuous-labels-scales-prep
+#| output-location: column
+#| code-line-numbers: "1,2|4,5,6,7"
+g <- g + labs(tag = NULL, title = NULL, 
+              subtitle = NULL)
+
+g +
+  scale_y_continuous(
+    breaks = 0:4*15000
+  )
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-continuous-labels-scales-1
+#| output-location: column
+#| code-line-numbers: "4"
+g +
+  scale_y_continuous(
+    breaks = 0:4*15000,
+    labels = scales::comma_format()
+  )
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-continuous-labels-scales-2
+#| output-location: column
+#| code-line-numbers: "4,5,6|5|7"
+g +
+  scale_y_continuous(
+    breaks = 0:4*15000,
+    labels = scales::comma_format(
+      suffix = " bikes"
+    ),
+    name = NULL
+  )
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-continuous-labels-scales-3
+#| output-location: column
+#| code-line-numbers: "5|9,10,11,12,13"
+g +
+  scale_y_continuous(
+    breaks = 0:4*15000,
+    labels = scales::comma_format(
+      suffix = "\nbikes shared"
+    ),
+    name = NULL
+  ) +
+  theme(
+    axis.text.y = element_text(
+      hjust = .5
+    )
+  )
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-continuous-labels-scales-4
+#| output-location: column
+#| code-line-numbers: "5|5,7"
+g +
+  scale_y_continuous(
+    breaks = 0:4*15000,
+    labels = scales::comma_format(
+      scale = .001
+    ),
+    name = "Reported bike shares in thousands"
+  )
+```
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-continuous-labels-function
+#| output-location: column
+#| code-line-numbers: "4"
+g +
+  scale_y_continuous(
+    breaks = 0:4*15000,
+    labels = function(y) y / 1000,
+    name = "Reported bike shares in thousands",
+  )
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-continuous-labels-function-paste
+#| output-location: column
+#| code-line-numbers: "2,5|3|4"
+g +
+  scale_x_continuous(
+    labels = function(y) paste0(y, "°C"),
+    name = "Temperature"
+  )
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-discrete-labels
+#| output-location: column
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  scale_x_discrete()
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-xy-discrete-labels-function
+#| output-location: column
+#| code-line-numbers: "8|7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  scale_x_discrete(
+    name = NULL,
+    labels = stringr::str_to_title
+  )
+```
+
+
+
+## Format Labels via \`scale\_\*\`
+
+```{r}
+#| label: scales-color-discrete-name-labels
+#| output-location: column
+#| code-line-numbers: "2,4"
+g +
+  scale_color_discrete(
+    name = NULL,
+    labels = stringr::str_to_title
+  )
+```
+
+
+
+# Labels +<br>`element_markdown`
+
+
+
+## Styling Labels with {ggtext}
+
+```{r}
+#| label: ggtext-prep-markdown
+#| output-location: column
+#| code-line-numbers: "4"
+# install.packages("ggtext")
+
+g +
+  ggtitle("**TfL bike sharing trends by _season_**")
+```
+
+## Styling Labels with {ggtext}
+
+```{r}
+#| label: ggtext-element-markdown
+#| output-location: column
+#| code-line-numbers: "4,5,6,7|4|6"
+# install.packages("ggtext")
+
+g +
+  ggtitle("**TfL bike sharing trends by _season_**") +
+  theme(
+    plot.title = ggtext::element_markdown()
+  )
+```
+
+## Styling Labels with {ggtext}
+
+```{r}
+#| label: ggtext-element-markdown-html
+#| output-location: column
+#| code-line-numbers: "4|4,6"
+#| fig-height: 5.5
+# install.packages("ggtext")
+
+g +
+  ggtitle("<b style='font-size:25pt'>TfL</b> bike sharing trends by <i style='color:#28a87d;'>season</i>") +
+  theme(
+    plot.title = ggtext::element_markdown()
+  )
+```
+
+<div style="font-size:15pt;">
+
+`<b style='font-size:15pt;'>TfL</b> bike sharing trends by <i style='color:#28a87d;'>season</i>`
+
+</div>
+
+
+
+# Handling Long Labels
+
+
+
+## Handling Long Labels with {stringr}
+
+```{r}
+#| label: stringr-default-labs
+#| output-location: column
+ggplot(
+    bikes,
+    aes(x = weather_type,
+        y = count)
+  ) +
+  geom_boxplot()
+```
+
+
+
+## Handling Long Labels with {stringr}
+
+```{r}
+#| label: stringr-wrap-labs
+#| output-location: column
+#| code-line-numbers: "3"
+ggplot(
+    bikes,
+    aes(x = stringr::str_wrap(weather_type, 6),
+        y = count)
+  ) +
+  geom_boxplot()
+```
+
+
+
+## Handling Long Labels with {ggtext}
+
+```{r}
+#| label: ggtext-text-default
+#| output-location: column
+#| code-line-numbers: "2|3,4,5,6|4"
+g +
+  ggtitle("TfL bike sharing trends in 2015 and 2016 by season for day and night periods") +
+  theme(
+    plot.title = element_text(size = 20),
+    plot.title.position = "plot"
+  )
+```
+
+
+
+## Handling Long Titles
+
+```{r}
+#| label: ggtext-textbox-default
+#| output-location: column
+#| code-line-numbers: "5,6,7"
+g +
+  ggtitle("TfL bike sharing trends in 2015 and 2016 by season for day and night periods") +
+  theme(
+    plot.title =
+      ggtext::element_textbox_simple(
+        size = 20
+      ),
+    plot.title.position = "plot"
+  )
+```
+
+
+
+## Handling Long Titles
+
+```{r}
+#| label: ggtext-textbox-margin
+#| output-location: column
+#| code-line-numbers: "6,7"
+g +
+  ggtitle("TfL bike sharing trends in 2015 and 2016 by season for day and night periods") +
+  theme(
+    plot.title = 
+      ggtext::element_textbox_simple(
+        margin = margin(t = 12, b = 12),
+        lineheight = .9
+      ),
+    plot.title.position = "plot"
+  )
+```
+
+
+
+## Handling Long Titles
+
+```{r}
+#| label: ggtext-textbox-box
+#| output-location: column
+#| code-line-numbers: "7"
+g +
+  ggtitle("TfL bike sharing trends in 2015 and 2016 by season for day and night periods") +
+  theme(
+    plot.title = 
+      ggtext::element_textbox_simple(
+        margin = margin(t = 12, b = 12),
+        fill = "grey90",
+        lineheight = .9
+      ),
+    plot.title.position = "plot"
+  )
+```
+
+
+
+## Handling Long Titles
+
+```{r}
+#| label: ggtext-textbox-box-styled
+#| output-location: column
+#| code-line-numbers: "7|9|10|11|12|13"
+g +
+  ggtitle("TfL bike sharing trends in 2015 and 2016 by season for day and night periods") +
+  theme(
+    plot.title = 
+      ggtext::element_textbox_simple(
+        margin = margin(t = 12, b = 12),
+        padding = margin(rep(12, 4)),
+        fill = "grey90",
+        box.colour = "grey30",
+        linetype = "13",
+        r = unit(9, "pt"),
+        halign = .5,
+        face = "bold",
+        lineheight = .9
+      ),
+    plot.title.position = "plot"
+  )
+```
+
+
+
+# Annotations &<br>Call-Outs
+
+
+
+## Add Single Text Annotations
+
+```{r}
+#| label: annotate-text-setup
+#| output-location: column
+#| code-line-numbers: "1|2,3|4,5,6,7|8,9,10,11|5,9"
+ga <- 
+  ggplot(bikes, 
+         aes(x = temp, y = count)) +
+  geom_point(
+    aes(color = count > 40000),
+    size = 2
+  ) +
+  scale_color_manual(
+    values = c("grey", "firebrick"),
+    guide = "none"
+  )
+
+ga
+```
+
+
+
+## Add Single Text Annotations
+
+```{r}
+#| label: annotate-text
+#| output-location: column
+#| code-line-numbers: "1,2,3,4,5,6|2|3,4|5"
+ga +
+  annotate(
+    geom = "text",
+    x = 18,
+    y = 48000,
+    label = "What happened here?"
+  )
+```
+
+
+
+
+## Style Text Annotations
+
+```{r}
+#| label: annotate-text-adj
+#| output-location: column
+#| code-line-numbers: "7,8,9,10,11"
+ga +
+  annotate(
+    geom = "text",
+    x = 18,
+    y = 48000,
+    label = "What happened here?",
+    color = "firebrick",
+    size = 6,
+    family = "Asap SemiCondensed",
+    fontface = "bold",
+    lineheight =  .8
+  )
+```
+
+
+
+## Add Multiple Text Annotations
+
+```{r}
+#| label: annotate-text-multiple
+#| output-location: column
+#| code-line-numbers: "4,5,6|4,5,6,7,8,9,10,11"
+ga +
+  annotate(
+    geom = "text",
+    x = c(18, max(bikes$temp)),
+    y = c(48000, 1000),
+    label = c("What happened here?", "Powered by TfL"),
+    color = c("firebrick", "black"),
+    size = c(6, 3),
+    family = c("Asap SemiCondensed", "Hepta Slab"),
+    fontface = c("bold", "plain"),
+    hjust = c(.5, 1)
+  )
+```
+
+
+
+## "Point'n'Click" Annotations
+
+```{r}
+#| label: ggannotate
+#| eval: false
+ggannotate::ggannotate(g)
+```
+
+![](img/annotations/ggannotate.png){fig-align="center" fig-alt="A screenshot of the Shiny app provided by the ggannotate package which allows to place a text annotation by clicking and returns the code."}
+
+
+
+## Add Boxes
+
+```{r}
+#| label: annotate-text-rect
+#| output-location: column
+#| code-line-numbers: "11,18|11,12,18|13,14,15,16|17,18|5,8,15"
+ga + 
+  annotate(
+    geom = "text",
+    x = 19.5,
+    y = 42000,
+    label = "What happened here?",
+    family = "Asap SemiCondensed",
+    size = 6,
+    vjust = 1.3
+  ) +
+  annotate(
+    geom = "rect",
+    xmin = 17, 
+    xmax = 22,
+    ymin = 42000, 
+    ymax = 54000,
+    color = "firebrick", 
+    fill = NA
+  )
+```
+
+
+
+## Add Lines
+
+```{r}
+#| label: annotate-text-line
+#| output-location: column
+#| code-line-numbers: "11,17|12|13,14,15,16|4,5,13,15"
+ga +
+  annotate(
+    geom = "text",
+    x = 10,
+    y = 38000,
+    label = "The\nhighest\ncount",
+    family = "Asap SemiCondensed",
+    size = 6,
+    lineheight =  .8
+  ) +
+  annotate(
+    geom = "segment",
+    x = 13, 
+    xend = 18.2,
+    y = 38000, 
+    yend = 51870
+  )
+```
+
+
+
+## Add Lines
+
+```{r}
+#| label: annotate-text-curve
+#| output-location: column
+#| code-line-numbers: "13,14,15,16|6,11,15"
+ga +
+  annotate(
+    geom = "text",
+    x = 10,
+    y = 38000,
+    label = "The\nhighest\ncount",
+    family = "Asap SemiCondensed",
+    size = 6,
+    lineheight =  .8
+  ) +
+  annotate(
+    geom = "curve",
+    x = 13, 
+    xend = 18.2,
+    y = 38000, 
+    yend = 51870
+  )
+```
+
+
+
+## Add Arrows
+
+```{r}
+#| label: annotate-text-arrow
+#| output-location: column
+#| code-line-numbers: "17,18"
+ga +
+  annotate(
+    geom = "text",
+    x = 10,
+    y = 38000,
+    label = "The\nhighest\ncount",
+    family = "Asap SemiCondensed",
+    size = 6,
+    lineheight =  .8
+  ) +
+  annotate(
+    geom = "curve",
+    x = 13, 
+    xend = 18.2,
+    y = 38000, 
+    yend = 51870,
+    curvature = .25,
+    arrow = arrow()
+  )
+```
+
+
+
+## Add Arrows
+
+```{r}
+#| label: annotate-text-arrow-type2
+#| output-location: column
+#| code-line-numbers: "18,19,20,21,22|19,20,21"
+ga +
+  annotate(
+    geom = "text",
+    x = 10,
+    y = 38000,
+    label = "The\nhighest\ncount",
+    family = "Asap SemiCondensed",
+    size = 6,
+    lineheight =  .8
+  ) +
+  annotate(
+    geom = "curve",
+    x = 13, 
+    xend = 18.2,
+    y = 38000, 
+    yend = 51870,
+    curvature = .25,
+    arrow = arrow(
+      length = unit(10, "pt"),
+      type = "closed",
+      ends = "both"
+    )
+  )
+```
+
+
+
+## Add Arrows
+
+```{r}
+#| label: annotate-text-arrow-skewed
+#| output-location: column
+#| code-line-numbers: "18|19,20,21,22"
+ga +
+  annotate(
+    geom = "text",
+    x = 10,
+    y = 38000,
+    label = "The\nhighest\ncount",
+    family = "Asap SemiCondensed",
+    size = 6,
+    lineheight =  .8
+  ) +
+  annotate(
+    geom = "curve",
+    x = 13, 
+    xend = 18.2,
+    y = 38000, 
+    yend = 51870,
+    curvature = .8,
+    angle = 130,
+    arrow = arrow(
+      length = unit(10, "pt"),
+      type = "closed"
+    )
+  )
+```
+
+
+
+## Highlight Hot Days
+
+```{r}
+#| label: highlight-hot-periods
+#| output-location: column
+#| code-line-numbers: "1|2,3,4,5,6|2,3,4,5,6,11|7,8,9,10|5,12,13,14,15"
+gh <- 
+  ggplot(
+    data = filter(bikes, temp >= 27),
+    aes(x = date, y = temp)
+  ) +
+  geom_point(
+    data = bikes,
+    color = "grey65", alpha = .3
+  ) +
+  geom_point(size = 2.5)
+
+gh
+```
+
+
+
+## Annotations with geom_text()
+
+```{r}
+#| label: highlight-geom-text
+#| output-location: column
+#| code-line-numbers: "2,6|3|4,5"
+gh +
+  geom_text(
+    aes(label = format(date, "%m/%d")),
+    nudge_x = 10,
+    hjust = 0
+  )
+```
+
+
+
+## Annotations with geom_label()
+
+```{r}
+#| label: highlight-geom-label
+#| output-location: column
+#| code-line-numbers: "2"
+gh +
+  geom_label(
+    aes(label = format(date, "%m/%d")),
+    nudge_x = .3,
+    hjust = 0
+  )
+```
+
+
+
+## Annotations with {ggrepel}
+
+```{r}
+#| label: seeding
+#| include: false
+set.seed(20230918)
+```
+
+```{r}
+#| label: highlight-geom-text-repel
+#| output-location: column
+#| code-line-numbers: "2,3,4"
+gh +
+  ggrepel::geom_text_repel(
+    aes(label = format(date, "%m/%d"))
+  )
+```
+
+
+
+## Annotations with {ggrepel}
+
+```{r}
+#| label: seeding-2
+#| include: false
+set.seed(20230918)
+```
+
+```{r}
+#| label: highlight-geom-text-repel-styling
+#| output-location: column
+#| code-line-numbers: "3|4,5,6"
+gh + 
+  ggrepel::geom_text_repel(
+    aes(label = format(date, "%m/%d")),
+    family = "Spline Sans Mono",
+    size = 4.5,
+    fontface = "bold"
+  )
+```
+
+
+
+## Annotations with {ggrepel}
+
+```{r}
+#| label: highlight-geom-text-repel-dist
+#| output-location: column
+#| code-line-numbers: "5,6|7,8"
+gh +
+  ggrepel::geom_text_repel(
+    aes(label = format(date, "%m/%d")),
+    family = "Spline Sans Mono",
+    # space between points + labels
+    box.padding = .8,
+    # always draw segments
+    min.segment.length = 0
+  )
+```
+
+
+
+## Annotations with {ggrepel}
+
+```{r}
+#| label: highlight-geom-text-repel-lim
+#| output-location: column
+#| code-line-numbers: "5,6|5,6,7|3"
+gh +
+  ggrepel::geom_text_repel(
+    aes(label = format(date, "%y/%m/%d")),
+    family = "Spline Sans Mono",
+    # force to the right
+    xlim = c(NA, as.Date("2015-06-01")), 
+    hjust = 1
+  )
+```
+
+
+
+## Annotations with {ggrepel}
+
+```{r}
+#| label: highlight-geom-text-repel-arrow
+#| output-location: column
+#| code-line-numbers: "6,7,8"
+gh +
+  ggrepel::geom_text_repel(
+    aes(label = format(date, "%y/%m/%d")),
+    family = "Spline Sans Mono",
+    xlim = c(NA, as.Date("2015-06-01")),
+    # style segment
+    segment.curvature = .01,
+    arrow = arrow(length = unit(.02, "npc"), type = "closed")
+  )
+```
+
+
+
+## Annotations with {ggrepel}
+
+```{r}
+#| label: highlight-geom-text-repel-inflect
+#| output-location: column
+#| code-line-numbers: "8"
+gh +
+  ggrepel::geom_text_repel(
+    aes(label = format(date, "%y/%m/%d")),
+    family = "Spline Sans Mono",
+    xlim = c(NA, as.Date("2015-06-01")),
+    # style segment
+    segment.curvature = .001,
+    segment.inflect = TRUE
+  )
+```
+
+
+
+## Annotations with {ggforce}
+
+```{r}
+#| label: highlight-geom-mark-rect
+#| output-location: column
+#| code-line-numbers: "2,5|3,4"
+g +
+  ggforce::geom_mark_rect(
+    aes(label = "Outliers?",
+        filter = count > 40000)
+  )
+```
+
+
+
+## Annotations with {ggforce}
+
+```{r}
+#| label: highlight-geom-mark-rect-color
+#| output-location: column
+#| code-line-numbers: "5,6"
+g +
+  ggforce::geom_mark_rect(
+    aes(label = "Outliers?",
+        filter = count > 40000),
+    color = "black",
+    label.family = "Asap SemiCondensed"
+  )
+```
+
+
+
+## Annotations with {ggforce}
+
+```{r}
+#| label: highlight-geom-mark-rect-description
+#| output-location: column
+#| code-line-numbers: "11,12,13"
+g +
+  ggforce::geom_mark_rect(
+    aes(label = "Outliers?",
+        filter = count > 40000),
+    description = "What happened on\nthese two days?",
+    color = "black",
+    label.family = "Asap SemiCondensed"
+  )
+```
+
+
+
+## Annotations with {ggforce}
+
+```{r}
+#| label: highlight-geom-mark-rect-modify
+#| output-location: column
+#| code-line-numbers: "8,9,10,11,12,13"
+g +
+  ggforce::geom_mark_rect(
+    aes(label = "Outliers?",
+        filter = count > 40000),
+    description = "What happened on\nthese two days?",
+    color = "black",
+    label.family = "Asap SemiCondensed",
+    expand = unit(8, "pt"),
+    radius = unit(12, "pt"),
+    con.cap = unit(0, "pt"),
+    label.buffer = unit(15, "pt"),
+    con.type = "straight",
+    label.fill = "transparent"
+  )
+```
+
+
+
+## Annotations with {ggforce}
+
+```{r}
+#| label: highlight-geom-mark-circle
+#| output-location: column
+#| code-line-numbers: "2"
+g +
+  ggforce::geom_mark_circle(
+    aes(label = "Outliers?",
+        filter = count > 40000),
+    description = "What happened on\nthese two days?",
+    color = "black",
+    label.family = "Asap SemiCondensed",
+    expand = unit(8, "pt"),
+    con.cap = unit(0, "pt"),
+    label.buffer = unit(15, "pt"),
+    con.type = "straight",
+    label.fill = "transparent"
+  )
+```
+
+
+
+## Annotations with {ggforce}
+
+```{r}
+#| label: highlight-geom-mark-hull
+#| output-location: column
+#| code-line-numbers: "2"
+g +
+  ggforce::geom_mark_hull(
+    aes(label = "Outliers?",
+        filter = count > 40000),
+    description = "What happened on\nthese two days?",
+    color = "black",
+    label.family = "Asap SemiCondensed",
+    expand = unit(8, "pt"),
+    con.cap = unit(0, "pt"),
+    label.buffer = unit(15, "pt"),
+    con.type = "straight",
+    label.fill = "transparent"
+  )
+```
+
+
+
+## Annotations with {geomtextpath}
+
+```{r}
+#| label: geomtextpath-prep
+#| output-location: column
+#| code-line-numbers: "1,2,3,4|5,6,7,8|9|10,11,12,13,14,15|16,17,18,19"
+bikes |>
+  filter(year == "2016") |>
+  group_by(month, day_night) |> 
+  summarize(count = sum(count)) |> 
+  ggplot(aes(x = month, y = count, 
+             color = day_night,
+             group = day_night)) +
+  geom_line(linewidth = 1) +
+  coord_cartesian(expand = FALSE) +
+  scale_y_continuous(
+    labels = scales::label_comma(
+      scale = 1/10^3, suffix = "K"
+    ),
+    limits = c(0, 850000)
+  ) +
+  scale_color_manual(
+    values = c("#FFA200", "#757BC7"),
+    name = NULL
+  )
+```
+
+
+## Annotations with {geomtextpath}
+
+```{r}
+#| label: geomtextpath
+#| output-location: column
+#| code-line-numbers: "8,9,10,11,12,13,14|24"
+bikes |>
+  filter(year == "2016") |>
+  group_by(month, day_night) |> 
+  summarize(count = sum(count)) |> 
+  ggplot(aes(x = month, y = count, 
+             color = day_night,
+             group = day_night)) +
+  geomtextpath::geom_textline(
+    aes(label = day_night),
+    linewidth = 1,
+    vjust = -.5, 
+    family = "Asap SemiCondensed",
+    fontface = "bold"
+  ) +
+  coord_cartesian(expand = FALSE) +
+  scale_y_continuous(
+    labels = scales::label_comma(
+      scale = 1/10^3, suffix = "K"
+    ),
+    limits = c(0, 850000)
+  ) +
+  scale_color_manual(
+    values = c("#FFA200", "#757BC7"),
+    guide = "none"
+  )
+```
+
+
+## Annotations with {geomtextpath}
+
+```{r}
+#| label: geomtextpath-long
+#| output-location: column
+#| code-line-numbers: "5,6,7,8,9|17"
+bikes |>
+  filter(year == "2016") |>
+  group_by(month, day_night) |> 
+  summarize(count = sum(count)) |> 
+  mutate(day_night = if_else(
+    day_night == "day", 
+    "Day period (6am-6pm)", 
+    "Night period (6pm-6am)"
+  )) |> 
+  ggplot(aes(x = month, y = count, 
+             color = day_night,
+             group = day_night)) +
+  geomtextpath::geom_textline(
+    aes(label = day_night),
+    linewidth = 1,
+    vjust = -.5, 
+    hjust = .05,
+    family = "Asap SemiCondensed",
+    fontface = "bold"
+  ) +
+  coord_cartesian(expand = FALSE) +
+  scale_y_continuous(
+    labels = scales::label_comma(
+      scale = 1/10^3, suffix = "K"
+    ),
+    limits = c(0, 850000)
+  ) +
+  scale_color_manual(
+    values = c("#FFA200", "#757BC7"),
+    guide = "none"
+  )
+```
+
+
+
+## Line Chart with \`stat_summary()\`
+
+```{r}
+#| label: line-stat
+#| purl: false
+#| output-location: column
+#| code-line-numbers: "1,2|6,7,8,9"
+bikes |>
+  filter(year == "2016") |>
+  ggplot(aes(x = month, y = count, 
+             color = day_night,
+             group = day_night)) +
+  stat_summary(
+    geom = "line", fun = sum,
+    linewidth = 1
+  ) +
+  coord_cartesian(expand = FALSE) +
+  scale_y_continuous(
+    labels = scales::label_comma(
+      scale = 1/10^3, suffix = "K"
+    ),
+    limits = c(0, 850000)
+  ) +
+  scale_color_manual(
+    values = c("#FFA200", "#757BC7"),
+    name = NULL
+  )
+```
+
+
+
+## Line Chart with \`stat_summary()\`
+
+```{r}
+#| label: line-stat-textpath-fail
+#| output-location: column
+#| code-line-numbers: "10,11,12,13"
+bikes |>
+  filter(year == "2016") |>
+  ggplot(aes(x = month, y = count, 
+             color = day_night,
+             group = day_night)) +
+  stat_summary(
+    geom = "line", fun = sum,
+    linewidth = 1
+  ) +
+  geomtextpath::geom_textline(
+    aes(label = day_night), 
+    stat = "summary" # fails
+  ) +
+  coord_cartesian(expand = FALSE) +
+  scale_y_continuous(
+    labels = scales::label_comma(
+      scale = 1/10^3, suffix = "K"
+    ),
+    limits = c(0, 850000)
+  ) +
+  scale_color_manual(
+    values = c("#FFA200", "#757BC7"),
+    name = NULL
+  )
+```
+
+
+
+# Adding Images
+
+
+
+## Load Image
+
+```{r}
+#| label: read-img
+#| cache: false
+#| code-line-numbers: "1|2|4"
+url <- "https://www.gs.tum.de/fileadmin/_processed_/0/7/csm_UGI_Logo_frei_ba00944e1c.png"
+img <- magick::image_read(url)
+
+img
+```
+
+
+
+## Add Background Image
+
+```{r}
+#| label: annotate-custom
+#| output-location: column
+#| code-line-numbers: "3,4,5,6|3|4"
+ggplot(bikes, aes(date, temp)) +
+  annotation_custom(
+    grid::rasterGrob(
+      image = img
+    )
+  ) +
+  geom_point(color = "#308DD1")
+```
+
+## Adjust Position
+
+```{r}
+#| label: annotate-custom-position
+#| output-location: column
+#| code-line-numbers: "5,6,7,11"
+ggplot(bikes, aes(date, temp)) +
+  annotation_custom(
+    grid::rasterGrob(
+      image = img,
+      x = .5,
+      y = .75,
+      width = .3
+    )
+  ) +
+  geom_point(color = "#308DD1") +
+  ylim(NA, 35)
+```
+
+
+
+## Place Image Outside
+
+```{r}
+#| label: annotate-custom-position-outside
+#| output-location: column
+#| code-line-numbers: "5,6,11,12,13,14|6,11,13"
+ggplot(bikes, aes(date, temp)) +
+  annotation_custom(
+    grid::rasterGrob(
+      image = img,
+      x = .9,
+      y = 1.2,
+      width = .3
+    )
+  ) +
+  geom_point(color = "#308DD1") +
+  coord_cartesian(clip = "off") +
+  theme(
+    plot.margin = margin(120, 10, 10, 10)
+  )
+```
+
+
+
+## <b style='color:#663399;'>Recap</b>
+
+::: recap
+::: incremental
+-   style labels such as title, axis and legend texts with **`theme()`**
+-   format data-related labels with the **`labels`** argument of `scale_*()`
+-   adjust strip text with the **`facet_*(labeller)`** functionality
+-   add data-related annotations with **`geom_text|label()`**
+-   ... and data-unrelated annotations with **`annotate()`**
+-   use **`annotation_custom(rasterGrob())`** to add images
+-   **`{ggtext}`** allows to render labels with markdown and basic html
+-   `{ggtext}` also allows to add **dynamic linebreaks** and images
+-   **`{ggrepel}`** ensures clever placement of annotations
+-   **`ggforce::geom_mark_*()`** provide a set of advanced annotations
+:::
+:::
+
+
+
+# Exercises
+
+
+
+## Exercise 1
+
+::: question
+-  **Take a look at the following visualization.**
+   -  For each group of text labels, note how one would add and modify them.
+   -  Discuss how to automate the placement of the labels in- and outside of the bars.
+:::
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-plot
+#| echo: false
+#| purl: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+bikes |> 
+  filter(!is.na(weather_type), year == "2015") |> 
+  mutate(weather_type = forcats::fct_reorder(weather_type, count, .fun = sum)) |> 
+  ggplot(aes(x = count, y = weather_type)) +
+  stat_summary(
+    fun = sum, geom = "bar",
+    color = "grey20", fill = "beige", width = .7
+  ) +
+  stat_summary(
+    fun = sum, geom = "text", 
+    aes(
+      label = after_stat(paste0("  ", sprintf("%2.2f", x / 10^6), "M  ")),
+      hjust = after_stat(x) > .5*10^6
+    ),
+    family = "Asap SemiCondensed"
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0), name = "**Reported bike shares**, in millions",
+    breaks = 0:4*10^6, labels = c("0", paste0(1:4, "M"))
+  ) +
+  scale_y_discrete(labels = stringr::str_to_sentence, name = NULL) +
+  coord_cartesian(clip = "off") +
+  labs(
+    title = "Fair weather preferred—even in London",
+    subtitle = "Less than 10% of TfL bikes shares have been reported on rainy, cloudy, or snowy days in 2015.",
+    caption = "**Data:** Transport for London / freemeteo.com"
+  ) +
+  theme_minimal(base_size = 14, base_family = "Asap SemiCondensed") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.title.x = ggtext::element_markdown(hjust = 0, face = "italic"),
+    axis.text.y = element_text(color = "black", size = rel(1.2)),
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(margin = margin(b = 20)),
+    plot.title.position = "plot",
+    plot.caption = ggtext::element_markdown(color = "grey40")
+  )
+```
+
+
+## Exercise 2
+
+::: question
+-   {ggtext} also comes with some new geom's. Explore those and other options on the package webpage: [wilkelab.rg/ggtext](https://wilkelab.org/ggtext/).
+-   {ggforce} comes with a variety of interesting geometries and utilities. Take a look at this wonderful toolbox: [ggforce.data-imaginist.com](https://ggforce.data-imaginist.com/). Share potentially helpful features with the group.
+:::
+
+
+
+# Solution Exercise 1 {background-color="#e6d9f2"}
+
+
+
+## Exercise 1
+
+::: question
+-  **Take a look at the following visualization.**
+   -  For each group of text labels, note how one would add and modify them.
+   -  Discuss how to automate the placement of the labels in- and outside of the bars.
+:::
+
+
+
+## Horizontal Bar Chart
+
+```{r}
+#| label: exercise-1-labels-0
+#| eval: false
+#| cache: false
+#| purl: false
+#| code-line-numbers: "1|2,3,4|5|6,7,8,9|7|10|11|12,13,14,15,16"
+p <- 
+  bikes |> 
+  filter(!is.na(weather_type), year == "2015") |> 
+  summarize(n = sum(count), .by = weather_type) |> 
+  ggplot(aes(x = n, y = forcats::fct_reorder(weather_type, n))) +
+  geom_col(color = "grey20", fill = "beige", width = .7) +
+  scale_x_continuous(expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 14, base_family = "Asap SemiCondensed") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+p
+```
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-1-labels-0
+#| echo: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+```
+
+
+## Add Count Annotations
+
+```{r}
+#| label: exercise-1-labels-1
+#| eval: false
+#| purl: false
+#| code-line-numbers: "2,3,4,5,6|3|4"
+p +
+  geom_text(
+    aes(label = n),
+    family = "Asap SemiCondensed"
+  )
+```
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-1-labels-1
+#| echo: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+```
+
+
+## Add Count Annotations
+
+```{r}
+#| label: exercise-1-labels-2
+#| eval: false
+#| purl: false
+#| code-line-numbers: "4,5|5"
+p +
+  geom_text(
+    aes(label = n,
+        hjust = n > .5*10^6),
+    family = "Asap SemiCondensed"
+  )
+```
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-1-labels-2
+#| echo: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+```
+
+
+## Add Count Annotations
+
+```{r}
+#| label: exercise-1-labels-3
+#| eval: false
+#| purl: false
+#| code-line-numbers: "4"
+p +
+  geom_text(
+    aes(label = paste0("  ", sprintf("%2.2f", n / 10^6), "M  "),
+        hjust = n > .5*10^6),
+    family = "Asap SemiCondensed"
+  )
+```
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-1-labels-3
+#| echo: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+```
+
+
+## Polish Axes
+
+```{r}
+#| label: exercise-1-labels-4
+#| eval: false
+#| purl: false
+#| code-line-numbers: "8,9,10,11|9|9,12,13,14|10"
+p +
+  geom_text(
+    aes(label = paste0("  ", sprintf("%2.2f", n / 10^6), "M  "),
+        hjust = n > .5*10^6),
+    family = "Asap SemiCondensed"
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0), name = "**Reported bike shares**, in millions", 
+    breaks = 0:4*10^6, labels = c("0", paste0(1:4, "M"))
+  ) +
+  theme(
+    axis.title.x = ggtext::element_markdown(hjust = 0, face = "italic")
+  )
+```
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-1-labels-4
+#| echo: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+```
+
+
+## Polish Axes Labels
+
+```{r}
+#| label: exercise-1-labels-5
+#| eval: false
+#| purl: false
+#| code-line-numbers: "12,13,14|13|17"
+p +
+  geom_text(
+    aes(label = paste0("  ", sprintf("%2.2f", n / 10^6), "M  "),
+        hjust = n > .5*10^6),
+    family = "Asap SemiCondensed"
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0), name = "**Reported bike shares**, in millions", 
+    breaks = 0:4*10^6, labels = c("0", paste0(1:4, "M"))
+  ) +
+  scale_y_discrete(
+    labels = stringr::str_to_sentence, name = NULL
+  ) +
+  theme(
+    axis.title.x = ggtext::element_markdown(hjust = 0, face = "italic"),
+    axis.text.y = element_text(color = "black", size = rel(1.2))
+  )
+```
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-1-labels-5
+#| echo: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+```
+
+
+## Add Titles
+
+```{r}
+#| label: exercise-1-labels-6
+#| eval: false
+#| purl: false
+#| code-line-numbers: "15,16,17,18,19|16,23,24|17,23,25|18,26"
+p +
+  geom_text(
+    aes(label = paste0("  ", sprintf("%2.2f", n / 10^6), "M  "),
+        hjust = n > .5*10^6),
+    family = "Asap SemiCondensed"
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0), name = "**Reported bike shares**, in millions", 
+    breaks = 0:4*10^6, labels = c("0", paste0(1:4, "M"))
+  ) +
+  scale_y_discrete(
+    labels = stringr::str_to_sentence, name = NULL
+  ) +
+  labs(
+    title = "Fair weather preferred—even in London",
+    subtitle = "Less than 10% of TfL bikes shares have been reported on rainy, cloudy, or snowy days in 2015.",
+    caption = "**Data:** Transport for London / freemeteo.com"
+  ) +
+  theme(
+    axis.title.x = ggtext::element_markdown(hjust = 0, face = "italic"),
+    axis.text.y = element_text(color = "black", size = rel(1.2)),
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(margin = margin(b = 20)),
+    plot.caption = ggtext::element_markdown(color = "grey40")
+  )
+```
+
+--------------------------------------------------------------------------------
+
+```{r}
+#| label: exercise-1-labels-6
+#| echo: false
+#| fig-width: 7.5
+#| fig-height: 4.7
+```
+
+
+## Full Code
+
+```{r}
+#| label: exercise-1-labels-full
+#| eval: false
+#| purl: false
+bikes |> 
+  filter(!is.na(weather_type), year == "2015") |> 
+  summarize(n = sum(count), .by = weather_type) |> 
+  ggplot(aes(x = n, y = forcats::fct_reorder(weather_type, n))) +
+  geom_col(color = "grey20", fill = "beige", width = .7) +
+  geom_text(
+    aes(label = paste0("  ", sprintf("%2.2f", n / 10^6), "M  "),
+        hjust = n > .5*10^6),
+    family = "Asap SemiCondensed"
+  ) +
+  scale_x_continuous(
+    breaks = 0:4*10^6,
+    labels = c("0", paste0(1:4, "M")),
+    expand = c(0, 0), 
+    name = "**Reported bike shares**, in millions"
+  ) +
+  scale_y_discrete(labels = stringr::str_to_sentence, name = NULL) +
+  coord_cartesian(clip = "off") +
+  labs(
+    title = "Fair weather preferred—even in London",
+    subtitle = "Less than 10% of TfL bikes shares have been reported on rainy, cloudy, or snowy days in 2015.",
+    caption = "**Data:** Transport for London / freemeteo.com"
+  ) +
+  theme_minimal(base_size = 14, base_family = "Asap SemiCondensed") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.title.x = ggtext::element_markdown(hjust = 0, face = "italic"),
+    axis.text.y = element_text(color = "black", size = rel(1.2)),
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(margin = margin(b = 20)),
+    plot.title.position = "plot",
+    plot.caption = ggtext::element_markdown(color = "grey40")
+  )
+```
+
+
+## Full Code with \`stat_summary()\`
+
+```{r}
+#| label: exercise-1-labels-full-stat
+#| eval: false
+#| purl: false
+#| code-line-numbers: "3|3,5,6,8|3,5,6,8,9,10,11,12,13,14,16"
+bikes |> 
+  filter(year == "2015") |> 
+  mutate(weather_type = forcats::fct_reorder(weather_type, count, .fun = sum)) |> 
+  ggplot(aes(x = count, y = weather_type)) +
+  stat_summary(
+    geom = "bar", fun = sum, 
+    color = "grey20", fill = "beige", width = .7
+  ) +
+  stat_summary(
+    geom = "text", fun = sum,
+    aes(
+      label = after_stat(paste0("  ", sprintf("%2.2f", x / 10^6), "M  ")),
+      hjust = after_stat(x) > .5*10^6
+    ),
+    family = "Asap SemiCondensed"
+  ) +
+  scale_x_continuous(
+    breaks = 0:4*10^6,
+    labels = c("0", paste0(1:4, "M")),
+    expand = c(0, 0), 
+    name = "**Reported bike shares**, in millions"
+  ) +
+  scale_y_discrete(labels = stringr::str_to_sentence, name = NULL) +
+  coord_cartesian(clip = "off") +
+  labs(
+    title = "Fair weather preferred—even in London",
+    subtitle = "Less than 10% of TfL bikes shares have been reported on rainy, cloudy, or snowy days in 2015.",
+    caption = "**Data:** Transport for London / freemeteo.com"
+  ) +
+  theme_minimal(base_size = 14, base_family = "Asap SemiCondensed") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.title.x = ggtext::element_markdown(hjust = 0, face = "italic"),
+    axis.text.y = element_text(color = "black", size = rel(1.2)),
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(margin = margin(b = 20)),
+    plot.title.position = "plot",
+    plot.caption = ggtext::element_markdown(color = "grey40")
+  )
+```
+
+
+
+# Solution Exercise 2 {background-color="#e6d9f2"}
+
+
+
+## Exercise 2
+
+::: question
+-   {ggtext} also comes with some new geom's. Explore those and other options on the package webpage: [wilkelab.rg/ggtext](https://wilkelab.org/ggtext/).
+-   {ggforce} comes with a variety of interesting geometries and utilities. Take a look at this wonderful toolbox: [ggforce.data-imaginist.com](https://ggforce.data-imaginist.com/). Share potentially helpful features with the group.
+:::
+
+
