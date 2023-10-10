@@ -34,20 +34,27 @@ execute:
   fig-height: 6
 ---
 
+# Data Visualization<br>{background-color="#000000"}
 
-# Data Visualization<br><br><span style='color:#e2e2e2;font-size:.6em;font-family:Asap;font-stretch:87.5%;font-weight:500;'>is any graphical representation<br>of information and data.</span>{background-color="#000000"}
-
-
-
-# Data Visualization<br><br><span style='color:#e2e2e2;font-size:.6em;font-family:Asap;font-stretch:87.5%;font-weight:500;'>helps to amplify cognition, gain insights, discover, explain, and make decisions.</span>{background-color="#000000"}
+<div span style='color:#e2e2e2;font-size:1.5em;font-family:Asap;font-stretch:87.5%;font-weight:500;font-style:italic;text-align:center;padding-top:.2em;line-height:1;'>is any graphical representation<br>of information and data.</div>
 
 
 
-# Data Visualization<br><br><span style='color:#e2e2e2;font-size:.6em;font-family:Asap;font-stretch:87.5%;font-weight:500;'>converts information into visual forms<br>as quantifiable features.</span>{background-color="#000000"}
+# Data Visualization<br>{background-color="#000000"}
+
+<div span style='color:#e2e2e2;font-size:1.5em;font-family:Asap;font-stretch:87.5%;font-weight:500;font-style:italic;text-align:center;padding-top:.2em;line-height:1;'>helps to amplify cognition, gain insights, discover, explain, and make decisions.</div>
 
 
 
-# Data Visualization<br><br><span style='color:#e2e2e2;font-size:.6em;Asap;font-stretch:87.5%;font-weight:500;'>is part art and part science.<br><span style='color:#000000;'>.</span></span>{background-color="#000000"}
+# Data Visualization<br>{background-color="#000000"}
+
+<div span style='color:#e2e2e2;font-size:1.5em;font-family:Asap;font-stretch:87.5%;font-weight:500;font-style:italic;text-align:center;padding-top:.2em;line-height:1;'>converts information into visual forms<br>as quantifiable features.</div>
+
+
+
+# Data Visualization<br>{background-color="#000000"}
+
+<div span style='color:#e2e2e2;font-size:1.5em;font-family:Asap;font-stretch:87.5%;font-weight:500;font-style:italic;text-align:center;padding-top:.2em;line-height:1;'>is part art and part science.<br><span style='color:#000000;'>.</span></div>
 
 
 
@@ -383,7 +390,7 @@ When Dmitry Kobak and Sergey Shpilkin [...] analysed the results, they found tha
 
 # <span style='line-height:1.3;'>Data Integrity<br></span> {background-color="#FFD166"}
 
-<div style='font-family:asap semicondensed;font-size:2em;font-weight:700;font-style:normal;color:#B48200;text-align:center;'>and Potential Pitfalls...</div>
+<div style='font-family:Asap;font-stretch:87.5%;font-size:2em;font-weight:700;font-style:normal;color:#B48200;text-align:center;'>and Potential Pitfalls...</div>
 
 
 
@@ -411,7 +418,7 @@ When Dmitry Kobak and Sergey Shpilkin [...] analysed the results, they found tha
 
 
 
-# <span style='font-family:asap semicondensed;font-size:.85em;line-height:1;font-weight:500;font-style:normal;'>Our data is <u style='font-weight:800;'>never</u> a perfect<br>reflection of the real world.</span>{background-color="#FFD166"}
+# <span style='font-family:Asap;font-stretch:87.5%;font-size:.85em;line-height:1;font-weight:500;font-style:normal;'>Our data is <u style='font-weight:800;'>never</u> a perfect<br>reflection of the real world.</span>{background-color="#FFD166"}
 
 
 
@@ -679,7 +686,7 @@ g +
 
 # <span style='line-height:1.3;'>Encodings<br></span> {background-color="#e6d9f2"}
 
-<div style='font-family:asap semicondensed;font-size:1.3em;font-weight:700;font-style:normal;color:#663399;text-align:center;'>Mapping data values to visual attributes.</div>
+<div style='font-family:Asap;font-stretch:87.5%;font-size:1.3em;font-weight:700;font-style:normal;color:#663399;text-align:center;'>Mapping data values to visual attributes.</div>
 
 
 
@@ -2584,7 +2591,7 @@ gbt +
 
 # <span style='line-height:1.3;'>Designing Charts</span> {background-color="#afe7ff"}
 
-<div style='font-family:asap semicondensed;font-size:1.5em;font-weight:700;font-style:normal;color:#007CB1;text-align:center;'>A Walk-Through Example</div>
+<div style='font-family:Asap;font-stretch:87.5%;font-size:1.5em;font-weight:700;font-style:normal;color:#007CB1;text-align:center;'>A Walk-Through Example</div>
 
 
 
