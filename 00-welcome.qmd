@@ -94,7 +94,11 @@ execute:
 
 
 
-##  {background-image="img/intro/hello-blank.png" background-position="center" background-size="65%"}
+##  {#hello-blank data-menu-title="Hello You" background-image="img/intro/hello-blank.png" background-position="center" background-size="62%"}
+
+
+
+##  {#hello-course data-menu-title="Hello Course" background-image="img/intro/hello-course.png" background-position="center" background-size="62%"}
 
 
 

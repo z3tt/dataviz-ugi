@@ -1,0 +1,3440 @@
+---
+title: "The Art & Science of<br>Data Visualization"
+subtitle: "<span style='font-size:1.5em;'>Engaging and Reproducible Graphics with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Concepts of the Layered Grammar of Graphics (Pt. 2)</span></span>"
+author: "<b style='color:#28a87d;'><a href='https://www.cedricscherer.com'>Dr. Cédric Scherer</a></b>&ensp;**//**&ensp;RTG-UGI Workshop&ensp;**//**&ensp;October 2023"
+format:
+  revealjs:
+    theme: slides.scss
+    logo: img/logo.png
+    footer: '**[Cédric Scherer](https://cedricscherer.com)** // Data Visualization & Information Design'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 4
+      buttons: true
+    pause: true
+    mainfont: Asap SemiCondensed
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 5
+  fig-height: 6
+---
+
+
+
+## The Components of a ggplot
+
+
+<br>
+<table style='width:100%;font-size:16pt;'>
+  <tr>
+    <th>Component</th>
+    <th>Function</th>
+    <th>Explanation</th>
+  </tr>
+  <tr>
+    <td><b style='color:#67676;'>Data</b></td>
+    <td><code>ggplot(data)</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>*The raw data that you want to visualize (initialising a plot).*</td>
+  </tr>
+  <tr>
+    <td><b style='color:#67676;'>Aesthetics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+    <td><code>aes()</code></td>
+    <td>*The mapping between variables and visual properties.*</td>
+  <tr>
+    <td><b style='color:#67676;'>Geometries</b></td>
+    <td><code>geom_*()</code></td>
+    <td>*The geometric shape of a layer representing the data.*</td>
+  </tr>
+  <tr>
+    <td><b style='color:#67676;'>Statistics</b></td>
+    <td><code>stat_*()</code></td>
+    <td>*The statistical transformation of a layer applied to the data.*</td>
+  </tr>
+  <tr>
+    <td><b style='color:#67676;'>Scales</b></td>
+    <td><code>scale_*()</code></td>
+    <td>*The representation of mapped aesthetic attributes.*</td>
+  </tr>
+  <tr>
+    <td><b style='color:#67676;'>Coordinate System</b></td>
+    <td><code>coord_*()</code></td>
+    <td>*The transformation to map data coordinates into the plot plane.*</td>
+  </tr>
+  <tr>
+    <td><b style='color:#67676;'>Facets</b></td>
+    <td><code>facet_*()</code></td>
+    <td>*The arrangement of the data into a set of small multiples.*</td>
+  </tr>
+  <tr>
+    <td><b style='color:#67676;'>Visual Themes</b></td>
+    <td><code>theme() | theme_*()</code></td>
+    <td>*The overall visual defaults of non-data elements of the graphic.*</td>
+  </tr>
+</table>
+
+
+
+## Preparation
+
+```{r}
+#| label: prep
+#| cache: false
+#| code-line-numbers: "1,2|4,5,6,7|9|11|13,14,15,16,17,18"
+library(ggplot2)
+library(dplyr)
+
+bikes <- readr::read_csv(
+  here::here("data", "london-bikes-custom.csv"),
+  col_types = "Dcfffilllddddc"
+)
+
+bikes$season <- forcats::fct_inorder(bikes$season)
+
+theme_set(theme_light(base_size = 14, base_family = "Asap SemiCondensed"))
+
+theme_update(
+  panel.grid.minor = element_blank(),
+  plot.title = element_text(face = "bold"),
+  legend.position = "top",
+  plot.title.position = "plot"
+)
+```
+
+
+
+# Facets
+
+
+
+## Facets
+
+<br>
+
+<b class='simple-highlight-grn' style='font-size:2.6rem;'>= split variables to multiple panels</b><br><br>
+
+::: fragment
+Facets are also known as:
+
+-   small multiples
+-   trellis graphs
+-   lattice plots
+-   conditioning
+:::
+
+
+
+------------------------------------------------------------------------
+
+::: {layout-ncol="2"}
+```{r}
+#| label: facet-types-wrap
+#| echo: false
+#| purl: false
+ggplot(bikes, aes(x = 1, y = 1)) +
+  geom_text(
+    aes(label = paste0("Subset for\n", stringr::str_to_title(season))),
+    size = 6, family = "Asap SemiCondensed", lineheight = .9
+  ) +
+  facet_wrap(~stringr::str_to_title(season)) +
+  ggtitle("facet_wrap()") +
+  theme_bw(base_size = 24, base_family = "Asap SemiCondensed") +
+  theme(
+    plot.title = element_text(hjust = .5, family = "Spline Sans Mono", face = "bold"),
+    strip.text = element_text(face = "bold", size = 22),
+    panel.grid = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    plot.background = element_rect(color = "#f8f8f8", fill = "#f8f8f8"),
+    plot.margin = margin(t = 3, r = 25)
+  )
+```
+
+::: fragment
+```{r}
+#| label: facet-types-grid
+#| echo: false
+#| purl: false
+data <- tibble::tibble(
+  x = 1, y = 1,
+  day_night = c("Day", "Day", "Night", "Night"),
+  year = factor(c("2015", "2016", "2015", "2016"), levels = levels(bikes$year)),
+  label = c("Subset for\nDay × 2015", "Subset for\nDay × 2016",
+            "Subset for\nNight × 2015", "Subset for\nNight × 2016")
+)
+
+ggplot(data, aes(x = 1, y = 1)) +
+ geom_text(
+    aes(label = label),
+    size = 6, family = "Asap SemiCondensed", lineheight = .9
+  ) +
+  facet_grid(day_night ~ year) +
+  ggtitle("facet_grid()") +
+  theme_bw(base_size = 24, base_family = "Asap SemiCondensed") +
+  theme(
+    plot.title = element_text(hjust = .5, family = "Spline Sans Mono", face = "bold"),
+    strip.text = element_text(face = "bold", size = 22),
+    panel.grid = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    plot.background = element_rect(color = "#f8f8f8", fill = "#f8f8f8"),
+    plot.margin = margin(t = 3, l = 25)
+  )
+```
+:::
+:::
+
+
+
+## Setup
+
+```{r}
+#| label: theme-size-facets
+#| include: false
+#| purl: false
+theme_set(theme_light(base_size = 12, base_family = "Asap SemiCondensed"))
+
+theme_update(
+  panel.grid.minor = element_blank(),
+  plot.title = element_text(face = "bold"),
+  legend.position = "top",
+  plot.title.position = "plot"
+)
+```
+
+```{r}
+#| label: facet-setup
+#| output-location: column
+#| code-line-numbers: "1,2,3,4,5,6,7,8,9,10|12"
+g <-
+  ggplot(
+    bikes,
+    aes(x = temp, y = count,
+        color = season)
+  ) +
+  geom_point(
+    alpha = .3,
+    guide = "none"
+  )
+
+g
+```
+
+
+
+## Wrapped Facets
+
+```{r}
+#| label: facet-wrap
+#| output-location: column
+#| code-line-numbers: "1,2,3,4|2,4|3"
+g +
+  facet_wrap(
+    vars(day_night)
+  )
+```
+
+
+
+## Wrapped Facets
+
+```{r}
+#| label: facet-wrap-circumflex
+#| output-location: column
+#| code-line-numbers: "3"
+g +
+  facet_wrap(
+    ~ day_night
+  )
+```
+
+
+
+## Facet Multiple Variables
+
+```{r}
+#| label: facet-wrap-multiple
+#| output-location: column
+#| code-line-numbers: "3"
+g +
+  facet_wrap(
+    ~ is_workday + day_night
+  )
+```
+
+
+
+## Facet Labellers
+
+```{r}
+#| label: facet-wrap-labels-1
+#| output-location: column
+#| code-line-numbers: "4"
+g +
+  facet_wrap(
+    ~ is_workday + day_night,
+    labeller = label_both
+  )
+```
+
+
+
+## Facet Labellers
+
+```{r}
+#| label: facet-wrap-labels-2
+#| output-location: column
+#| code-line-numbers: "4,7|5,6"
+g +
+  facet_wrap(
+    ~ is_workday + day_night,
+    labeller = labeller(
+      day_night = stringr::str_to_title,
+      is_workday = label_both
+    )
+  )
+```
+
+
+
+## Facet Labellers
+
+```{r}
+#| label: facet-wrap-labels-3
+#| output-location: column
+#| code-line-numbers: "1,2,3,4|10,11"
+codes <- c(
+  `TRUE` = "Workday",
+  `FALSE` = "Weekend or Holiday"
+)
+
+g +
+  facet_wrap(
+    ~ is_workday + day_night,
+    labeller = labeller(
+      day_night = stringr::str_to_title,
+      is_workday = codes
+    )
+  )
+```
+
+
+
+## Facet Labellers
+
+```{r}
+#| label: facet-wrap-labels-4
+#| output-location: column
+#| code-line-numbers: "10"
+codes <- c(
+  `TRUE` = "Workday",
+  `FALSE` = "Weekend or Holiday"
+)
+
+g +
+  facet_wrap(
+    ~ is_workday + day_night,
+    labeller = labeller(
+      .default = stringr::str_to_title,
+      is_workday = codes
+    )
+  )
+```
+
+
+
+## Facet Options: Cols + Rows
+
+```{r}
+#| label: facet-wrap-options-ncol
+#| output-location: column
+#| code-line-numbers: "4"
+g +
+  facet_wrap(
+    ~ day_night,
+    ncol = 1
+  )
+```
+
+
+
+## Facet Options: Free Scaling
+
+```{r}
+#| label: facet-wrap-options-scales
+#| output-location: column
+#| code-line-numbers: "5"
+g +
+  facet_wrap(
+    ~ day_night,
+    ncol = 1,
+    scales = "free"
+  )
+```
+
+
+
+## Facet Options: Free Scaling
+
+```{r}
+#| label: facet-wrap-options-freey
+#| output-location: column
+#| code-line-numbers: "5"
+g +
+  facet_wrap(
+    ~ day_night,
+    ncol = 1,
+    scales = "free_y"
+  )
+```
+
+
+
+## Facet Options: Switch Labels
+
+```{r}
+#| label: facet-wrap-options-switch
+#| output-location: column
+#| code-line-numbers: "5"
+g +
+  facet_wrap(
+    ~ day_night,
+    ncol = 1,
+    switch = "x"
+  )
+```
+
+
+
+## Gridded Facets
+
+```{r}
+#| label: facet-grid
+#| output-location: column
+#| code-line-numbers: "2,5|3,4"
+g +
+  facet_grid(
+    rows = vars(day_night),
+    cols = vars(is_weekend)
+  )
+```
+
+
+
+## Gridded Facets
+
+```{r}
+#| label: facet-grid-circumflex
+#| output-location: column
+#| code-line-numbers: "3"
+g +
+  facet_grid(
+    day_night ~ is_weekend
+  )
+```
+
+
+
+## Facet Multiple Variables
+
+```{r}
+#| label: facet-grid-multiple
+#| output-location: column
+#| code-line-numbers: "3"
+g +
+  facet_grid(
+    day_night ~ is_weekend + is_holiday
+  )
+```
+
+
+
+## Facet Labellers
+
+```{r}
+#| label: facet-grid-labeller
+#| output-location: column
+#| code-line-numbers: "1,2,3,4|6,7,8,9|14,15,16,17,18"
+codes_weekend <- c(
+  `TRUE` = "Weekend",
+  `FALSE` = "No weekend"
+)
+
+codes_holiday <- c(
+  `TRUE` = "Holiday",
+  `FALSE` = "No holiday"
+)
+
+g +
+  facet_grid(
+    day_night ~ is_weekend + is_holiday,
+    labeller = labeller(
+      day_night = stringr::str_to_title,
+      is_weekend = codes_weekend,
+      is_holiday = codes_holiday
+    )
+  )
+```
+
+
+
+## Facet Options: Free Scaling
+
+```{r}
+#| label: facet-grid-options-scales
+#| output-location: column
+#| code-line-numbers: "4"
+g +
+  facet_grid(
+    day_night ~ is_weekend,
+    scales = "free"
+  )
+```
+
+
+
+## Facet Options: Switch Labels
+
+```{r}
+#| label: facet-grid-options-switch
+#| output-location: column
+#| code-line-numbers: "5"
+g +
+  facet_grid(
+    day_night ~ is_weekend,
+    scales = "free",
+    switch = "y"
+  )
+```
+
+
+
+## Facet Options: Proportional Spacing
+
+```{r}
+#| label: facet-grid-options-space
+#| output-location: column
+#| code-line-numbers: "4,5|5"
+g +
+  facet_grid(
+    day_night ~ is_weekend,
+    scales = "free",
+    space = "free"
+  )
+```
+
+
+
+## Facet Options: Proportional Spacing
+
+```{r}
+#| label: facet-grid-options-space-y
+#| output-location: column
+#| code-line-numbers: "4,5"
+g +
+  facet_grid(
+    day_night ~ is_weekend,
+    scales = "free_y",
+    space = "free_y"
+  )
+```
+
+
+
+# Exercise
+
+
+
+## Your Turn!
+
+::: question
+**Create the following facet from the `diamonds` data**.
+
+```{r}
+#| label: exercise-facets
+#| fig-height: 2.4
+#| echo: false
+#| purl: false
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = .3, size = .5) +
+  geom_smooth(se = FALSE, color = "dodgerblue", linewidth = .4) +
+  facet_grid(cut ~ color, scales = "free_x", space = "free_x") +
+  theme_light(base_size = 6, base_family = "Asap SemiCondensed")
+```
+:::
+
+
+
+## Your Turn!
+
+::: question
+<b style="color:#1D785A;">Bonus: Create this bloody-dark version.</b>
+
+```{r}
+#| label: exercise-facets-bonus
+#| fig-height: 2.4
+#| echo: false
+#| purl: false
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = .3, size = .5, color = "white") +
+  geom_smooth(se = FALSE, color = "red", linewidth = .4) +
+  facet_grid(cut ~ color, scales = "free_x", space = "free_x") +
+  theme_dark(base_size = 6, base_family = "Asap SemiCondensed")
+```
+:::
+
+
+
+# Solution Exercise {background-color="#e6d9f2"}
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-start
+#| output-location: column
+#| code-line-numbers: "1,2,3,4|5,6,7|8,9,10,11"
+ggplot(
+    diamonds,
+    aes(x = carat, y = price)
+  ) +
+  geom_point(
+    alpha = .3
+  ) +
+  geom_smooth(
+    se = FALSE,
+    color = "dodgerblue"
+  )
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet
+#| output-location: column
+#| code-line-numbers: "12,13,14,15,16"
+ggplot(
+    diamonds,
+    aes(x = carat, y = price)
+  ) +
+  geom_point(
+    alpha = .3
+  ) +
+  geom_smooth(
+    se = FALSE,
+    color = "dodgerblue"
+  ) +
+  facet_grid(
+    cut ~ color,
+    space = "free_x",
+    scales = "free_x"
+  )
+```
+
+
+
+## Diamonds Facet (Dark Theme Bonus)
+
+```{r}
+#| label: diamonds-facet-dark
+#| output-location: column
+#| code-line-numbers: "18,19,20,21"
+ggplot(
+    diamonds,
+    aes(x = carat, y = price)
+  ) +
+  geom_point(
+    alpha = .3,
+    color = "white"
+  ) +
+  geom_smooth(
+    se = FALSE,
+    color = "dodgerblue"
+  ) +
+  facet_grid(
+    cut ~ color,
+    space = "free_x",
+    scales = "free_x"
+  ) +
+  theme_dark(
+    base_size = 14,
+    base_family = "Asap SemiCondensed"
+  )
+```
+
+
+
+# Scales
+
+```{r}
+#| label: theme-size-reset
+#| include: false
+#| purl: false
+theme_set(theme_light(base_size = 14, base_family = "Asap SemiCondensed"))
+
+theme_update(
+  panel.grid.minor = element_blank(),
+  plot.title = element_text(face = "bold"),
+  legend.position = "top",
+  plot.title.position = "plot"
+)
+```
+
+
+
+## Scales
+
+<br>
+
+<b class='simple-highlight-grn' style='font-size:2.6rem;'>= translate between variable ranges and property ranges</b><br><br>
+
+::: incremental
+-   feels-like temperature ⇄ x
+-   reported bike shares ⇄ y
+-   season ⇄ color
+-   year ⇄ shape
+-   ...
+:::
+
+
+
+## Scales
+
+The `scale_*()` components control the properties of all the<br><b class='simple-highlight-ylw'>aesthetic dimensions mapped to the data.</b>
+
+<br>Consequently, there are `scale_*()` functions for all aesthetics such as:
+
+-   **positions** via `scale_x_*()` and `scale_y_*()`
+
+-   **colors** via `scale_color_*()` and `scale_fill_*()`
+
+-   **sizes** via `scale_size_*()` and `scale_radius_*()`
+
+-   **shapes** via `scale_shape_*()` and `scale_linetype_*()`
+
+-   **transparency** via `scale_alpha_*()`
+
+
+
+## Scales
+
+The `scale_*()` components control the properties of all the<br><b class='simple-highlight-ylw'>aesthetic dimensions mapped to the data.</b>
+
+<br>The extensions (`*`) can be filled by e.g.:
+
+-   `continuous()`, `discrete()`, `reverse()`, `log10()`, `sqrt()`, `date()` for positions
+
+-   `continuous()`, `discrete()`, `manual()`, `gradient()`, `gradient2()` for colors
+
+-   `continuous()`, `discrete()`, `manual()`, `ordinal()`, `area()`, `date()` for sizes
+
+-   `continuous()`, `discrete()`, `manual()`, `ordinal()` for shapes
+
+-   `continuous()`, `discrete()`, `manual()`, `ordinal()`, `date()` for transparency
+
+
+
+------------------------------------------------------------------------
+
+![Illustration by [Allison Horst](https://github.com/allisonhorst/stats-illustrations)](img/concepts/continuous_discrete.png){fig-size="120%" fig-align="center" fig-alt="Allison Horsts illustration ofthe correct use of continuous versus discrete; however, in {ggplot2} these are interpeted in a different way: as quantitative and qualitative."}
+
+
+
+## Continuous vs. Discrete in {ggplot2}
+
+::: {layout-ncol="2"}
+## Continuous:<br>quantitative or numerical data
+
+-   height
+-   weight
+-   age
+-   counts
+
+## Discrete:<br>qualitative or categorical data
+
+-   species
+-   sex
+-   study sites
+-   age group
+:::
+
+
+
+## Continuous vs. Discrete in {ggplot2}
+
+::: {layout-ncol="2"}
+## Continuous:<br>quantitative or numerical data
+
+-   height (continuous)
+-   weight (continuous)
+-   age (continuous or discrete)
+-   counts (discrete)
+
+## Discrete:<br>qualitative or categorical data
+
+-   species (nominal)
+-   sex (nominal)
+-   study site (nominal or ordinal)
+-   age group (ordinal)
+:::
+
+
+
+## Aesthetics + Scales
+
+```{r}
+#| label: scales-default-invisible
+#| output-location: column
+#| code-line-numbers: "3,4"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point()
+```
+
+
+
+## Aesthetics + Scales
+
+```{r}
+#| label: scales-default
+#| output-location: column
+#| code-line-numbers: "3,4,7,8,9|7,8,9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_date() +
+  scale_y_continuous() +
+  scale_color_discrete()
+```
+
+
+
+## Scales
+
+```{r}
+#| label: scales-overwrite-1
+#| output-location: column
+#| code-line-numbers: "7"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_continuous() +
+  scale_y_continuous() +
+  scale_color_discrete()
+```
+
+
+
+## Scales
+
+```{r}
+#| label: scales-overwrite-2
+#| output-location: column
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_continuous() +
+  scale_y_log10() +
+  scale_color_discrete()
+```
+
+
+
+## Scales
+
+```{r}
+#| label: scales-overwrite-3
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_continuous() +
+  scale_y_log10() +
+  scale_color_viridis_d()
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-trans
+#| output-location: column
+#| code-line-numbers: "8,9,10|9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +  
+  geom_point() +
+  scale_y_continuous(
+    trans = "log10"
+  )
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-name
+#| output-location: column
+#| code-line-numbers: "7,8,9|8"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares"
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-breaks-seq
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    breaks = seq(0, 60000, by = 15000)
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-breaks-short
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    breaks = 0:4*15000
+  )
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-breaks-irregular
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    breaks = c(0, 2:12*2500, 40000, 50000)
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-labels
+#| output-location: column
+#| code-line-numbers: "8,10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares in thousands",
+    breaks = 0:4*15000,
+    labels = 0:4*15
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-labels-paste
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares in thousands",
+    breaks = 0:4*15000,
+    labels = paste(0:4*15000, "bikes")
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-limits
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    breaks = 0:4*15000,
+    limits = c(NA, 60000)
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-expand.no
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    breaks = 0:4*15000,
+    expand = c(0, 0)
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-expand
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    breaks = -1:5*15000,
+    expand = c(.5, .5) ## c(add, mult)
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-expand-add-explicit
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    breaks = -1:5*15000,
+    expand = expansion(add = 2000)
+  ) 
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-continuous-guide-none
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Reported bike shares",
+    guide = "none"
+  )
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-duplicated
+#| output-location: column
+#| code-line-numbers: "3|7,8,9,10|9"
+ggplot(
+    bikes,
+    aes(x = date, y = temp,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Temperature (°C)",
+    sec.axis = dup_axis()
+  )
+```
+
+
+
+## \`scale_x\|y_continuous\`
+
+```{r}
+#| label: scales-xy-secondary
+#| output-location: column
+#| code-line-numbers: "9|10|11"
+ggplot(
+    bikes,
+    aes(x = date, y = temp,
+        color = season)
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    name = "Temperature (°C)",
+    sec.axis = sec_axis(
+      trans = ~ (. * 9/5) + 32,
+      name = "Temperature (°F)"
+    )
+  )
+```
+
+
+
+## \`scale_x\|y_date\`
+
+```{r}
+#| label: scales-xy-date-breaks-months
+#| output-location: column
+#| code-line-numbers: "7,10|7,8,9,10|9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_date(
+    name = NULL,
+    date_breaks = "4 months"
+  )
+```
+
+
+
+## \`scale_x\|y_date\`
+
+```{r}
+#| label: scales-xy-date-breaks-weeks
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_date(
+    name = NULL,
+    date_breaks = "20 weeks"
+  )
+```
+
+
+
+## \`scale_x\|y_date\` with \`strftime()\`
+
+```{r}
+#| label: scales-xy-date-labels
+#| output-location: column
+#| code-line-numbers: "9,10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_date(
+    name = NULL,
+    date_breaks = "6 months",
+    date_labels = "%Y/%m/%d"
+  )
+```
+
+
+
+## \`scale_x\|y_date\` with \`strftime()\`
+
+```{r}
+#| label: scales-xy-date-labels-special
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_x_date(
+    name = NULL,
+    date_breaks = "6 months",
+    date_labels = "%b '%y"
+  )
+```
+
+
+
+## \`scale_x\|y_discrete\`
+
+```{r}
+#| label: scales-xy-discrete
+#| output-location: column
+#| code-line-numbers: "3,6,9|6,7,8,9|7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  scale_x_discrete(
+    name = "Period",
+    labels = c("Dec-Feb", "Mar-May", "Jun-Aug", "Sep-Nov")
+  )
+```
+
+
+
+## \`scale_x\|y_discrete\`
+
+```{r}
+#| label: scales-xy-discrete-expand
+#| output-location: column
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  scale_x_discrete(
+    name = "Season",
+    expand = c(.5, 0) ## add, mult
+  )
+```
+
+
+
+## Discrete or Continuous?
+
+```{r}
+#| label: scales-xy-fake-discrete-no-group
+#| output-location: column
+#| code-line-numbers: "3"
+ggplot(
+    bikes,
+    aes(x = as.numeric(season), y = count)
+  ) +
+  geom_boxplot()
+```
+
+
+
+## Discrete or Continuous?
+
+```{r}
+#| label: scales-xy-fake-discrete-visible
+#| output-location: column
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = as.numeric(season), y = count)
+  ) +
+  geom_boxplot(
+    aes(group = season)
+  )
+```
+
+
+
+## Discrete or Continuous?
+
+```{r}
+#| label: scales-xy-fake-discrete
+#| output-location: column
+#| code-line-numbers: "9,10,11,12,13|11|12"
+ggplot(
+    bikes,
+    aes(x = as.numeric(season),
+        y = count)
+  ) +
+  geom_boxplot(
+    aes(group = season)
+  ) +
+  scale_x_continuous(
+    name = "Season",
+    breaks = 1:4,
+    labels = levels(bikes$season)
+  )
+```
+
+
+
+## Discrete or Continuous?
+
+```{r}
+#| label: scales-xy-fake-discrete-shift
+#| output-location: column
+#| code-line-numbers: "3,4"
+ggplot(
+    bikes,
+    aes(x = as.numeric(season) + 
+            as.numeric(season) / 8,
+        y = count)
+  ) +
+  geom_boxplot(
+    aes(group = season)
+  ) +
+  scale_x_continuous(
+    name = "Season",
+    breaks = 1:4,
+    labels = levels(bikes$season)
+  )
+```
+
+
+
+## Discrete or Continuous?
+
+```{r}
+#| label: scales-xy-fake-discrete-box-jitter
+#| output-location: column
+#| code-line-numbers: "3,4|7,11|6,7,8,9|10,11,12,13,14"
+ggplot(
+    bikes,
+    aes(y = count,
+        group = season)
+  ) +
+  geom_boxplot(
+    aes(x = as.numeric(season) + .15),
+    width = .3
+  ) +
+  geom_jitter(
+    aes(x = as.numeric(season) - .15),
+    width = .1,
+    alpha = .3
+  ) +
+  scale_x_continuous(
+    name = "Season",
+    breaks = 1:4,
+    labels = levels(bikes$season)
+  )
+```
+
+
+
+## \`scale_color\|fill_discrete\`
+
+```{r}
+#| label: scales-color-discrete-type-vector
+#| output-location: column
+#| code-line-numbers: "7,10|7,8,9,10|8,9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_color_discrete(
+    name = "Season:",
+    type = c("#69b0d4", "#00CB79", "#F7B01B", "#a78f5f")
+  )
+```
+
+
+
+## Inspect Assigned Colors
+
+```{r}
+#| label: scales-color-discrete-type-inspect
+#| output-location: column
+#| code-line-numbers: "1|12|14"
+g <- ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_color_discrete(
+    name = "Season:",
+    type = c("#3ca7d9", "#1ec99b", "#F7B01B", "#bb7e8f")
+  )
+
+gb <- ggplot_build(g)
+
+gb$data[[1]][c(1:5, 200:205, 400:405), 1:5]
+```
+
+
+
+## \`scale_color\|fill_discrete\`
+
+```{r}
+#| label: scales-color-discrete-type-vector-named
+#| output-location: column
+#| code-line-numbers: "1,2,3,4,5,6|1,16"
+my_colors <- c(
+  `winter` = "#3c89d9",
+  `spring` = "#1ec99b",
+  `summer` = "#F7B01B",
+  `autumn` = "#a26e7c"
+)
+
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_color_discrete(
+    name = "Season:",
+    type = my_colors
+  )
+```
+
+
+
+## \`scale_color\|fill_discrete\`
+
+```{r}
+#| label: scales-color-discrete-type-vector-named-shuffled
+#| output-location: column
+#| code-line-numbers: "2,5|1,16"
+my_colors_alphabetical <- c(
+  `autumn` = "#a26e7c",
+  `spring` = "#1ec99b",
+  `summer` = "#F7B01B",
+  `winter` = "#3c89d9"
+)
+
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_color_discrete(
+    name = "Season:",
+    type = my_colors_alphabetical
+  )
+```
+
+
+
+## \`scale_color\|fill_discrete\`
+
+```{r}
+#| label: scales-color-discrete-type-palette
+#| output-location: column
+#| code-line-numbers: "1|11,12,13"
+library(RColorBrewer)
+
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = season)
+  ) +
+  geom_point() +
+  scale_color_discrete(
+    name = "Season:",
+    type = brewer.pal(
+      n = 4, name = "Dark2"
+    )
+  )
+```
+
+
+
+## \`scale_color\|fill_manual\`
+
+```{r}
+#| label: scales-color-manual-na
+#| output-location: column
+#| code-line-numbers: "4,9,10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = weather_type)
+  ) +
+  geom_point() +
+  scale_color_manual(
+    name = NULL,
+    values = brewer.pal(n = 6, name = "Pastel1"),
+    na.value = "black"
+  )
+```
+
+
+
+## \`scale_color\|fill_carto_d\`
+
+```{r}
+#| label: scales-color-discrete-carto
+#| output-location: column
+#| code-line-numbers: "7,8,9,10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = weather_type)
+  ) +
+  geom_point() +
+  rcartocolor::scale_color_carto_d(
+    name = NULL,
+    palette = "Pastel",
+    na.value = "black"
+  )
+```
+
+
+
+## \`scale_color\|fill_continuous\`
+
+```{r}
+#| label: scales-color-continuous
+#| output-location: column
+#| code-line-numbers: "4,7"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_continuous()
+```
+
+## \`scale_color\|fill_continuous\`
+
+```{r}
+#| label: scales-color-continuous-viridis
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_continuous(
+    name = "Temperature:",
+    type = "viridis"
+  )
+```
+
+## \`scale_color\|fill_gradient\`
+
+```{r}
+#| label: scales-color-gradient
+#| output-location: column
+#| code-line-numbers: "7,11|9,10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_gradient(
+    name = "Temperature:",
+    low = "grey90",
+    high = "#8b0023"
+  )
+```
+
+## \`scale_color\|fill_gradient2\`
+
+```{r}
+#| label: scales-color-gradient2
+#| output-location: column
+#| code-line-numbers: "7,12|9,10,11"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_gradient2(
+    name = "Temperature:",
+    low = "#28a87d",
+    mid = "grey90",
+    high = "#8b0023"
+  )
+```
+
+## \`scale_color\|fill_gradient2\`
+
+```{r}
+#| label: scales-color-gradient2-midpoint
+#| output-location: column
+#| code-line-numbers: "12"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_gradient2(
+    name = "Temperature:",
+    low = "#28a87d",
+    mid = "grey90",
+    high = "#8b0023",
+    midpoint = mean(bikes$temp)
+  )
+```
+
+## \`scale_color\|fill_gradientn\`
+
+```{r}
+#| label: scales-color-gradientn
+#| output-location: column
+#| code-line-numbers: "7,10|9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_gradientn(
+    name = "Temperature:",
+    colors = c("red", "orange", "green", "blue")
+  )
+```
+
+## \`scale_color\|fill_viridis_c\`
+
+```{r}
+#| label: scales-color-viridis-c
+#| output-location: column
+#| code-line-numbers: "7,10|9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    name = "Temperature:",
+    option = "magma"
+  )
+```
+
+## \`scale_color\|fill_viridis_c\`
+
+```{r}
+#| label: scales-color-viridis-c-direction
+#| output-location: column
+#| code-line-numbers: "10"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    name = "Temperature:",
+    option = "magma",
+    direction = -1
+  )
+```
+
+## \`scale_color\|fill_viridis_c\`
+
+```{r}
+#| label: scales-color-viridis-c-range
+#| output-location: column
+#| code-line-numbers: "11,12"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_viridis_c(
+    name = "Temperature:",
+    option = "magma",
+    direction = -1,
+    begin = .2,
+    end = .95
+  )
+```
+
+## \`scale_color\|fill_distiller\`
+
+```{r}
+#| label: scales-color-distiller
+#| output-location: column
+#| code-line-numbers: "7,10|9"
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scale_color_distiller(
+    name = "Temperature:",
+    palette = "RdYlBu"
+  )
+```
+
+
+
+## {RColorBrewer}
+
+```{r}
+#| label: color-palettes-brewer-show-all
+#| fig-width: 12
+RColorBrewer::display.brewer.all()
+```
+
+
+
+## {RColorBrewer}
+
+```{r}
+#| label: color-palettes-brewer-show-cvd
+#| fig-width: 12
+RColorBrewer::display.brewer.all(colorblindFriendly = TRUE)
+```
+
+
+
+## \`scale_color\|fill_carto_c\`
+
+```{r}
+#| label: scales-color-carto-c
+#| output-location: column
+#| code-line-numbers: "9,13|11,12"
+# install.packages("rcartocolor")
+
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  rcartocolor::scale_color_carto_c(
+    name = "Temperature:",
+    palette = "ag_GrnYl",
+    direction = -1
+  )
+```
+
+
+
+## {rcartocolor}
+
+```{r}
+#| label: color-palettes-carto-show-all
+#| fig-width: 12
+rcartocolor::display_carto_all()
+```
+
+
+
+## {rcartocolor}
+
+```{r}
+#| label: color-palettes-carto-show-cvd
+#| fig-width: 12
+rcartocolor::display_carto_all(colorblind_friendly = TRUE)
+```
+
+
+
+## \`scale_color\|fill_scico\`
+
+```{r}
+#| label: color-palettes-scico
+#| output-location: column
+#| code-line-numbers: "9,13|11"
+# install.packages("scico")
+
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scico::scale_color_scico(
+    name = "Temperature:",
+    palette = "batlow"
+  )
+```
+
+
+
+## \`scale_color\|fill_scico\`
+
+```{r}
+#| label: color-palettes-scico-direction
+#| output-location: column
+#| code-line-numbers: "11,12"
+# install.packages("scico")
+
+ggplot(
+    bikes,
+    aes(x = date, y = count,
+        color = temp)
+  ) +
+  geom_point() +
+  scico::scale_color_scico(
+    name = "Temperature:",
+    palette = "managua",
+    direction = -1
+  )
+```
+
+
+
+## {scico}
+
+```{r}
+#| label: color-palettes-scico-show-all
+#| fig-width: 12
+scico::scico_palette_show()
+```
+
+
+
+# Exercise
+
+
+
+## Your Turn!
+
+::: question
+**Modify our diamonds facet like this:**
+
+```{r}
+#| label: exercise-scales
+#| fig-height: 2.4
+#| echo: false
+#| purl: false
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = .3, size = .5) +
+  geom_smooth(aes(color = cut), se = FALSE, linewidth = .4) +
+  facet_grid(cut ~ color, scales = "free_x", space = "free_x") +
+  scale_x_continuous(limits = c(0, NA)) +
+  scale_y_continuous(breaks = 0:5*5000, labels = scales::dollar_format()) +
+  rcartocolor::scale_color_carto_d(palette = "Pastel", guide = "none") +
+  theme_light(base_size = 6, base_family = "Asap SemiCondensed")
+```
+:::
+
+
+
+# Solution Exercise {background-color="#e6d9f2"}
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-store
+#| output-location: column
+#| code-line-numbers: "1|10|19"
+facet <-
+  ggplot(
+    diamonds,
+    aes(x = carat, y = price)
+  ) +
+  geom_point(
+    alpha = .3
+  ) +
+  geom_smooth(
+    aes(color = cut),
+    se = FALSE
+  ) +
+  facet_grid(
+    cut ~ clarity,
+    space = "free_x",
+    scales = "free_x"
+  )
+
+facet
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-scales-x
+#| output-location: column
+#| code-line-numbers: "2,3,4"
+facet +
+  scale_x_continuous(
+    limits = c(0, NA)
+  )
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-scales-y
+#| output-location: column
+#| code-line-numbers: "5,6,7,8"
+facet +
+  scale_x_continuous(
+    limits = c(0, NA)
+  ) +
+  scale_y_continuous(
+    breaks = 0:5*5000,
+    labels = c("$0", "$5,000", "$10,000", "$15,000", "$20,000", "$25,000")
+  )
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-scales-y-paste-format
+#| output-location: column
+#| code-line-numbers: "7,8,9"
+facet +
+  scale_x_continuous(
+    limits = c(0, NA)
+  ) +
+  scale_y_continuous(
+    breaks = 0:5*5000,
+    labels = paste0(
+      "$", format(0:5*5000, big.mark = ",", trim = TRUE)
+    )
+  )
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-scales-y-function
+#| output-location: column
+#| code-line-numbers: "7,8,9"
+facet +
+  scale_x_continuous(
+    limits = c(0, NA)
+  ) +
+  scale_y_continuous(
+    breaks = 0:5*5000,
+    labels = function(y) paste0(
+      "$", format(y, big.mark = ",", trim = TRUE)
+    )
+  )
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-scales-y-dollar-format
+#| output-location: column
+#| code-line-numbers: "7"
+facet +
+  scale_x_continuous(
+    limits = c(0, NA)
+  ) +
+  scale_y_continuous(
+    breaks = 0:5*5000,
+    labels = scales::dollar_format()
+  )
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-scales-color
+#| output-location: column
+#| code-line-numbers: "9,10,11,12"
+facet +
+  scale_x_continuous(
+    limits = c(0, NA)
+  ) +
+  scale_y_continuous(
+    breaks = 0:5*5000,
+    labels = scales::dollar_format()
+  ) +
+  rcartocolor::scale_color_carto_d(
+    palette = "Pastel", 
+    guide = "none"
+  )
+```
+
+
+
+## Diamonds Facet
+
+```{r}
+#| label: diamonds-facet-scales-no-legend
+#| output-location: column
+#| code-line-numbers: "12,13,14"
+facet +
+  scale_x_continuous(
+    limits = c(0, NA)
+  ) +
+  scale_y_continuous(
+    breaks = 0:5*5000,
+    labels = scales::dollar_format()
+  ) +
+  rcartocolor::scale_color_carto_d(
+    palette = "Pastel"
+  ) +
+  theme(
+    legend.position = "none"
+  )
+```
+
+
+
+# Customize Palettes
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-default
+#| output-location: column
+#| code-line-numbers: "5,6,7"
+ggplot(bikes, 
+       aes(x = day_night, y = count, 
+           fill = season)) +
+  geom_boxplot() +
+  rcartocolor::scale_fill_carto_d(
+    palette = "Vivid" 
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-manual
+#| output-location: column
+#| code-line-numbers: "5,9|6,7,8"
+ggplot(bikes, 
+       aes(x = day_night, y = count, 
+           fill = season)) +
+  geom_boxplot() +
+  scale_fill_manual(
+    values = rcartocolor::carto_pal(
+      name = "Vivid", n = 4
+    )
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-custom
+#| output-location: column
+#| code-line-numbers: "6,7,8|7|8"
+ggplot(bikes, 
+       aes(x = day_night, y = count, 
+           fill = season)) +
+  geom_boxplot() +
+  scale_fill_manual(
+    values = rcartocolor::carto_pal(
+      name = "Vivid", n = 5
+    )[1:4]
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-custom-2
+#| output-location: column
+#| code-line-numbers: "6,7,8|7|8"
+ggplot(bikes, 
+       aes(x = day_night, y = count, 
+           fill = season)) +
+  geom_boxplot() +
+  scale_fill_manual(
+    values = rcartocolor::carto_pal(
+      name = "Vivid", n = 7
+    )[c(2, 6, 1, 3)]
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-custom-assign
+#| output-location: column
+#| code-line-numbers: "1,2,3,4|11"
+carto_custom <- 
+  rcartocolor::carto_pal(
+    name = "Vivid", n = 7
+  )[c(2, 6, 1, 3)]
+
+ggplot(bikes, 
+       aes(x = day_night, y = count, 
+           fill = season)) +
+  geom_boxplot() +
+  scale_fill_manual(
+    values = carto_custom
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-light
+#| output-location: column
+#| code-line-numbers: "1|3,4,5|12"
+library(prismatic)
+
+carto_light <- clr_lighten(
+  carto_custom, .7
+)
+
+ggplot(bikes, 
+       aes(x = day_night, y = count, 
+           fill = season)) +
+  geom_boxplot() +
+  scale_fill_manual(
+    values = carto_light
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-afterscale
+#| output-location: column
+#| code-line-numbers: "2,4|10|4,5,6,7"
+ggplot(bikes, 
+       aes(x = day_night, y = count)) +
+  geom_boxplot(
+    aes(fill = season,
+        fill = after_scale(
+          clr_lighten(fill, .7)
+    ))
+  ) +
+  scale_fill_manual(
+    values = carto_custom
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-afterscale-stage
+#| output-location: column
+#| code-line-numbers: "4,5,6,7"
+ggplot(bikes, 
+       aes(x = day_night, y = count)) +
+  geom_boxplot(
+    aes(fill = stage(
+      season, 
+      after_scale = clr_lighten(fill, .7)
+    ))
+  ) +
+  scale_fill_manual(
+    values = carto_custom
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-afterscale-2
+#| output-location: column
+#| code-line-numbers: "4|4,5,6,7"
+ggplot(bikes, 
+       aes(x = day_night, y = count)) +
+  geom_boxplot(
+    aes(color = season,
+        fill = after_scale(
+          clr_lighten(color, .7)
+    ))
+  ) +
+  scale_color_manual(
+    values = carto_custom
+  )
+```
+
+
+
+## Customize Existing Palettes
+
+```{r}
+#| label: color-palettes-carto-afterscale-combined
+#| output-location: column
+#| code-line-numbers: "3,10|4,5,6,7|4,5,6,7,11,12,13,14|4,5,6,7,11,12,13,14,21,22,23|3,8|10,15,16,17,18"
+ggplot(bikes,
+       aes(x = day_night, y = count)) +
+  geom_boxplot(
+    aes(color = season,
+        fill = after_scale(
+          clr_lighten(color, .7)
+    )),
+    outlier.shape = NA
+  ) +
+  geom_jitter(
+    aes(color = season,
+        color = after_scale(
+          clr_darken(color, .4)
+    )), 
+    position = position_jitterdodge(
+      dodge.width = .75, 
+      jitter.width = .2
+    ),
+    alpha = .3, size = .6
+  ) +
+  scale_color_manual(
+    values = carto_custom
+  ) +
+  theme(legend.position = "top")
+```
+
+
+
+# Coordinate Systems
+
+
+
+## Coordinate Systems
+
+<br>
+
+<b class='simple-highlight-grn' style='font-size:2.6rem;'>= interpret the position aesthetics</b><br><br>
+
+::: incremental
+-   **linear coordinate systems:** preserve the geometrical shapes
+    -   `coord_cartesian()`
+    -   `coord_fixed()`
+    -   `coord_flip()`
+-   **non-linear coordinate systems:** likely change the geometrical shapes
+    -   `coord_polar()`
+    -   `coord_map()` and `coord_sf()`
+    -   `coord_trans()`
+:::
+
+
+
+## Cartesian Coordinate System
+
+```{r}
+#| label: coord-cartesian
+#| output-location: column
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian()
+```
+
+
+
+## Cartesian Coordinate System
+
+```{r}
+#| label: coord-cartesian-zoom
+#| output-location: column
+#| code-line-numbers: "6,7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000)
+  )
+```
+
+
+
+## Changing Limits
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-ylim
+#| fig-height: 3.5
+#| code-line-numbers: "6,7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000)
+  )
+```
+
+```{r}
+#| label: scale-y-limits
+#| fig-height: 3.5
+#| code-line-numbers: "6,7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  scale_y_continuous(
+    limits = c(NA, 15000)
+  )
+```
+:::
+
+
+
+## Clipping
+
+```{r}
+#| label: coord-clip
+#| output-location: column
+#| code-line-numbers: "8|10,11,12"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000),
+    clip = "off"
+  ) +
+  theme(
+    plot.margin = margin(t = 150)
+  )
+```
+
+
+
+## Clipping
+
+```{r}
+#| label: coord-clip-text
+#| output-location: column
+#| code-line-numbers: "2,3|6,7,8,9,10|12"
+ggplot(
+    filter(bikes, is_holiday == TRUE),
+    aes(x = temp, y = count)
+  ) +
+  geom_point() +
+  geom_text(
+    aes(label = season),
+    nudge_x = .3,
+    hjust = 0
+  ) +
+  coord_cartesian(
+    clip = "off"
+  )
+```
+
+
+
+## ... or better use {ggrepel}
+
+```{r}
+#| label: coord-clip-text-repel
+#| output-location: column
+#| code-line-numbers: "6"
+ggplot(
+    filter(bikes, is_holiday == TRUE),
+    aes(x = temp, y = count)
+  ) +
+  geom_point() +
+  ggrepel::geom_text_repel(
+    aes(label = season),
+    nudge_x = .3,
+    hjust = 0
+  ) +
+  coord_cartesian(
+    clip = "off"
+  )
+```
+
+
+
+## Remove All Padding
+
+```{r}
+#| label: coord-expand-off-clip
+#| output-location: column
+#| code-line-numbers: "7|8"
+ggplot(
+    bikes,
+    aes(x = temp, y = count)
+  ) +
+  geom_point() +
+  coord_cartesian(
+    expand = FALSE,
+    clip = "off"
+  )
+```
+
+
+
+## Fixed Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-fixed
+#| fig-height: 4.2
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = temp, y = temp_feel)
+  ) +
+  geom_point() +
+  coord_fixed()
+```
+
+::: fragment
+```{r}
+#| label: coord-fixed-custom
+#| fig-height: 4.2
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = temp, y = temp_feel)
+  ) +
+  geom_point() +
+  coord_fixed(ratio = 4)
+```
+:::
+:::
+
+
+
+## Flipped Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-comp-flip
+#| fig-height: 4.1
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_cartesian()
+```
+
+```{r}
+#| label: coord-flip
+#| fig-height: 4.1
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_flip()
+```
+:::
+
+
+
+## Flipped Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-switch-x-y
+#| fig-height: 4.1
+#| code-line-numbers: "3,6"
+ggplot(
+    bikes,
+    aes(y = weather_type)
+  ) +
+  geom_bar() +
+  coord_cartesian()
+```
+
+```{r}
+#| label: coord-flip-again
+#| fig-height: 4.1
+#| code-line-numbers: "3,6"
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_flip()
+```
+:::
+
+
+
+## Reminder: Sort Your Bars!
+
+```{r}
+#| label: forcats-sort-infreq
+#| output-location: column
+#| code-line-numbers: "1|5"
+library(forcats)
+
+ggplot(
+    filter(bikes, !is.na(weather_type)),
+    aes(y = fct_infreq(weather_type))
+  ) +
+  geom_bar()
+```
+
+
+
+## Reminder: Sort Your Bars!
+
+```{r}
+#| label: forcats-sort-infreq-rev
+#| output-location: column
+#| code-line-numbers: "4,5,6"
+ggplot(
+    filter(bikes, !is.na(weather_type)),
+    aes(
+      y = fct_rev(
+        fct_infreq(weather_type)
+      )
+    )
+  ) +
+  geom_bar()
+```
+
+
+
+## Circular Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-comp-polar
+#| fig-height: 3.9
+#| code-line-numbers: "7"
+ggplot(
+    bikes,
+    aes(x = is_workday,
+        fill = is_workday)
+  ) +
+  geom_bar() +
+  coord_cartesian()
+```
+
+::: fragment
+```{r}
+#| label: coord-polar
+#| fig-height: 3.9
+#| code-line-numbers: "7"
+ggplot(
+    bikes,
+    aes(x = is_workday,
+        fill = is_workday)
+  ) +
+  geom_bar() +
+  coord_polar()
+```
+:::
+:::
+
+
+
+## Circular Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-comp-polar-no-padding
+#| fig-height: 3.9
+#| code-line-numbers: "6,7"
+ggplot(
+    bikes,
+    aes(x = is_workday,
+        fill = is_workday)
+  ) +
+  geom_bar(width = 1) +
+  coord_cartesian()
+```
+
+::: fragment
+```{r}
+#| label: coord-polar-coxcomb
+#| fig-height: 3.9
+#| code-line-numbers: "6,7"
+ggplot(
+    bikes,
+    aes(x = is_workday,
+        fill = is_workday)
+  ) +
+  geom_bar(width = 1) +
+  coord_polar()
+```
+:::
+:::
+
+
+
+## Circular Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-polar-theta-x
+#| fig-height: 3.9
+#| code-line-numbers: "7"
+ggplot(
+    bikes,
+    aes(x = is_workday,
+        fill = is_workday)
+  ) +
+  geom_bar() +
+  coord_polar(theta = "x")
+```
+
+```{r}
+#| label: coord-polar-theta-y
+#| fig-height: 3.9
+#| code-line-numbers: "7"
+ggplot(
+    bikes,
+    aes(x = is_workday,
+        fill = is_workday)
+  ) +
+  geom_bar() +
+  coord_polar(theta = "y")
+```
+:::
+
+
+## Circular Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-comp-polar-stacked
+#| fig-height: 4.1
+#| code-line-numbers: "5"
+ggplot(
+    bikes,
+    aes(x = 1, fill = is_workday)
+  ) +
+  geom_bar() +
+  coord_cartesian() 
+```
+
+::: fragment
+```{r}
+#| label: coord-polar-pie
+#| fig-height: 4.1
+#| code-line-numbers: "5"
+ggplot(
+    bikes,
+    aes(x = 1, fill = is_workday)
+  ) +
+  geom_bar() +
+  coord_polar(theta = "y") 
+```
+:::
+:::
+
+
+
+## Transform a Coordinate System
+
+```{r}
+#| label: coord-trans-log
+#| output-location: column
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = temp, y = count)
+  ) +
+  geom_point() +
+  coord_trans(y = "log10")
+```
+
+
+
+## Transform a Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: trans-log-via-coord
+#| fig-height: 3.6
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = temp, y = count,
+        group = day_night)
+  ) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  coord_trans(y = "log10")
+```
+
+::: fragment
+```{r}
+#| label: trans-log-via-scale
+#| fig-height: 3.6
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = temp, y = count,
+        group = day_night)
+  ) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_y_log10()
+```
+:::
+:::
+
+
+
+## Spatial Coordinate (Reference) Systems
+
+```{r}
+#| label: coord-sf
+#| output-location: column
+#| code-line-numbers: "1,2,3|5,6,11|7|8,9,10"
+countries <- rnaturalearth::ne_countries(
+  returnclass = "sf"
+)
+
+ggplot() +
+  geom_sf(
+    data = countries,
+    color = "#79dfbd",
+    fill = "#28a87d",
+    linewidth = .3
+  )
+```
+
+
+
+## Spatial Coordinate (Reference) Systems
+
+```{r}
+#| label: coord-sf-mollweide
+#| output-location: column
+#| code-line-numbers: "8,9,10"
+ggplot() +
+  geom_sf(
+    data = countries,
+    color = "#79dfbd",
+    fill = "#28a87d",
+    linewidth = .3
+  ) +
+  coord_sf(
+    crs = "+proj=moll"
+  )
+```
+
+
+
+## Spatial Coordinate (Reference) Systems
+
+```{r}
+#| label: coord-sf-bonne
+#| output-location: column
+#| code-line-numbers: "9"
+ggplot() +
+  geom_sf(
+    data = countries,
+    color = "#79dfbd",
+    fill = "#28a87d",
+    linewidth = .3
+  ) +
+  coord_sf(
+    crs = "+proj=bonne +lat_1=10"
+  )
+```
+
+
+
+## Generate Own Simple Features Objects
+
+```{r}
+#| label: locator-bln
+#| code-line-numbers: "1,2,3,4|2|3"
+sf_bln <- sf::st_sfc(
+  sf::st_point(c(13.4050, 52.5200)), 
+  crs = sf::st_crs(countries)
+)
+```
+
+
+
+## Generate Own Simple Features Objects
+
+```{r}
+#| label: locator-bln-print
+#| code-line-numbers: "6"
+sf_bln <- sf::st_sfc(
+  sf::st_point(c(13.4050, 52.5200)), 
+  crs = sf::st_crs(countries)
+)
+
+sf_bln
+```
+
+
+
+## Spatial Coordinate (Reference) Systems
+
+```{r}
+#| label: map-locator-bln
+#| fig-width: 16
+#| fig-height: 7.5
+ggplot() +
+  geom_sf(data = countries, fill = "grey50", color = NA) + 
+  geom_sf(data = sf_bln, shape = 21, color = "firebrick", fill = NA, size = 5, stroke = 2)
+```
+
+
+
+## Spatial Coordinate (Reference) Systems
+
+```{r}
+#| label: map-locator-bln-proj
+#| fig-width: 16
+#| fig-height: 7.5
+ggplot() +
+  geom_sf(data = countries, fill = "grey50", color = NA) + 
+  geom_sf(data = sf_bln, shape = 21, color = "firebrick", fill = NA, size = 5, stroke = 2) +
+  coord_sf(crs = "+proj=moll")
+```
+
+
+
+## Spatial Coordinate (Reference) Systems
+
+```{r}
+#| label: rnaturalearth-ocean-data
+#| message: false
+oceans <- rnaturalearth::ne_download(
+  category = "physical", type = "ocean", returnclass = "sf"
+)
+```
+
+
+
+## Spatial Coordinate (Reference) Systems
+
+```{r}
+#| label: coord-sf-bonne-ocean
+#| output-location: column
+#| message: false
+#| code-line-numbers: "2,3,4,5|3,7|15"
+ggplot() +
+  geom_sf(
+    data = oceans,
+    fill = "#d8f1f6"
+  ) +
+  geom_sf(
+    data = countries,
+    color = "#79dfbd",
+    fill = "#28a87d",
+    linewidth = .3
+  ) +
+  coord_sf(
+    crs = "+proj=moll"
+  ) +
+  theme_void()
+```
+
+
+
+## Mapping of Visual Properties
+
+```{r}
+#| label: coord-sf-bonne-ocean-aes
+#| output-location: column
+#| code-line-numbers: "9|10|16"
+ggplot() +
+  geom_sf(
+    data = oceans,
+    fill = "#d8f1f6",
+    color = "white"
+  ) +
+  geom_sf(
+    data = countries,
+    aes(fill = economy),
+    color = "white",
+    linewidth = .3
+  ) +
+  coord_sf(
+    crs = "+proj=moll"
+  ) +
+  scale_fill_viridis_d(option = "magma") +
+  theme_void() +
+  theme(legend.position = "top")
+```
+
+
+
+## Better Borders
+
+```{r}
+#| label: coord-sf-bonne-ocean-inner
+#| output-location: column
+#| code-line-numbers: "1,10,12,13,14,15,16,17"
+borders <- rmapshaper::ms_innerlines(countries)
+
+ggplot() +
+  geom_sf(
+    data = oceans,
+    fill = "#d8f1f6",
+    color = "white"
+  ) +
+  geom_sf(
+    data = countries,
+    aes(fill = economy),
+    color = "transparent"
+  ) +
+  geom_sf(
+    data = borders,
+    fill = "transparent",
+    color = "white",
+    linewidth = .3
+  ) +
+  coord_sf(
+    crs = "+proj=moll"
+  ) +
+  scale_fill_viridis_d(option = "magma") +
+  theme_void() +
+  theme(legend.position = "top")
+```
+
+
+
+## <b style='color:#663399;'>Recap</b>
+
+::: recap
+::: incremental
+-   **`facet_*()`** functions allow to create small multiples
+-   **`scale_*()`** functions translate between `aes`thetics and properties
+-   use **`*_continuous()`** for numerical data
+-   ... and **`*_discrete()`** for categorical data
+-   use **`scale_color|fill_*()`** to customize data-related colors
+-   **`coord_*()`** functions interpret the positional aesthetics
+    -   e.g. create polar plots or work with spatial projections 
+-   be careful when adjusting axis limits:
+    -   `scale_*_continuous(limits)` removes the data outside the range
+    -   `coord_*(*lim)` keeps the data and zooms into the range
+:::
+:::
+
+
+
+# Exercises
+
+
+
+## Exercise 1
+
+::: question
+-   Download data set(s) for your home country or study area and plot it/them.
+-   Change the projection with `coord_sf()` and observe how the spatial mapping changes.
+-   Choose a projection that is suited for the given area.
+-   Add a marker to indicate your home city, exact location of the study etc.
+:::
+
+
+
+## Exercise 2
+
+::: question
+::: incremental
+-   Have a look at the following visualization of the cumulative time that cosmo- and astronauts have spent in outer space. The data also contains information on the year of their first and last travel, respectively.
+-   Together with your group, discuss which layers and modifications are needed to create such a chart with `{ggplot2}`.
+-   Note down the aesthetics, geometries, and scales used for each element of this graphic.
+-   What is the coordinate system? Have any adjustments been made?
+-   Which theme was used and how was it modified?
+:::
+:::
+
+
+
+##  {background-image="img/exercises/astronaut-viz-detail.png" background-position="center" background-size="61%"}
+
+
+
+# Solution Exercise 1 {background-color="#e6d9f2"}
+
+
+
+## Exercise 1
+
+::: question
+-   Download data set(s) for your home country or study area and plot it/them.
+-   Change the projection with `coord_sf()` and observe how the spatial mapping changes.
+-   Choose a projection that is suited for the given area.
+-   Add a marker to indicate your home city, exact location of the study etc.
+:::
+
+
+
+## Setup
+
+```{r}
+#| label: data-germany
+#| cache: false
+library(ggplot2)
+library(sf)
+
+theme_set(theme_minimal(base_size = 14, base_family = "Asap SemiCondensed"))
+theme_update(panel.grid.minor = element_blank())
+
+sf_germany <- rnaturalearth::ne_countries(country = "Germany", returnclass = "sf")
+sf_germany_hd <- rnaturalearth::ne_countries(country = "Germany", scale = 10, returnclass = "sf")
+
+class(sf_germany)
+```
+
+
+
+## Plot the Data
+
+::: {layout-ncol="2"}
+```{r}
+#| label: data-germany-lowres
+#| fig-height: 5.6
+ggplot(sf_germany) +  
+  geom_sf(fill = "#CBE7BE")
+```
+
+::: fragment
+```{r}
+#| label: data-germany-highres
+#| fig-height: 5.6
+ggplot(sf_germany_hd) + 
+  geom_sf(fill = "#CBE7BE")
+```
+:::
+:::
+
+
+
+## Change Projection
+
+```{r} 
+#| label: data-germany-crs-proj4
+#| fig-height: 6.2
+#| fig-align: center
+ggplot(sf_germany) + 
+  geom_sf(fill = "#CBE7BE") +
+  coord_sf(crs = "+proj=lcc +lat_1=48.66 +lat_2=53.66 +lat_0=51 +lon_0=10.5 +ellps=GRS80") 
+``` 
+
+
+
+## Change Projection
+
+```{r} 
+#| label: data-germany-crs-epsg
+#| fig-height: 6.2
+#| fig-align: center
+ggplot(sf_germany) + 
+  geom_sf(fill = "#CBE7BE") +
+  coord_sf(crs = st_crs(5243)) 
+```
+
+
+
+## Change Projection
+```{r} 
+#| label: data-germany-crs-screwed
+#| fig-height: 6.2
+#| fig-align: center
+ggplot(sf_germany) + 
+  geom_sf(fill = "#CBE7BE") +
+  coord_sf(crs = "+proj=moll") 
+``` 
+
+
+
+## Change Projection
+
+```{r} 
+#| label: data-germany-crs-screwed2
+#| fig-width: 6.6
+#| fig-height: 6.2
+#| fig-align: center
+ggplot(sf_germany) + 
+  geom_sf(fill = "#CBE7BE") +
+  coord_sf(crs = "+proj=laea +lon_0=-70 +lat_0=0") 
+```
+
+
+
+## Generate Locator Object
+
+```{r}
+#| label: locator-bln-again
+sf_bln <- sf::st_sfc(
+  sf::st_point(c(13.4050, 52.5200)), 
+  crs = sf::st_crs(sf_germany)
+)
+
+sf_bln
+```
+
+
+
+## Add Location Marker
+
+::: {layout-ncol="2"}
+```{r} 
+#| label: data-germany-crs-screwed-loc
+#| fig-height: 4.8
+ggplot(sf_germany) + 
+  geom_sf(fill = "#CBE7BE") +
+  geom_sf(data = sf_bln, size = 5) +
+  coord_sf(crs = "+proj=moll")
+``` 
+
+```{r} 
+#| label: data-germany-crs-fine-loc
+#| fig-height: 4.8
+ggplot(sf_germany) + 
+  geom_sf(fill = "#CBE7BE") +
+  geom_sf(data = sf_bln, size = 5) +
+  coord_sf(crs = st_crs(5243))
+```
+:::
+
+
+
+# Solution Exercise 2 {background-color="#e6d9f2"}
+
+::: question
+-   Have a look at the following visualization of the cumulative time that cosmo- and astronauts have spent in outer space. The data also contains information on the year of their first and last travel, respectively.
+-   Together with your group, discuss which layers and modifications are needed to create such a chart with `{ggplot2}`.
+    -   Note down the aesthetics, geometries, and scales used for each element of this graphic.
+    -   What is the coordinate system? Have any adjustments been made?
+    -   Which theme was used and how was it modified?
+:::
+
+
+
+##  {background-image="img/exercises/astronaut-viz-detail.png" background-position="center" background-size="61%"}
+
+
+
+------------------------------------------------------------------------
+
+### Layers
+
+::: incremental
+-   **`geom_point()`**
+    -   `aes(x = id, y = hours, size = hours)`
+-   **`geom_linerange()`**
+    -   `aes(x = id, ymin = 0, ymax = hours, color = hours, alpha = hours)`
+-   **`geom_point()`**
+    -   `aes(x = id, y = 0), shape = 15, color = "#808080"`
+-   **`geom_text()`**
+    -   `aes(x = id, y = 0, label = year), size = 4.5, hjust = 1.2`
+-   **`geom_text()`**
+    -   `aes(x = id, y = hours, label = max), size = 3.9, vjust = -.35`
+:::
+
+------------------------------------------------------------------------
+
+### Scales
+
+::: incremental
+-   **`scale_x_continuous()`**
+    -   `limits = c(-300, NA), expand = c(0, 0)`
+-   **`scale_y_continuous()`**
+    -   `limits = c(0, 230000), expand = c(0, 0)`
+-   **`scale_color_distiller()`**
+    -   `palette = "YlGnBu, direction = -1`
+-   **`scale_size()`**
+    -   `range = c(.001, 3)`
+-   **`scale_alpha()`**
+    -   `range = c(.33, .95)`
+:::
+
+------------------------------------------------------------------------
+
+### Coordinate System
+
+::: incremental
+-   **`coord_polar()`**
+    -   `theta = "y"`
+:::
+
+------------------------------------------------------------------------
+
+### Coordinate System
+
+-   **`coord_polar()`**
+    -   `theta = "y"`
+
+### Theme
+
+::: incremental
+-   **`theme_void()`**
+    -   `legend.position = "none"`
+    -   `plot.background = element_rect(fill = "black")`
+    -   `plot.margin = margin(-70, -70, -70, -70)`
+    -   `plot.caption = element_text(hjust = .5, margin = margin(-100, 0, 100, 0), ...)`
+:::
+
+------------------------------------------------------------------------
+
+### Coordinate System
+
+-   **`coord_polar()`**
+    -   `theta = "y"`
+
+### Theme
+
+-   **`theme_void()`**
+    -   `legend.position = "none"`
+    -   `plot.background = element_rect(fill = "black")`
+    -   `plot.margin = margin(-70, -70, -70, -70)`
+    -   `plot.caption = element_text(...)`
+
+### Title
+
+::: incremental
+-   **2 x `annotate(geom = "text", x = -300, y = 0, ...)`**
+:::
+
+
+
+## Data Prep
+
+```{r}
+#| label: import-data-astronauts
+library(ggplot2)
+library(dplyr)
+
+df_astro <- readr::read_csv(
+  'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-14/astronauts.csv'
+)
+
+df_missions <-
+  df_astro %>%
+  group_by(name) %>%
+  summarize(
+    hours = sum(hours_mission),
+    year = min(year_of_mission),
+    max_year = max(year_of_mission)
+  ) %>%
+  ungroup() %>%
+  mutate(year = -year) %>%
+  arrange(year) %>%
+  mutate(id = row_number())
+
+```
+
+
+
+## Code Pt. 1
+
+```{r}
+#| label: astronout-viz-blank
+# install.packages("scico")
+
+g1 <-
+  ggplot(df_missions, aes(x = id, y = hours, color = hours)
+    ) +
+    ## curves
+    geom_linerange(aes(ymin = 0, ymax = hours, alpha = hours), size = .25) +
+    ## baseline
+    geom_point(aes(y = 0), shape = 15, size = .1, color = "#808080") +
+    ## points
+    geom_point(aes(y = hours, size = hours)) +
+    ## turn into circular
+    coord_polar(theta = "y", start = 0, clip = "off") +
+    ## add axis spacings
+    scale_x_continuous(limits = c(-300, NA), expand = c(0, 0)) +
+    scale_y_continuous(limits = c(0, 23000), expand = c(0, 0)) +
+    ## change colors, transparencies, and bubble sizes
+    scale_color_distiller(palette = "YlGnBu", direction = -1) +
+    scale_size(range = c(.001, 3)) +
+    scale_alpha(range = c(.33, .95)) +
+    ## remove all theme components
+    theme_void() +
+    theme(
+      ## set dark background
+      plot.background = element_rect(fill = "black"),
+      ## remove "white" space
+      plot.margin = margin(-70, -70, -70, -70),
+      ## remove legends
+      legend.position = "none"
+    )
+```
+
+
+
+## Data Prep Labels
+
+```{r}
+#| label: astronout-viz-label-dfs
+df_labs <-
+  df_missions %>%
+  filter(year %in% -c(1961, 197:201*10, 2019)) %>%
+  group_by(year) %>%
+  filter(id == min(id))
+
+df_max <-
+  df_missions %>%
+  arrange(-hours) %>%
+  slice(1) %>%
+  mutate(
+    first_name = stringr::str_remove(name, ".*, "),
+    last_name = stringr::str_remove(name, "(?<=),.*"),
+    label = paste("Between", abs(year), "and", max_year, ",\n", first_name, last_name, "has spent\n", format(hours, big.mark = ','), "hours in space.\nThat's roughly", round(hours / 24, 0), "days!")
+  )
+```
+
+
+
+## Code Pt. 2
+
+```{r}
+#| label: astronout-viz-labels
+g2 <-
+  g1 +
+    ## labels years
+    geom_text(
+      data = df_labs, aes(y = 0, label = abs(year)),
+      family = "Lato", fontface = "bold", color = "#808080",
+      size = 4.5, hjust = 1.2
+    ) +
+    ## label max
+    geom_text(
+      data = df_max, aes(label = label),
+      family = "Lato", size = 3.9, vjust = -.35
+    ) +
+    ## title shadow
+    annotate(
+      geom = "text", x = -300, y = 0, label = "Travelling to\nOuter Space",
+      family = "Boska", fontface = "bold", lineheight = .9,
+      size = 20, color = "white", hjust = .57, vjust = .45, alpha = .25
+    ) +
+    ## title
+    annotate(
+      geom = "text", x = -300, y = 0, label = "Travelling to\nOuter Space",
+      family = "Boska", fontface = "bold", lineheight = .85,
+      size = 20, color = "white", hjust = .55, vjust = .4
+    ) +
+    ## caption
+    labs(caption = "Cumulative time in outer space for all 565 cosmonauts and astronauts who participated
+    in space missions between April 23, 1961 and January 15, 2020, sorted by the year of their first mission.
+
+    Graphic: Cédric Scherer • Data: Stavnichuk & Corlett 2020 (DOI: 10.17632/86tsnnbv2w.1)") +
+    ## modify caption + move inside plot area
+    theme(
+      plot.caption = element_text(
+        family = "Lato",
+        size = 15, color = "#808080", hjust = .5,
+        margin = margin(-100, 0, 100, 0)
+      )
+    )
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: astronout-viz-plot
+#| echo: false
+#| fig-width: 15
+#| fig-height: 16
+#| fig-align: "center"
+g2
+```

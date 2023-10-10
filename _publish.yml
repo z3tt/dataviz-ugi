@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 4f1fa505-122a-4b23-840c-4eb836e4e325
+      url: 'https://cedscherer.quarto.pub/datavizugi'

@@ -2,8 +2,6 @@ project:
   type: website
   output-dir: docs
 
-toc: true
-
 format:
   html:
     css: slides.scss
