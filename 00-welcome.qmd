@@ -1,0 +1,114 @@
+---
+title: "The Art & Science of<br>Data Visualization"
+subtitle: "<span style='font-size:1.5em;'>Engaging and Reproducible Graphics with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Welcome!</span></span>"
+author: "<b style='color:#28a87d;'><a href='https://www.cedricscherer.com'>Dr. Cédric Scherer</a></b>&ensp;**//**&ensp;RTG-UGI Workshop&ensp;**//**&ensp;October 2023"
+format:
+  revealjs:
+    theme: slides.scss
+    logo: img/logo.png
+    footer: '**[Cédric Scherer](https://cedricscherer.com)** // Data Visualization & Information Design'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 4
+      buttons: true
+    pause: true
+    mainfont: Asap SemiCondensed
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 5
+  fig-height: 6
+---
+
+# Welcome!
+
+
+
+##  {#hello-cedric data-menu-title="Hello Cédric" background-image="img/intro/hello-cedric.png" background-position="center" background-size="62%"}
+
+
+
+##  {#cedric-avatars data-menu-title="Cédric Avatars" background-image="img/portfolio/avatars-logo.png" background-position="center" background-size="80%"}
+
+
+
+##  {#cedric-dataviz-science data-menu-title="Cédric Projects Science" background-image="img/portfolio/projects-science.png" background-position="center" background-size="82%" background-color="#ABABAB"}
+
+::: footer
+:::
+
+
+
+##  {#cedric-dataviz-clients data-menu-title="Cédric Projects Clients" background-image="img/portfolio/projects-clients.png" background-position="center" background-size="77%" background-color="#ABABAB"}
+
+::: footer
+:::
+
+
+
+##  {#cedric-dataviz-personal data-menu-title="Cédric Projects Personal"background-image="img/portfolio/projects-personal.png" background-position="center" background-size="85%" background-color="#ABABAB"}
+
+::: footer
+:::
+
+
+
+##  {#cedric-blog data-menu-title="Cédric Blog "background-image="img/portfolio/blog.png" background-position="center" background-size="56%"}
+
+::: footer
+:::
+
+
+
+##  {#cedric-ggplot-tutorial data-menu-title="Cédric Blog Tutorial" background-image="img/portfolio/blog-tutorial.png" background-position="center" background-size="56%"}
+
+::: footer
+:::
+
+
+
+## {#cedric-ggplot-tutorial-overview data-menu-title="Cédric Blog Tutorial Overview"}
+
+![[cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r](https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)](img/portfolio/ggplot-tutorial-overview.png){fig-align="center" fig-alt="Overview of some exemplary plots included in my ggplot2 tutorial."}
+
+
+
+##  {#cedric-rstudio-conf data-menu-title="Cédric Blog rstudio::conf" background-image="img/portfolio/blog-rstudioconf.png" background-position="center" background-size="56%"}
+
+::: footer
+:::
+
+
+
+##  {background-image="img/intro/hello-blank.png" background-position="center" background-size="65%"}
+
+
+
+------------------------------------------------------------------------
+
+## Conversation Starters
+
+-   What's your name?
+-   Where do you feel home?
+-   What's your favorite animal / plant / color / typeface?
+-   When did you use R for the first time?
+-   How much experience do you have with ggplot?
+-   Which R package are you looking forward to try?
+
+
+
+# Let's get started!
