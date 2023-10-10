@@ -190,7 +190,9 @@ execute:
 
 
 
-# <span style='font-size:.5em;color:#BBBBBB;line-height:.9;font-weight:500;'>... make both <b style='color:#EDCBA0;font-weight:700;'>calculations and graphs</b>.<br>Both sorts of output should be studied;<br>each will <b style='color:#EDCBA0;font-weight:700;'>contribute to understanding</b>.</span><br><br><span style='font-size:.3em;color:#e2e2e2;line-height:.9;font-weight:300;font-style:normal;'>F. J. Anscombe (1973)</span>{#quote-anscombe data-menu-title="Quote F. J. Anscombe" background-color="#000000" }
+# {#quote-anscombe data-menu-title="Quote Anscombe" background-color="#000000"}
+
+<div style='color:#e2e2e2;font-size:1.4em;font-family:literata;color:#BBBBBB;line-height:.8;font-weight:500;font-style:italic;text-align:center;padding-top:.2em;line-height:1.2;'>... make both <b style='color:#EDCBA0;font-weight:700;'>calculations and graphs</b>.<br>Both sorts of output should be studied;<br>each will <b style='color:#EDCBA0;font-weight:700;'>contribute to understanding</b>.<br><br><span style='font-size:.7em;font-weight:300;'>F. J. Anscombe (1973)</span></div></div>
 
 
 
@@ -199,7 +201,7 @@ execute:
 <br>
 
 ```{r}
-   #| label: datasaurus-dozen-prep
+#| label: datasaurus-dozen-prep
 #| include: false
 #| cache: false
 library(ggplot2)
@@ -2973,7 +2975,7 @@ ggplot(movies, aes(x = gross_millions,
 
 
 
-## Exercise 1
+## Exercise 2
 
 ::: question
 <b style='font-size:1.3em;'>Take notes on the following fun graphic.</b>
