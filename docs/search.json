@@ -40,5 +40,446 @@
     "title": "The Art & Science of Data Visualization",
     "section": "Course Materials (Scripts, Data, Font Files)",
     "text": "Course Materials (Scripts, Data, Font Files)\nz3tt.github.io/datavizugi/"
+  },
+  {
+    "objectID": "06-programing.html#setup",
+    "href": "06-programing.html#setup",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  plot.title = element_text(face = \"bold\"),\n  plot.title.position = \"plot\"\n)"
+  },
+  {
+    "objectID": "06-programing.html#conditional-components",
+    "href": "06-programing.html#conditional-components",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Conditional Components",
+    "text": "Conditional Components\n\nsmooth <- TRUE\n\nggplot(bikes, aes(x = temp, y = humidity)) +\n  { if(smooth) geom_smooth(color = \"red\") } +\n  geom_point(alpha = .5)"
+  },
+  {
+    "objectID": "06-programing.html#conditional-components-1",
+    "href": "06-programing.html#conditional-components-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Conditional Components",
+    "text": "Conditional Components\n\nsmooth <- TRUE\n\nggplot(bikes, aes(x = temp, y = humidity)) +\n  { if(smooth) geom_smooth(color = \"red\") } +\n  geom_point(alpha = .5)"
+  },
+  {
+    "objectID": "06-programing.html#conditional-components-2",
+    "href": "06-programing.html#conditional-components-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Conditional Components",
+    "text": "Conditional Components\n\nsmooth <- FALSE\n\nggplot(bikes, aes(x = temp, y = humidity)) +\n  { if(smooth) geom_smooth(color = \"red\") } +\n  geom_point(alpha = .5)"
+  },
+  {
+    "objectID": "06-programing.html#wrapper-functions-for-plots",
+    "href": "06-programing.html#wrapper-functions-for-plots",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Wrapper Functions for Plots",
+    "text": "Wrapper Functions for Plots\n\ndraw_scatter <- function(smooth = TRUE) {\n  ggplot(bikes, aes(x = temp, y = humidity)) +\n    { if(smooth) geom_smooth(color = \"red\") } +\n    geom_point(alpha = .5)\n}"
+  },
+  {
+    "objectID": "06-programing.html#wrapper-functions-for-plots-1",
+    "href": "06-programing.html#wrapper-functions-for-plots-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Wrapper Functions for Plots",
+    "text": "Wrapper Functions for Plots\n\n\ndraw_scatter()"
+  },
+  {
+    "objectID": "06-programing.html#wrapper-functions-for-plots-2",
+    "href": "06-programing.html#wrapper-functions-for-plots-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Wrapper Functions for Plots",
+    "text": "Wrapper Functions for Plots\n\n\ndraw_scatter(smooth = FALSE)"
+  },
+  {
+    "objectID": "06-programing.html#components-as-functions",
+    "href": "06-programing.html#components-as-functions",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Components as Functions",
+    "text": "Components as Functions\n\ngeom_scatterfit <- function(pointsize = 1, pointalpha = 1, \n                            method = \"lm\", linecolor = \"red\", ...) {\n  list(\n    geom_point(size = pointsize, alpha = pointalpha, ...),\n    geom_smooth(method = method, color = linecolor, ...)\n  )\n}"
+  },
+  {
+    "objectID": "06-programing.html#components-as-functions-1",
+    "href": "06-programing.html#components-as-functions-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Components as Functions",
+    "text": "Components as Functions\n\n\nggplot(bikes,\n       aes(x = humidity, y = count)) +\n  geom_scatterfit()"
+  },
+  {
+    "objectID": "06-programing.html#components-as-functions-2",
+    "href": "06-programing.html#components-as-functions-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Components as Functions",
+    "text": "Components as Functions\n\n\nggplot(bikes,\n       aes(x = humidity, y = count)) +\n  geom_scatterfit(\n    color = \"#28A87D\", \n    linewidth = 3\n  )"
+  },
+  {
+    "objectID": "06-programing.html#components-as-functions-3",
+    "href": "06-programing.html#components-as-functions-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Components as Functions",
+    "text": "Components as Functions\n\n\nggplot(diamonds, \n       aes(x = carat, y = price)) +\n  geom_scatterfit(\n    pointsize = .5, \n    pointalpha = .1,\n    method = \"gam\",\n    linecolor = \"#EFAC00\"\n  )"
+  },
+  {
+    "objectID": "06-programing.html#components-as-functions-4",
+    "href": "06-programing.html#components-as-functions-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Components as Functions",
+    "text": "Components as Functions\n\nscales_log <- function(sides = \"xy\") {\n  list(\n    if(stringr::str_detect(sides, \"x\")) {\n      scale_x_log10(\n        breaks = c(10^(1:100)), labels = scales::label_log()\n      )\n    },\n    if(stringr::str_detect(sides, \"y\")) {\n      scale_y_log10(\n        breaks = c(10^(1:100)), labels = scales::label_log()\n      )\n    }\n  )\n}"
+  },
+  {
+    "objectID": "06-programing.html#components-as-functions-5",
+    "href": "06-programing.html#components-as-functions-5",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Components as Functions",
+    "text": "Components as Functions\n\n\nggplot(diamonds, \n       aes(x = carat, y = price)) +\n  geom_scatterfit(\n    pointsize = .5, \n    pointalpha = .1,\n    method = \"gam\",\n    linecolor = \"#EFAC00\"\n  ) +\n  scales_log(sides = \"y\")"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics",
+    "href": "06-programing.html#iterative-graphics",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\ntrends_monthly <- function(grp = \"January\") {\n  bikes |> \n    dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = FALSE)) |> \n    dplyr::filter(month %in% grp) |> \n    ggplot(aes(x = temp, y = count, color = day_night)) +\n    geom_point(alpha = .2, show.legend = FALSE) +\n    geom_smooth(se = FALSE) +\n    scale_color_manual(values = c(\"#FFA200\", \"#757bc7\")) +\n    labs(title = grp, x = \"Temperature\", y = \"Bike shares\", color = NULL)\n}"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-1",
+    "href": "06-programing.html#iterative-graphics-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\n\ntrends_monthly(\"July\")"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-2",
+    "href": "06-programing.html#iterative-graphics-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\ntrends_monthly <- function(grp = \"January\") {\n  bikes |> \n    dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = FALSE)) |> \n    dplyr::filter(month %in% grp) |> \n    ggplot(aes(x = temp, y = count, color = day_night)) +\n    geom_point(alpha = .2, show.legend = FALSE) +\n    geom_smooth(se = FALSE) +\n    # keep axis ranges consistent\n    scale_x_continuous(limits = range(bikes$temp)) +\n    scale_y_continuous(limits = range(bikes$count)) +\n    scale_color_manual(values = c(\"#FFA200\", \"#757bc7\")) +\n    labs(title = grp, x = \"Temperature\", y = \"Bike shares\", color = NULL)\n}"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-3",
+    "href": "06-programing.html#iterative-graphics-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\n\ntrends_monthly(\"July\")"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-4",
+    "href": "06-programing.html#iterative-graphics-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\nplots <- purrr::map(month.name[1:12], trends_monthly) ## also: ~ trends_monthly(.x)"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-5",
+    "href": "06-programing.html#iterative-graphics-5",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\nplots <- purrr::map(month.name[1:12], trends_monthly) ## also: ~ trends_monthly(.x)\nplots[[9]]"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-6",
+    "href": "06-programing.html#iterative-graphics-6",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\nplots <- purrr::map(month.name[1:12], trends_monthly) ## also: ~ trends_monthly(.x)\npatchwork::wrap_plots(plots)"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-7",
+    "href": "06-programing.html#iterative-graphics-7",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\nplot_density <- function(data, var, grp = \"\") {\n  ggplot(data, aes(x = !!sym(var))) +\n    geom_density(aes(fill = !!sym(grp)), position = \"identity\",\n                 color = \"grey30\", alpha = .3) +\n    coord_cartesian(expand = FALSE, clip = \"off\") +\n    scale_y_continuous(labels = scales::label_number()) +\n    scale_fill_brewer(palette = \"Dark2\", name = NULL) +\n    theme(legend.position = \"top\")\n}"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-8",
+    "href": "06-programing.html#iterative-graphics-8",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\n\nplot_density(\n  bikes, \"count\"\n)"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-9",
+    "href": "06-programing.html#iterative-graphics-9",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\nplots <- purrr::map(\n  c(\"count\", \"temp\", \"humidity\", \"wind_speed\"), \n  ~ plot_density(data = bikes, var = .x, grp = \"day_night\")\n)\npatchwork::wrap_plots(plots, nrow = 1)"
+  },
+  {
+    "objectID": "06-programing.html#iterative-graphics-10",
+    "href": "06-programing.html#iterative-graphics-10",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Iterative Graphics",
+    "text": "Iterative Graphics\n\nplots <- purrr::map(\n  names(dplyr::select(midwest, where(is.numeric))),\n  ~plot_density(data = midwest, var = .x)\n)\npatchwork::wrap_plots(plots)"
+  },
+  {
+    "objectID": "06-programing.html#complete-themes-whats-inside",
+    "href": "06-programing.html#complete-themes-whats-inside",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Complete Themes: What’s Inside?",
+    "text": "Complete Themes: What’s Inside?\n\ntheme_grey\n\nfunction (base_size = 11, base_family = \"\", base_line_size = base_size/22, \n    base_rect_size = base_size/22) \n{\n    half_line <- base_size/2\n    t <- theme(line = element_line(colour = \"black\", linewidth = base_line_size, \n        linetype = 1, lineend = \"butt\"), rect = element_rect(fill = \"white\", \n        colour = \"black\", linewidth = base_rect_size, linetype = 1), \n        text = element_text(family = base_family, face = \"plain\", \n            colour = \"black\", size = base_size, lineheight = 0.9, \n            hjust = 0.5, vjust = 0.5, angle = 0, margin = margin(), \n            debug = FALSE), axis.line = element_blank(), axis.line.x = NULL, \n        axis.line.y = NULL, axis.text = element_text(size = rel(0.8), \n            colour = \"grey30\"), axis.text.x = element_text(margin = margin(t = 0.8 * \n            half_line/2), vjust = 1), axis.text.x.top = element_text(margin = margin(b = 0.8 * \n            half_line/2), vjust = 0), axis.text.y = element_text(margin = margin(r = 0.8 * \n            half_line/2), hjust = 1), axis.text.y.right = element_text(margin = margin(l = 0.8 * \n            half_line/2), hjust = 0), axis.ticks = element_line(colour = \"grey20\"), \n        axis.ticks.length = unit(half_line/2, \"pt\"), axis.ticks.length.x = NULL, \n        axis.ticks.length.x.top = NULL, axis.ticks.length.x.bottom = NULL, \n        axis.ticks.length.y = NULL, axis.ticks.length.y.left = NULL, \n        axis.ticks.length.y.right = NULL, axis.title.x = element_text(margin = margin(t = half_line/2), \n            vjust = 1), axis.title.x.top = element_text(margin = margin(b = half_line/2), \n            vjust = 0), axis.title.y = element_text(angle = 90, \n            margin = margin(r = half_line/2), vjust = 1), axis.title.y.right = element_text(angle = -90, \n            margin = margin(l = half_line/2), vjust = 0), legend.background = element_rect(colour = NA), \n        legend.spacing = unit(2 * half_line, \"pt\"), legend.spacing.x = NULL, \n        legend.spacing.y = NULL, legend.margin = margin(half_line, \n            half_line, half_line, half_line), legend.key = element_rect(fill = \"grey95\", \n            colour = NA), legend.key.size = unit(1.2, \"lines\"), \n        legend.key.height = NULL, legend.key.width = NULL, legend.text = element_text(size = rel(0.8)), \n        legend.text.align = NULL, legend.title = element_text(hjust = 0), \n        legend.title.align = NULL, legend.position = \"right\", \n        legend.direction = NULL, legend.justification = \"center\", \n        legend.box = NULL, legend.box.margin = margin(0, 0, 0, \n            0, \"cm\"), legend.box.background = element_blank(), \n        legend.box.spacing = unit(2 * half_line, \"pt\"), panel.background = element_rect(fill = \"grey92\", \n            colour = NA), panel.border = element_blank(), panel.grid = element_line(colour = \"white\"), \n        panel.grid.minor = element_line(linewidth = rel(0.5)), \n        panel.spacing = unit(half_line, \"pt\"), panel.spacing.x = NULL, \n        panel.spacing.y = NULL, panel.ontop = FALSE, strip.background = element_rect(fill = \"grey85\", \n            colour = NA), strip.clip = \"inherit\", strip.text = element_text(colour = \"grey10\", \n            size = rel(0.8), margin = margin(0.8 * half_line, \n                0.8 * half_line, 0.8 * half_line, 0.8 * half_line)), \n        strip.text.x = NULL, strip.text.y = element_text(angle = -90), \n        strip.text.y.left = element_text(angle = 90), strip.placement = \"inside\", \n        strip.placement.x = NULL, strip.placement.y = NULL, strip.switch.pad.grid = unit(half_line/2, \n            \"pt\"), strip.switch.pad.wrap = unit(half_line/2, \n            \"pt\"), plot.background = element_rect(colour = \"white\"), \n        plot.title = element_text(size = rel(1.2), hjust = 0, \n            vjust = 1, margin = margin(b = half_line)), plot.title.position = \"panel\", \n        plot.subtitle = element_text(hjust = 0, vjust = 1, margin = margin(b = half_line)), \n        plot.caption = element_text(size = rel(0.8), hjust = 1, \n            vjust = 1, margin = margin(t = half_line)), plot.caption.position = \"panel\", \n        plot.tag = element_text(size = rel(1.2), hjust = 0.5, \n            vjust = 0.5), plot.tag.position = \"topleft\", plot.margin = margin(half_line, \n            half_line, half_line, half_line), complete = TRUE)\n    ggplot_global$theme_all_null %+replace% t\n}\n<bytecode: 0x10e0280e0>\n<environment: namespace:ggplot2>"
+  },
+  {
+    "objectID": "06-programing.html#complete-themes-whats-inside-1",
+    "href": "06-programing.html#complete-themes-whats-inside-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Complete Themes: What’s Inside?",
+    "text": "Complete Themes: What’s Inside?\n\ntheme_minimal\n\nfunction (base_size = 11, base_family = \"\", base_line_size = base_size/22, \n    base_rect_size = base_size/22) \n{\n    theme_bw(base_size = base_size, base_family = base_family, \n        base_line_size = base_line_size, base_rect_size = base_rect_size) %+replace% \n        theme(axis.ticks = element_blank(), legend.background = element_blank(), \n            legend.key = element_blank(), panel.background = element_blank(), \n            panel.border = element_blank(), strip.background = element_blank(), \n            plot.background = element_blank(), complete = TRUE)\n}\n<bytecode: 0x12ff9b9f8>\n<environment: namespace:ggplot2>"
+  },
+  {
+    "objectID": "06-programing.html#create-a-custom-theme",
+    "href": "06-programing.html#create-a-custom-theme",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Create a Custom Theme",
+    "text": "Create a Custom Theme\n\ntheme_asap <- function(base_size = 13, base_family = \"Asap SemiCondensed\", \n                       base_line_size = base_size/22, base_rect_size = base_size/22) {\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n                base_line_size = base_line_size, base_rect_size = base_rect_size) \n}"
+  },
+  {
+    "objectID": "06-programing.html#create-a-custom-theme-1",
+    "href": "06-programing.html#create-a-custom-theme-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Create a Custom Theme",
+    "text": "Create a Custom Theme\n\ntheme_asap <- function(base_size = 13, base_family = \"Asap SemiCondensed\", \n                       base_line_size = base_size/22, base_rect_size = base_size/22) {\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n                base_line_size = base_line_size, base_rect_size = base_rect_size)  %+replace%\n    theme(\n      # add your theme changes here\n    )\n}"
+  },
+  {
+    "objectID": "06-programing.html#create-a-custom-theme-2",
+    "href": "06-programing.html#create-a-custom-theme-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Create a Custom Theme",
+    "text": "Create a Custom Theme\n\ntheme_asap <- function(base_size = 13, base_family = \"Asap SemiCondensed\", \n                       base_line_size = base_size/22, base_rect_size = base_size/22) {\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n                base_line_size = base_line_size, base_rect_size = base_rect_size) %+replace%\n    theme(\n      plot.title = element_text(size = rel(1.3), margin = margin(b = base_size/2),\n                                family = \"Asap SemiCondensed Extrabold\", hjust = 0),\n      plot.title.position = \"plot\",\n      plot.caption = element_text(color = \"grey30\", margin = margin(t = base_size),\n                                  size = rel(0.8), hjust = 1, vjust = 1),\n      plot.caption.position = \"plot\",\n      axis.title.x = element_text(hjust = 0, vjust = 0, margin = margin(t = base_size/3)),\n      axis.title.y = element_text(hjust = 1, vjust = 0, angle = 90, margin = margin(r = base_size/3)),\n      panel.background = element_rect(fill = \"white\", color = \"grey20\"), \n      panel.border = element_rect(fill = NA, color = \"grey20\"), \n      plot.background = element_rect(fill = \"grey85\", color = NA), \n      legend.justification = \"top\",\n      strip.text = element_text(size = rel(1.05), margin = margin(base_size/2, 0, base_size/2, 0)),\n      panel.grid.minor = element_blank(), \n      complete = TRUE\n    )\n}"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme",
+    "href": "06-programing.html#apply-the-custom-theme",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\ng <- \n  ggplot(bikes, aes(x = temp, y = count, color = day_night)) +\n  geom_point(alpha = .3, size = 2) +\n  scale_color_manual(values = c(day = \"#FFA200\", night = \"#757BC7\")) +\n  theme_minimal(base_size = 14, base_family = \"Asap SemiCondensed\") +\n  theme(panel.grid.minor = element_blank())"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-1",
+    "href": "06-programing.html#apply-the-custom-theme-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\n\ng + \n  theme_asap()"
+  },
+  {
+    "objectID": "06-programing.html#modify-an-existing-theme",
+    "href": "06-programing.html#modify-an-existing-theme",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Modify an Existing Theme",
+    "text": "Modify an Existing Theme\n ⁠%+replace%\n\nreplaces the entire element; any element of a theme not specified in e2 will not be present in the resulting theme (i.e. NULL).Thus this operator can be used to overwrite an entire theme.\n\n\n +\n\nupdates the elements of e1 that differ from elements specified (not NULL) in e2.Thus this operator can be used to incrementally add or modify attributes of a ggplot theme."
+  },
+  {
+    "objectID": "06-programing.html#create-a-custom-theme-3",
+    "href": "06-programing.html#create-a-custom-theme-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Create a Custom Theme",
+    "text": "Create a Custom Theme\n\ntheme_asap_plus <- function(base_size = 13, base_family = \"Asap SemiCondensed\", \n                            base_line_size = base_size/22, base_rect_size = base_size/22) {\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n                base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme( \n      plot.title = element_text(size = rel(1.3), hjust = 0,\n                                family = \"Asap SemiCondensed Extrabold\"),\n      plot.title.position = \"plot\",\n      plot.caption = element_text(color = \"grey30\", margin = margin(t = base_size)),\n      plot.caption.position = \"plot\",\n      axis.title.x = element_text(hjust = 0, margin = margin(t = base_size/3)),\n      axis.title.y = element_text(hjust = 1, margin = margin(r = base_size/3)),\n      panel.background = element_rect(fill = \"white\", color = \"grey20\"), \n      panel.border = element_rect(fill = NA, color = \"grey20\"), \n      plot.background = element_rect(fill = \"grey85\", color = NA), \n      legend.justification = \"top\",\n      strip.text = element_text(size = rel(1.05), margin = margin(base_size/2, 0, base_size/2, 0)),\n      panel.grid.minor = element_blank()\n    )\n}"
+  },
+  {
+    "objectID": "06-programing.html#versus-replace",
+    "href": "06-programing.html#versus-replace",
+    "title": "The Art & Science of Data Visualization",
+    "section": "+ versus %+replace%",
+    "text": "+ versus %+replace%\n\n\n\ng + theme_asap_plus()\n\n\n\n\n\n\ng + theme_asap_replace()"
+  },
+  {
+    "objectID": "06-programing.html#modify-the-custom-theme",
+    "href": "06-programing.html#modify-the-custom-theme",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Modify the Custom Theme",
+    "text": "Modify the Custom Theme\n\n\ng + \n  theme_asap() +\n  theme(\n    legend.position = \"top\",\n    plot.background = element_rect(\n      fill = NA, color = NA\n    )\n  )"
+  },
+  {
+    "objectID": "06-programing.html#modify-the-custom-theme-1",
+    "href": "06-programing.html#modify-the-custom-theme-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Modify the Custom Theme",
+    "text": "Modify the Custom Theme\n\n\ng + \n  theme_asap(\n    base_size = 9,\n    base_family = \"Hepta Slab\"\n  )"
+  },
+  {
+    "objectID": "06-programing.html#modify-the-custom-theme-2",
+    "href": "06-programing.html#modify-the-custom-theme-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Modify the Custom Theme",
+    "text": "Modify the Custom Theme\n\n\ng + \n  theme_asap(\n    base_size = 9,\n    base_family = \"Hepta Slab\"\n  ) +\n  theme(\n    plot.title = element_text(\n      family = \"Hepta Slab\"\n    )\n  )"
+  },
+  {
+    "objectID": "06-programing.html#create-a-custom-theme-4",
+    "href": "06-programing.html#create-a-custom-theme-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Create a Custom Theme",
+    "text": "Create a Custom Theme\n\ntheme_asap_title <- function(base_size = 13, base_family = \"Asap SemiCondensed\", \n                             title_family = \"Asap SemiCondensed Extrabold\",\n                             base_line_size = base_size/22, base_rect_size = base_size/22) {\n  \n  if (title_family == \"Asap SemiCondensed Extrabold\") {\n    register_variant(name = \"Asap SemiCondensed Extrabold\",\n                     family = \"Asap SemiCondensed\",\n                     weight = \"ultrabold\")\n  }\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n                base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme(\n      plot.title = element_text(size = rel(1.3), hjust = 0, family = title_family),\n      # fill in other theme adjustments here\n    )\n}"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-2",
+    "href": "06-programing.html#apply-the-custom-theme-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\n\ng +\n  theme_asap_title(\n    base_size = 9,\n    base_family = \"Hepta Slab\",\n    title_family = \"Hepta Slab\"\n  )"
+  },
+  {
+    "objectID": "06-programing.html#advanced-font-handling-for-themes",
+    "href": "06-programing.html#advanced-font-handling-for-themes",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Advanced Font Handling (for Themes)",
+    "text": "Advanced Font Handling (for Themes)\n\ntheme_fonts <- function(base_size = 12, base_line_size = base_size/22, \n                        base_rect_size = base_size/22) {\n  \n  unavailable <- vector(\"character\")\n  \n  if (sum(grepl(\"Hepta Slab\", systemfonts::system_fonts()$family)) > 0) {\n    systemfonts::register_variant(\n      name = \"Hepta Slab Extrabold\",\n      family = \"Hepta Slab\",\n      weight = \"ultrabold\"\n    )\n    title_family <- \"Hepta Slab Extrabold\"\n  } else {\n    title_family <- \"\"\n    unavailable <- c(unavailable, \"Hepta Slab\")\n  }\n  \n  if (sum(grepl(\"Spline Sans\", systemfonts::system_fonts()$family)) > 0) {\n    base_family <- \"Spline Sans\"\n  } else {\n    base_family <- \"\"\n    unavailable <- c(unavailable, \"Spline Sans\")\n  }\n  \n  if (length(unavailable) > 0) {\n    unavailable <- data.frame(\n      name = unavailable, \n      url = paste0(\"https://fonts.google.com/specimen/\", sub(\" \", \"+\", unavailable))\n    )\n    message(paste(\n      \"Using system default typefaces.\", \n      \"For proper use, please install the following typeface(s):\",\n      paste0(\"  - \", unavailable$name, \": \", unavailable$url, collapse = \"\\n\"),\n      \"Then restart your R session.\",\n      sep = \"\\n\"\n    ))\n  }\n  \n  theme_asap(base_size = base_size, base_family = base_family, \n             base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme(\n      plot.title = element_text(size = rel(1.3), hjust = 0, family = title_family)\n    )\n}"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-3",
+    "href": "06-programing.html#apply-the-custom-theme-3",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\ng + theme_fonts()\n\nUsing system default typefaces.For proper use, please install the following typeface(s): - Hepta Slab: https://fonts.google.com/specimen/Hepta+Slab - Spline: https://fonts.google.com/specimen/Spline+SansThen restart your R session."
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-4",
+    "href": "06-programing.html#apply-the-custom-theme-4",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\n\ng + theme_fonts()"
+  },
+  {
+    "objectID": "06-programing.html#add-more-arguments",
+    "href": "06-programing.html#add-more-arguments",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Add More Arguments",
+    "text": "Add More Arguments\n\n\nturn grid lines on and off\ndefine alternative styles\nset a tabular fonts for axis and legend text\nadjust legend position\nadd/remove plot margin\ncontrol rendering of text elements\n…\n\n\n\nPro: Users don’t have to use theme().\n\n\nCon: Users don’t have to use theme()."
+  },
+  {
+    "objectID": "06-programing.html#add-more-arguments-1",
+    "href": "06-programing.html#add-more-arguments-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Add More Arguments",
+    "text": "Add More Arguments\n\nturn grid lines on and off\ndefine alternative styles\nset a tabular fonts for axis and legend text\nadjust legend position\nadd/remove plot margin\ncontrol rendering of text elements\n…\n\nPro: Users don’t have to use theme().\nCon: Users don’t have to use theme()."
+  },
+  {
+    "objectID": "06-programing.html#add-more-arguments-2",
+    "href": "06-programing.html#add-more-arguments-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Add More Arguments",
+    "text": "Add More Arguments\n\ntheme_asap_grid <- function(base_size = 13, base_family = \"Asap SemiCondensed\", grid = \"xy\", \n                            base_line_size = base_size/22, base_rect_size = base_size/22) {\n  out <- \n    theme_minimal(base_size = base_size, base_family = base_family, \n                  base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme(\n      panel.grid.major = element_blank(),\n      axis.ticks = element_line(color = \"grey20\"),\n      axis.ticks.length = unit(base_size/2, \"pt\"),\n      # fill in other theme adjustments here\n    )\n  \n  if (stringr::str_detect(grid, \"x|X\")) {\n    out <- out + theme(panel.grid.major.x = element_line(color = \"grey87\"),\n                       axis.ticks.x = element_blank(),\n                       axis.ticks.length.x = unit(base_size/6, \"pt\"))\n  }\n  if (stringr::str_detect(grid, \"y|Y\")) {\n    out <- out + theme(panel.grid.major.y = element_line(color = \"grey87\"),\n                       axis.ticks.y = element_blank(),\n                       axis.ticks.length.y = unit(base_size/4, \"pt\"))\n  }\n  \n  return(out)\n}"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-5",
+    "href": "06-programing.html#apply-the-custom-theme-5",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\n\ng + \n  theme_asap_grid(\n    grid = \"y\"\n  )"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-6",
+    "href": "06-programing.html#apply-the-custom-theme-6",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\n\n\ng + theme_asap_grid()\n\n\n\n\n\ng + theme_asap_grid(grid = \"none\")"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-7",
+    "href": "06-programing.html#apply-the-custom-theme-7",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\n\ng + \n  theme_asap_grid(\n    grid = \"all\"\n  )"
+  },
+  {
+    "objectID": "06-programing.html#add-checks-to-the-custom-theme",
+    "href": "06-programing.html#add-checks-to-the-custom-theme",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Add Checks to the Custom Theme",
+    "text": "Add Checks to the Custom Theme\n\ntheme_asap_grid <- function(base_size = 13, base_family = \"Asap SemiCondensed\", grid = \"xy\", \n                            base_line_size = base_size/22, base_rect_size = base_size/22) {\n  \n  if(!stringr::str_detect(grid, \"none|x|X|y|Y\")) stop('grid must be a character: \"none\" or any combination of \"X\", \"Y\", \"x\" and \"y\".')\n  \n  out <- \n    theme_minimal(base_size = base_size, base_family = base_family, \n                  base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme(\n      panel.grid.major = element_blank(),\n      axis.ticks = element_line(color = \"grey20\"),\n      axis.ticks.length = unit(base_size/2, \"pt\"),\n      # fill in other theme adjustments here\n    )\n  \n  if (stringr::str_detect(grid, \"x|X\")) {\n    out <- out + theme(panel.grid.major.x = element_line(color = \"grey87\"),\n                       axis.ticks.x = element_blank(),\n                       axis.ticks.length.x = unit(base_size/6, \"pt\"))\n  }\n  if (stringr::str_detect(grid, \"y|Y\")) {\n    out <- out + theme(panel.grid.major.y = element_line(color = \"grey87\"),\n                       axis.ticks.y = element_blank(),\n                       axis.ticks.length.y = unit(base_size/4, \"pt\"))\n  }\n  \n  return(out)\n}"
+  },
+  {
+    "objectID": "06-programing.html#apply-the-custom-theme-8",
+    "href": "06-programing.html#apply-the-custom-theme-8",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply the Custom Theme",
+    "text": "Apply the Custom Theme\n\ng + \n  theme_asap_grid(\n    grid = \"all\"\n  )\n\nError in theme_asap_grid(grid = “all”) :grid must be a character: “none” or any combination of “X”, “Y”, “x” and “y”."
+  },
+  {
+    "objectID": "06-programing.html#recap",
+    "href": "06-programing.html#recap",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Recap",
+    "text": "Recap\n\n\n\ndefine conditional components, custom layers and functions to generate plots more efficiently and to iterate over multiple inputs\nuse patchwork::wrap_plots() to create grids from plot lists\napply complete themes via theme_*() and modify theme defaults via theme()\nchange the appearance for all plots with theme_set() and theme_update()\n{systemfonts} allows to use non-default typefaces and register font variants\nuse the source code of complete themes to create a custom theme\nadd additional arguments to allow for different styles and settings"
+  },
+  {
+    "objectID": "06-programing.html#exercise-1",
+    "href": "06-programing.html#exercise-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\n\nCreate a function that plots the famous Gapminder chart, highlighting one of the continents.\n\nExtend the following code in to annotate a continent your choice of with {ggforce}.\nTurn the code into a function with the utility to annotate any continent.\nOptional: Create a second function to highlight a country."
+  },
+  {
+    "objectID": "06-programing.html#exercise-2",
+    "href": "06-programing.html#exercise-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\nCreate a corporate or funny custom theme.\n\nMake use of an existing complete theme to get started.\nPick a non-default font (or multiple) for your theme.\nOptional: Try working with font variants.\nOptional: Add other helpful arguments to your theme_* function."
+  },
+  {
+    "objectID": "06-programing.html#exercise-2-1",
+    "href": "06-programing.html#exercise-2-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\nCreate a corporate or funny custom theme.\n\nMake use of an existing complete theme to get started.\nPick a non-default font (or multiple).\nOptional: Try working with font variants.\nOptional: Add other helpful arguments to your theme_* function.\n\nShowcase your theme using some example graphics.\n\nSave the plots to disk and share them with the group.\nDid you add some additional arguments?Feel free to share your thoughts on “why” and “how”."
+  },
+  {
+    "objectID": "06-programing.html#gapminder-bubble-chart",
+    "href": "06-programing.html#gapminder-bubble-chart",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Gapminder Bubble Chart",
+    "text": "Gapminder Bubble Chart\n\n# install.packages(\"gapminder\")\n\nlibrary(gapminder)\nlibrary(dplyr)\nlibrary(ggplot2)\n\ngm2007 <- filter(gapminder, year == 2007)\n\nggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point(\n    aes(size = pop), alpha = .5\n  ) +\n  scale_x_log10(\n    breaks = c(500, 2000, 8000, 32000),\n    labels = scales::label_dollar(accuracy = 1)\n  ) +\n  scale_size(\n    range = c(1, 12), name = \"Population:\", \n    breaks = c(10, 100, 1000)*1000000, \n    labels = scales::label_comma(scale = 1 / 10^6, suffix = \"M\")\n  ) +\n  labs(x = \"GDP per capita\", y = \"Life expectancy\") +\n  theme_minimal(base_family = \"Asap SemiCondensed\", base_size = 15) +\n  theme(panel.grid.minor = element_blank())"
+  },
+  {
+    "objectID": "06-programing.html#annotate-continents",
+    "href": "06-programing.html#annotate-continents",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Annotate Continents",
+    "text": "Annotate Continents\n\nggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point(\n    aes(size = pop), alpha = .5, color = \"grey60\"\n  ) +\n  geom_point( \n    data = filter(gm2007, continent == \"Americas\"),\n    aes(size = pop), shape = 1, stroke = .7\n  ) +\n  ggforce::geom_mark_hull(\n    aes(label = continent, filter = continent == \"Americas\"),\n    expand = unit(10, \"pt\"), con.cap = unit(1, \"mm\"),\n    label.family = \"Asap SemiCondensed\", label.fontsize = 15\n  ) +\n  scale_x_log10(\n    breaks = c(500, 2000, 8000, 32000),\n    labels = scales::label_dollar(accuracy = 1)\n  ) +\n  scale_size(\n    range = c(1, 12), name = \"Population:\",\n    breaks = c(10, 100, 1000)*1000000,\n    labels = scales::label_comma(scale = 1 / 10^6, suffix = \"M\")\n  ) +\n  labs(x = \"GDP per capita\", y = \"Life expectancy\") +\n  theme_minimal(base_family = \"Asap SemiCondensed\", base_size = 15) +\n  theme(panel.grid.minor = element_blank())"
+  },
+  {
+    "objectID": "06-programing.html#function-to-highlight-a-continent",
+    "href": "06-programing.html#function-to-highlight-a-continent",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Function to Highlight a Continent",
+    "text": "Function to Highlight a Continent\n\ndraw_gp_continent <- function(grp) {\n  \n  ggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) + \n    geom_point( \n      aes(size = pop), alpha = .5, color = \"grey60\"\n    ) +\n    geom_point( \n      data = filter(gm2007, continent == grp),\n      aes(size = pop), shape = 1, stroke = .7\n    ) +\n    ggforce::geom_mark_hull(\n      aes(label = continent, filter = continent == grp),\n      expand = unit(10, \"pt\"), con.cap = unit(1, \"mm\"),\n      label.family = \"Asap SemiCondensed\", label.fontsize = 15\n    ) +\n    scale_x_log10(\n      breaks = c(500, 2000, 8000, 32000),\n      labels = scales::label_dollar(accuracy = 1)\n    ) +\n    scale_size(\n      range = c(1, 12), name = \"Population:\", \n      breaks = c(10, 100, 1000)*1000000, \n      labels = scales::label_comma(scale = 1 / 10^6, suffix = \"M\")\n    ) +\n    labs(x = \"GDP per capita\", y = \"Life expectancy\") +\n    theme_minimal(base_family = \"Asap SemiCondensed\", base_size = 15) +\n    theme(panel.grid.minor = element_blank())\n  \n}"
+  },
+  {
+    "objectID": "06-programing.html#function-to-highlight-a-country",
+    "href": "06-programing.html#function-to-highlight-a-country",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Function to Highlight a Country",
+    "text": "Function to Highlight a Country\n\ndraw_gp_country <- function(grp) {\n  \n  ggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) + \n    geom_point( \n      aes(size = pop), alpha = .5, color = \"grey60\"\n    ) +\n    ggforce::geom_mark_circle(\n      aes(label = country, filter = country == grp),\n      expand = unit(15, \"pt\"), con.cap = unit(0, \"mm\"),\n      # expand = unit(0, \"pt\"), con.cap = unit(0, \"mm\"),\n      label.family = \"Asap SemiCondensed\", label.fontsize = 15\n    ) +\n    geom_point( \n      data = filter(gm2007, country == grp),\n      aes(size = pop), color = \"#9C55E3\", show.legend = FALSE\n    ) +\n    scale_x_log10(\n      breaks = c(500, 2000, 8000, 32000),\n      labels = scales::label_dollar(accuracy = 1)\n    ) +\n    scale_size(\n      range = c(1, 12), name = \"Population:\", \n      breaks = c(10, 100, 1000)*1000000, \n      labels = scales::label_comma(scale = 1 / 10^6, suffix = \"M\")\n    ) +\n    labs(x = \"GDP per capita\", y = \"Life expectancy\") +\n    theme_minimal(base_family = \"Asap SemiCondensed\", base_size = 15) +\n    theme(panel.grid.minor = element_blank())\n  \n}"
+  },
+  {
+    "objectID": "06-programing.html#exercise-2-2",
+    "href": "06-programing.html#exercise-2-2",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\nCreate a corporate or funny custom theme.\n\nMake use of an existing complete theme to get started.\nPick a non-default font (or multiple).\nOptional: Try working with font variants.\nOptional: Add other helpful arguments to your theme_* function.\n\nShowcase your theme using some example graphics.\n\nSave the plots to disk and share them with the group.\nDid you add some additional arguments?Feel free to share your thoughts on “why” and “how”."
+  },
+  {
+    "objectID": "06-programing.html#preparation",
+    "href": "06-programing.html#preparation",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Preparation",
+    "text": "Preparation\n\nlibrary(ggplot2)"
+  },
+  {
+    "objectID": "06-programing.html#custom-theme",
+    "href": "06-programing.html#custom-theme",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Custom Theme",
+    "text": "Custom Theme\n\ntheme_bulls <- function(base_size = 18, base_family = \"College Block\", \n                        base_line_size = base_size/22, base_rect_size = base_size/22) {\n  \n  theme_bw(base_size = base_size, base_family = base_family, \n           base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme( \n      plot.title = element_text(size = rel(2), color = \"white\", margin = margin(b = base_size/2)),\n      plot.subtitle = element_text(margin = margin(t = -base_size/4, b = base_size/2)),\n      plot.caption = element_text(color = \"black\", size = rel(.7), hjust = 0),\n      plot.title.position = \"plot\",\n      plot.caption.position = \"plot\",\n      axis.title = element_text(color = \"white\"),\n      axis.title.x = element_text(hjust = 1, margin = margin(t = base_size/2)),\n      axis.title.y = element_text(hjust = 1, margin = margin(r = base_size/2)),\n      axis.text = element_text(color = \"black\"),\n      axis.ticks = element_line(color = \"black\"),\n      panel.background = element_rect(fill = \"#dfbb85\", color = \"white\", linewidth = base_size/4), \n      panel.border = element_rect(fill = NA, color = \"black\", linewidth = base_size/10), \n      plot.background = element_rect(fill = \"#CE1141\", color = \"black\", linewidth = base_size/4), \n      legend.background = element_rect(fill = \"transparent\", color = \"black\"),\n      legend.justification = \"top\",\n      strip.text = element_text(size = rel(1.25), color = \"white\"),\n      panel.grid.major = element_line(color = \"white\"),\n      panel.grid.minor = element_blank(),\n      plot.margin = margin(rep(base_size, 4))\n    )\n}"
+  },
+  {
+    "objectID": "06-programing.html#apply-theme",
+    "href": "06-programing.html#apply-theme",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Apply Theme",
+    "text": "Apply Theme\n\ndata <- readr::read_csv(\"https://query.data.world/s/cejs4o4gdt6autofsse7whhqnnmaii?dws=00000\")\n\nggplot(filter(data, Team == \"Chicago\"), aes(x = Pts, y = Reb)) +\n  geom_point(shape = \"🏀\", size = 5) +\n  labs(title = \"Let's Go Bulls! ⛹️️\", x = \"Points scored\", y = \"Rebounds\", \n       caption = \"Data: hoopsstats.com\") +\n  theme_bulls()"
+  },
+  {
+    "objectID": "06-programing.html#custom-theme-1",
+    "href": "06-programing.html#custom-theme-1",
+    "title": "The Art & Science of Data Visualization",
+    "section": "Custom Theme",
+    "text": "Custom Theme\n\ntheme_nba <- function(base_size = 18, base_family = \"College Block\", \n                      base_line_size = base_size/22, base_rect_size = base_size/22,\n                      team = \"Bulls\") {\n  \n  if(!team %in% c(\"Bulls\", \"Lakers\", \"Nuggets\", \"Celtics\", \"Knicks\", \"Heat\", \"Hornets\", \"Sixers\", \"Timberwolves\", \"Pelicans\", \"Suns\")) stop('team should be one of \"Bulls\", \"Lakers\", \"Nuggets\", \"Celtics\", \"Knicks\", \"Heat\", \"Hornets\", \"Sixers\", \"Timberwolves\", \"Pelicans\", or \"Suns\".')\n  \n  colors <- data.frame(\n    Bulls = c(\"#CE1141\", \"#FFFFFF\", \"#000000\"),\n    Lakers = c(\"#552583\", \"#FDB927\", \"#000000\"),\n    Nuggets = c(\"#8B2131\", \"#FEC524\", \"#0E2240\"),\n    Celtics = c(\"#007A33\", \"#FFFFFF\", \"#BA9653\"),\n    Knicks = c(\"#006BB6\", \"#F58426\", \"#BEC0C2\"),\n    Heat = c(\"#000000\", \"#F9A01B\", \"#98002E\"),\n    Hornets = c(\"#1D1160\", \"#A1A1A4\", \"#00788C\"),\n    Sixers = c(\"#006BB6\", \"#ED174C\", \"#002B5C\"),\n    Timberwolves = c(\"#0C2340\", \"#78BE20\", \"#9EA2A2\"),\n    Pelicans = c(\"#0C2340\", \"#C8102E\", \"#85714D\"),\n    Suns = c(\"#1D1160\", \"#E56020\", \"#63727A\")\n  )\n  colors <- unname(colors[, team])\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n           base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme( \n      plot.title = element_text(size = rel(2), color = colors[2], margin = margin(b = base_size/2)),\n      plot.subtitle = element_text(color = colors[3], margin = margin(t = -base_size/4, b = base_size/2)),\n      plot.caption = element_text(color = colors[3], size = rel(.7), hjust = 0),\n      plot.title.position = \"plot\",\n      plot.caption.position = \"plot\",\n      axis.title = element_text(color = colors[2]),\n      axis.title.x = element_text(hjust = 1, margin = margin(t = base_size/2)),\n      axis.title.y = element_text(hjust = 1, margin = margin(r = base_size/2)),\n      axis.text = element_text(color = colors[3]),\n      axis.ticks = element_line(color = colors[3]),\n      panel.background = element_rect(fill = \"#dfbb85\", color = \"white\", linewidth = base_size/4), \n      panel.border = element_rect(fill = NA, color = colors[3], linewidth = base_size/10), \n      plot.background = element_rect(fill = colors[1], color = colors[3], linewidth = base_size/4), \n      legend.background = element_rect(fill = \"transparent\", color = colors[3]),\n      legend.justification = \"top\",\n      strip.text = element_text(size = rel(1.25), color = colors[2]),\n      panel.grid.major = element_line(color = \"white\"),\n      panel.grid.minor = element_blank(),\n      plot.margin = margin(rep(base_size, 4))\n    )\n}"
   }
 ]

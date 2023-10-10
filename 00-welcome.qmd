@@ -119,7 +119,7 @@ execute:
 
 ## Course Slides
 
-<b style='font-family:spline sans mono;font-size:46pt;font-weight:700;'>z3tt.github.io/datavizugi/</b>
+<b style='font-family:spline sans mono;font-size:46pt;font-weight:700;'>z3tt.github.io/dataviz-ugi/</b>
 
 <span style='font-family:spline sans mono;font-size:36pt;'>
 &emsp;&emsp;&rarr; 01-dataviz.html<br>
@@ -136,7 +136,7 @@ execute:
 
 ## Course Materials (Scripts, Data, Font Files)
 
-<b style='font-family:spline sans mono;font-size:46pt;font-weight:700;'>z3tt.github.io/datavizugi/</b>
+<b style='font-family:spline sans mono;font-size:46pt;font-weight:700;'>https://raw.githubusercontent.com/z3tt/DataVizUGI/main/materials.zip</b>
 
 
 
