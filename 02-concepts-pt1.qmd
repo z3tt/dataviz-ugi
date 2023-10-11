@@ -1898,8 +1898,10 @@ class(g)
 
 ```{r}
 #| label: ggplot-object-data
+#| class-output: hscroll
 g$data
 ```
+
 
 
 
@@ -1908,6 +1910,32 @@ g$data
 ```{r}
 #| label: ggplot-object-mapping
 g$mapping
+```
+
+
+
+## Inspect Layer Data
+
+```{r}
+#| label: ggplot-build-data
+gbuilt <- ggplot_build(g)
+names(gbuilt)
+```
+
+. . .
+
+```{r}
+#| label: ggplot-build-data-view-point
+#| class-output: hscroll
+head(gbuilt$data[[1]])
+```
+
+. . .
+
+```{r}
+#| label: ggplot-build-data-view-smooth
+#| class-output: hscroll
+head(gbuilt$data[[2]])
 ```
 
 
