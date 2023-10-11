@@ -1,9 +1,9 @@
 #------------------------------------------------------------------------------#
 #                                                                              #
-#                    The Art & Science of Data Visualization                   #
-#                Engaging and Reproducible Graphics with ggplot2               #
+#                  Engaging & Reproducible Data Visualization                  #
+#                  From Theory to Implementation with ggplot2                  #
 #                                                                              #
-#                      Working with Layout and Compositions                    #
+#              Workflows: Functional Programing & Corporate Themes             #
 #                                                                              #
 #                              Dr. Cedric Scherer                              #
 #                       RTG-UGI Workshop // October 2023                       #

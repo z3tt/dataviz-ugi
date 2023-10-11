@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------#
 #                                                                              #
-#                    The Art & Science of Data Visualization                   #
-#                Engaging and Reproducible Graphics with ggplot2               #
+#                  Engaging & Reproducible Data Visualization                  #
+#                  From Theory to Implementation with ggplot2                  #
 #                                                                              #
 #              Concepts of the Layered Grammar of Graphics (Pt. 2)             #
 #                                                                              #

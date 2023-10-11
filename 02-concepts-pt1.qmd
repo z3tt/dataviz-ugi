@@ -1,6 +1,6 @@
 ---
-title: "The Art & Science of <br>Data Visualization "
-subtitle: "<span style='font-size:1.5em;'>Engaging and Reproducible Graphics with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Concepts of the Layered Grammar of Graphics (Pt. 1)</span></span>"
+title: "Engaging & Reproducible Data Visualization"
+subtitle: "<span style='font-size:1.5em;'>From Theory to Implementation with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Concepts of the Layered Grammar of Graphics (Pt. 1)</span></span>"
 author: "<b style='color:#28a87d;'><a href='https://www.cedricscherer.com'>Dr. Cédric Scherer</a></b>&ensp;**//**&ensp;RTG-UGI Workshop&ensp;**//**&ensp;October 2023"
 format:
   revealjs:
@@ -1719,6 +1719,24 @@ ggplot(
 ## Statistical Summaries
 
 ```{r}
+#| label: stat-summary-custom-mean-sdl
+#| output-location: column
+#| code-line-numbers: "7,8"
+ggplot(
+    bikes, 
+    aes(x = season, y = temp)
+  ) +
+  stat_summary(
+    fun.data = "mean_sdl", 
+    fun.args = list(mult = 1)
+  )
+```
+
+
+
+## Statistical Summaries
+
+```{r}
 #| label: stat-summary-custom-errorbars
 #| output-location: column
 #| code-line-numbers: "6|6,7,8|6,7,8,9|11,12,13,14,15|12,13|12,13,14"
@@ -1799,6 +1817,45 @@ ggplot(
       sprintf("%2.1f", y)
     )),
     hjust = -.3
+  ) 
+```
+
+
+
+## Statistical Summaries
+
+```{r}
+#| label: stat-summary-2d
+#| output-location: column
+#| code-line-numbers: "3,4|3,4,5|7"
+ggplot(
+    bikes, 
+    aes(x = season,  
+        y = weather_type, 
+        z = count)
+  ) +
+  stat_summary_2d() 
+```
+
+
+
+## Statistical Summaries
+
+```{r}
+#| label: stat-summary-2d-styling
+#| output-location: column
+#| code-line-numbers: "8|9|10,11"
+ggplot(
+    bikes, 
+    aes(x = season,  
+        y = weather_type, 
+        z = count)
+  ) +
+  stat_summary_2d(
+    geom = "tile", 
+    fun = "sum", 
+    color = "white", 
+    linewidth = .7
   ) 
 ```
 

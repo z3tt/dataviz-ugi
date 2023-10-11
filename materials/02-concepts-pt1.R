@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------#
 #                                                                              #
-#                    The Art & Science of Data Visualization                   #
-#                Engaging and Reproducible Graphics with ggplot2               #
+#                  Engaging & Reproducible Data Visualization                  #
+#                  From Theory to Implementation with ggplot2                  #
 #                                                                              #
 #              Concepts of the Layered Grammar of Graphics (Pt. 1)             #
 #                                                                              #
@@ -442,7 +442,6 @@ ggplot(
 
 
 ## -----------------------------------------------------------------------------
-
 ggplot(
     bikes, 
     aes(x = season, y = temp)
@@ -455,7 +454,17 @@ ggplot(
 
 
 ## -----------------------------------------------------------------------------
+ggplot(
+  bikes, 
+  aes(x = season, y = temp)
+) +
+  stat_summary(
+    fun.data = "mean_sdl", 
+    fun.args = list(mult = 1)
+  )
 
+
+## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
     aes(x = season, y = temp)
@@ -474,7 +483,6 @@ ggplot(
 
 
 ## -----------------------------------------------------------------------------
-
 ggplot(
   bikes, 
   aes(x = season, y = temp)
@@ -498,7 +506,6 @@ ggplot(
 
 
 ## -----------------------------------------------------------------------------
-
 ggplot(
   bikes, 
   aes(x = season, y = temp)
@@ -521,6 +528,31 @@ ggplot(
       sprintf("%2.1f", y)
     )),
     hjust = -.3
+  ) 
+
+
+## -----------------------------------------------------------------------------
+ggplot(
+  bikes, 
+  aes(x = season,  
+      y = weather_type, 
+      z = count)
+  ) +
+  stat_summary_2d() 
+
+
+## -----------------------------------------------------------------------------
+ggplot(
+    bikes, 
+    aes(x = season,  
+        y = weather_type, 
+        z = count)
+  ) +
+  stat_summary_2d(
+    geom = "tile", 
+    fun = "sum", 
+    color = "white", 
+    linewidth = .7
   ) 
 
 

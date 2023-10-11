@@ -1,6 +1,6 @@
 ---
-title: "The Art & Science of <br>Data Visualization "
-subtitle: "<span style='font-size:1.5em;'>Engaging and Reproducible Graphics with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Principles & Best Practices to Tell a Story with Data</span></span>"
+title: "Engaging & Reproducible Data Visualization"
+subtitle: "<span style='font-size:1.5em;'>From Theory to Implementation with ggplot2</span><br><span style='font-weight:500;font-size:1.3em;'>Principles & Best Practices to Tell a Story with Data</span></span>"
 author: "<b style='color:#28a87d;'><a href='https://www.cedricscherer.com'>Dr. Cédric Scherer</a></b>&ensp;**//**&ensp;RTG-UGI Workshop&ensp;**//**&ensp;October 2023"
 format:
   revealjs:
