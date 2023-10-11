@@ -24,7 +24,7 @@ library(ggplot2)
 ## -----------------------------------------------------------------------------
 bikes <- readr::read_csv(
   here::here("data", "london-bikes-custom.csv"),
-  ## or: "https://raw.githubusercontent.com/z3tt/graphic-design-ggplot2/main/data/london-bikes-custom.csv"
+  # "https://cedricscherer.com/data/london-bikes-custom.csv",
   col_types = "Dcfffilllddddc"
 )
 
