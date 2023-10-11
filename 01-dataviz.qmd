@@ -147,7 +147,7 @@ execute:
 ::: question
 -  Imagine you had to create a polar representation of the months.
 -  Draw a circle and indicate the position of March and December.
--  Use an arrow to illustrate the direciton of time.
+-  Use an arrow to illustrate the direction of time.
 -  Compare the results with your neighbors.
 :::
 :::
@@ -267,7 +267,7 @@ dino +
 
 
 
-## {#datasaurus-trends data-menu-title="Datasaurus Dozen"}
+## {#datasaurus-correlation data-menu-title="Datasaurus Dozen"}
 
 <br>
 

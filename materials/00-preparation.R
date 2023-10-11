@@ -19,5 +19,5 @@ pkgs <- c("ggplot2", "readr", "dplyr", "tibble", "tidyr", "forcats",
 
 install.packages(setdiff(pkgs, rownames(installed.packages())))
 
-remotes::install_github("clauswilke/rnaturalearthhires")
+remotes::install_github("ropensci/rnaturalearthhires")
 remotes::install_github("AllanCameron/geomtextpath")

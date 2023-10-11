@@ -1339,11 +1339,11 @@ Explanation
 </section>
 <section id="histogram" class="slide level2">
 <h2>Histogram</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-histogram_642155cdcd9308b6d6496a1ad0427b9e">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-histogram_73c6b9a66f224c50a1290731663f9866">
 <div class="column">
 <div class="sourceCode cell-code" id="cb26" data-code-line-numbers="3|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb26-2"><a href="#cb26-2"></a>    bikes, </span>
-<span id="cb26-3"><a href="#cb26-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> count)</span>
+<span id="cb26-3"><a href="#cb26-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> humidity)</span>
 <span id="cb26-4"><a href="#cb26-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb26-5"><a href="#cb26-5"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
@@ -1355,15 +1355,15 @@ Explanation
 </section>
 <section id="histogram-1" class="slide level2">
 <h2>Histogram</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-histogram-bins_9208d76bd66094aaa4a4bcfb60eec65d">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-histogram-bins_16c7d89f92c055d2b06262e85cd44312">
 <div class="column">
 <div class="sourceCode cell-code" id="cb27" data-code-line-numbers="5,6,7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb27-2"><a href="#cb27-2"></a>    bikes, </span>
-<span id="cb27-3"><a href="#cb27-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> count)</span>
+<span id="cb27-3"><a href="#cb27-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> humidity)</span>
 <span id="cb27-4"><a href="#cb27-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb27-5"><a href="#cb27-5"></a>  <span class="fu">geom_histogram</span>(</span>
 <span id="cb27-6"><a href="#cb27-6"></a>    <span class="at">bins =</span> <span class="dv">100</span> </span>
-<span id="cb27-7"><a href="#cb27-7"></a>    <span class="co"># binwidth = 500</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>    <span class="co"># binwidth = 1</span></span>
 <span id="cb27-8"><a href="#cb27-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
@@ -1374,11 +1374,11 @@ Explanation
 </section>
 <section id="histogram-2" class="slide level2">
 <h2>Histogram</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-histogram-groups_61dc8dbb63f5df7b52b4d4abc8cfb57b">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-histogram-groups_949f5b49ce92b9af4e00737a12830890">
 <div class="column">
 <div class="sourceCode cell-code" id="cb28" data-code-line-numbers="5,6,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb28-2"><a href="#cb28-2"></a>    bikes, </span>
-<span id="cb28-3"><a href="#cb28-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> count)</span>
+<span id="cb28-3"><a href="#cb28-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> humidity)</span>
 <span id="cb28-4"><a href="#cb28-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb28-5"><a href="#cb28-5"></a>  <span class="fu">geom_histogram</span>(</span>
 <span id="cb28-6"><a href="#cb28-6"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> day_night)</span>
@@ -1392,11 +1392,11 @@ Explanation
 </section>
 <section id="density-curve" class="slide level2">
 <h2>Density Curve</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density_46045bb79341a97667c11c59d30fdac1">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density_35bc6d525f0b47f6e0555ec3d9e6d808">
 <div class="column">
 <div class="sourceCode cell-code" id="cb29" data-code-line-numbers="5,6,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb29-2"><a href="#cb29-2"></a>    bikes, </span>
-<span id="cb29-3"><a href="#cb29-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> count)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> humidity)</span>
 <span id="cb29-4"><a href="#cb29-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb29-5"><a href="#cb29-5"></a>  <span class="fu">geom_density</span>(</span>
 <span id="cb29-6"><a href="#cb29-6"></a>    <span class="fu">aes</span>(<span class="at">color =</span> day_night)</span>
@@ -1410,11 +1410,11 @@ Explanation
 </section>
 <section id="density-curve-1" class="slide level2">
 <h2>Density Curve</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density-area_987ad8fe1f4016f392edd2d5dbe1e1ca">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density-area_8ffd8b4e0d4f43b2bb3cc4e91af40dff">
 <div class="column">
 <div class="sourceCode cell-code" id="cb30" data-code-line-numbers="6,7|6,7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb30-2"><a href="#cb30-2"></a>    bikes, </span>
-<span id="cb30-3"><a href="#cb30-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> count)</span>
+<span id="cb30-3"><a href="#cb30-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> humidity)</span>
 <span id="cb30-4"><a href="#cb30-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb30-5"><a href="#cb30-5"></a>  <span class="fu">geom_density</span>(</span>
 <span id="cb30-6"><a href="#cb30-6"></a>    <span class="fu">aes</span>(<span class="at">color =</span> day_night,</span>
@@ -1430,11 +1430,11 @@ Explanation
 </section>
 <section id="density-curve-2" class="slide level2">
 <h2>Density Curve</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density-stack_08c5681db1ba13761b0568b224bc8be3">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density-stack_2b83891e342c74a72fd6228db7a43a57">
 <div class="column">
 <div class="sourceCode cell-code" id="cb31" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb31-2"><a href="#cb31-2"></a>    bikes, </span>
-<span id="cb31-3"><a href="#cb31-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> count)</span>
+<span id="cb31-3"><a href="#cb31-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> humidity)</span>
 <span id="cb31-4"><a href="#cb31-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb31-5"><a href="#cb31-5"></a>  <span class="fu">geom_density</span>(</span>
 <span id="cb31-6"><a href="#cb31-6"></a>    <span class="fu">aes</span>(<span class="at">color =</span> day_night,</span>
@@ -1451,11 +1451,11 @@ Explanation
 </section>
 <section id="density-curve-3" class="slide level2">
 <h2>Density Curve</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density-fill_bc6ff131cf47efcf6fa457ba15c3fb72">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/geom-density-fill_9248c5baedaa43cf8726498c69ac236b">
 <div class="column">
 <div class="sourceCode cell-code" id="cb32" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb32-2"><a href="#cb32-2"></a>    bikes, </span>
-<span id="cb32-3"><a href="#cb32-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> count)</span>
+<span id="cb32-3"><a href="#cb32-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> humidity)</span>
 <span id="cb32-4"><a href="#cb32-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb32-5"><a href="#cb32-5"></a>  <span class="fu">geom_density</span>(</span>
 <span id="cb32-6"><a href="#cb32-6"></a>    <span class="fu">aes</span>(<span class="at">color =</span> day_night,</span>
@@ -1758,17 +1758,17 @@ Explanation
 <h2>`stat_` and `geom_`</h2>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/geom-stat-1_a610cca6967666f63579f3e1ff2dc96d" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/geom-stat-1_e3d14651fb7088401b200b9e47412d98" style="flex-basis: 50.0%;justify-content: center;">
 <div class="sourceCode cell-code" id="cb47" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">ggplot</span>(bikes, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temp)) <span class="sc">+</span></span>
-<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="co"># default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="02-concepts-pt1_files/figure-revealjs/geom-stat-1-1.png" width="1000"></p>
 </div>
 </div>
 <div class="fragment quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell" data-hash="02-concepts-pt1_cache/revealjs/stat-geom-1_64155158377d4128bbcd2d2523bea95e">
+<div class="cell" data-hash="02-concepts-pt1_cache/revealjs/stat-geom-1_1a5097be05623dbc3eec68d9fe186430">
 <div class="sourceCode cell-code" id="cb48" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">ggplot</span>(bikes, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temp)) <span class="sc">+</span></span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">stat_identity</span>(<span class="at">geom =</span> <span class="st">"point"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">stat_identity</span>(<span class="at">geom =</span> <span class="st">"point"</span>) <span class="co"># default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="02-concepts-pt1_files/figure-revealjs/stat-geom-1-1.png" width="1000"></p>
 </div>
@@ -1781,16 +1781,16 @@ Explanation
 <h2>`stat_` and `geom_`</h2>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/geom-stat-2_b9d437c1313be0c7e5bbf13e1569a3d7" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/geom-stat-2_3b9114708f6d4dfab1d90257596e696d" style="flex-basis: 50.0%;justify-content: center;">
 <div class="sourceCode cell-code" id="cb49" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">ggplot</span>(bikes, <span class="fu">aes</span>(<span class="at">x =</span> weather_type)) <span class="sc">+</span></span>
-<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="co"># default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="02-concepts-pt1_files/figure-revealjs/geom-stat-2-1.png" width="1000"></p>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/stat-geom-2_9cbec77318c6816a04c5aa8814932c1e" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/stat-geom-2_10f06470e6aa6bc35bdf99240b8238fa" style="flex-basis: 50.0%;justify-content: center;">
 <div class="sourceCode cell-code" id="cb50" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">ggplot</span>(bikes, <span class="fu">aes</span>(<span class="at">x =</span> weather_type)) <span class="sc">+</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">stat_count</span>(<span class="at">geom =</span> <span class="st">"bar"</span>) <span class="co"># default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="02-concepts-pt1_files/figure-revealjs/stat-geom-2-1.png" width="1000"></p>
 </div>
@@ -1802,16 +1802,16 @@ Explanation
 <h2>`stat_` and `geom_`</h2>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/geom-stat-3_fa6b7d54ad1652d9428584e91c39778f" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/geom-stat-3_45087cfa30de4ebe3129d645491dde42" style="flex-basis: 50.0%;justify-content: center;">
 <div class="sourceCode cell-code" id="cb51" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">ggplot</span>(bikes, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> count)) <span class="sc">+</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">geom_smooth</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">geom_smooth</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>) <span class="co"># default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="02-concepts-pt1_files/figure-revealjs/geom-stat-3-1.png" width="1000"></p>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/stat-geom-3_4fcad913eb34d6acf686996d2cef4de3" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-cell" data-hash="02-concepts-pt1_cache/revealjs/stat-geom-3_f913253b206645cb134de655826a771c" style="flex-basis: 50.0%;justify-content: center;">
 <div class="sourceCode cell-code" id="cb52" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">ggplot</span>(bikes, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> count)) <span class="sc">+</span></span>
-<span id="cb52-2"><a href="#cb52-2"></a>  <span class="fu">stat_smooth</span>(<span class="at">geom =</span> <span class="st">"smooth"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-2"><a href="#cb52-2"></a>  <span class="fu">stat_smooth</span>(<span class="at">geom =</span> <span class="st">"smooth"</span>) <span class="co"># default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="02-concepts-pt1_files/figure-revealjs/stat-geom-3-1.png" width="1000"></p>
 </div>
@@ -1837,15 +1837,15 @@ Explanation
 </section>
 <section id="statistical-summaries-1" class="slide level2">
 <h2>Statistical Summaries</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/stat-summary-defaults_818f1fd5d789e5a651e4e011a61f7ea3">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/stat-summary-defaults_6494a8956215be16f67a7461c62477ee">
 <div class="column">
 <div class="sourceCode cell-code" id="cb54" data-code-line-numbers="6,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb54-2"><a href="#cb54-2"></a>    bikes, </span>
 <span id="cb54-3"><a href="#cb54-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> season, <span class="at">y =</span> temp)</span>
 <span id="cb54-4"><a href="#cb54-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb54-5"><a href="#cb54-5"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb54-6"><a href="#cb54-6"></a>    <span class="at">fun.data =</span> mean_se, <span class="do">## the default</span></span>
-<span id="cb54-7"><a href="#cb54-7"></a>    <span class="at">geom =</span> <span class="st">"pointrange"</span>  <span class="do">## the default</span></span>
+<span id="cb54-6"><a href="#cb54-6"></a>    <span class="at">fun.data =</span> mean_se, <span class="co"># default</span></span>
+<span id="cb54-7"><a href="#cb54-7"></a>    <span class="at">geom =</span> <span class="st">"pointrange"</span>  <span class="co"># default</span></span>
 <span id="cb54-8"><a href="#cb54-8"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
@@ -1918,14 +1918,14 @@ Explanation
 </section>
 <section id="statistical-summaries-5" class="slide level2">
 <h2>Statistical Summaries</h2>
-<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/stat-summary-custom-mean-sdl_1e7b83ac692409c3e1ca19902f371947">
+<div class="cell columns column-output-location" data-hash="02-concepts-pt1_cache/revealjs/stat-summary-custom-mean-sdl_d94056f1ad12f04d37cf205a4da5cf69">
 <div class="column">
 <div class="sourceCode cell-code" id="cb58" data-code-line-numbers="7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb58-2"><a href="#cb58-2"></a>    bikes, </span>
 <span id="cb58-3"><a href="#cb58-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> season, <span class="at">y =</span> temp)</span>
 <span id="cb58-4"><a href="#cb58-4"></a>  ) <span class="sc">+</span></span>
 <span id="cb58-5"><a href="#cb58-5"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb58-6"><a href="#cb58-6"></a>    <span class="at">fun.data =</span> <span class="st">"mean_sdl"</span>, </span>
+<span id="cb58-6"><a href="#cb58-6"></a>    <span class="at">fun.data =</span> mean_sdl, </span>
 <span id="cb58-7"><a href="#cb58-7"></a>    <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult =</span> <span class="dv">1</span>)</span>
 <span id="cb58-8"><a href="#cb58-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">

@@ -16,6 +16,9 @@
 library(ggplot2)
 
 
+1+1
+
+
 ## -----------------------------------------------------------------------------
 # install.packages("tidyverse")
 # library(tidyverse)
@@ -131,7 +134,7 @@ ggplot(
 ## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_histogram()
 
@@ -139,18 +142,18 @@ ggplot(
 ## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_histogram(
     bins = 100 
-    # binwidth = 500
+    # binwidth = 1
   )
 
 
 ## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_histogram(
     aes(fill = day_night)
@@ -160,18 +163,17 @@ ggplot(
 ## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night)
   )
-```
 
 
 ## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night,
@@ -183,7 +185,7 @@ ggplot(
 ## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night,
@@ -196,7 +198,7 @@ ggplot(
 ## -----------------------------------------------------------------------------
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night,
@@ -368,32 +370,32 @@ ggplot(
 
 ## -----------------------------------------------------------------------------
 ggplot(bikes, aes(x = date, y = temp)) +
-  geom_point(stat = "identity")
+  geom_point(stat = "identity") # default
 
 
 ## -----------------------------------------------------------------------------
 ggplot(bikes, aes(x = date, y = temp)) +
-  stat_identity(geom = "point")
+  stat_identity(geom = "point") # default
 
 
 ## -----------------------------------------------------------------------------
-ggplot(bikes, aes(x = season)) +
-  geom_bar(stat = "count")
+ggplot(bikes, aes(x = weather_type)) +
+  geom_bar(stat = "count") # default
 
 
 ## -----------------------------------------------------------------------------
-ggplot(bikes, aes(x = season)) +
-  stat_count(geom = "bar")
-
-
-## -----------------------------------------------------------------------------
-ggplot(bikes, aes(x = temp, y = count)) +
-  geom_smooth(stat = "smooth")
+ggplot(bikes, aes(x = weather_type)) +
+  stat_count(geom = "bar") # default
 
 
 ## -----------------------------------------------------------------------------
 ggplot(bikes, aes(x = temp, y = count)) +
-  stat_smooth(geom = "smooth")
+  geom_smooth(stat = "smooth") # default
+
+
+## -----------------------------------------------------------------------------
+ggplot(bikes, aes(x = temp, y = count)) +
+  stat_smooth(geom = "smooth") # default
 
 
 ## -----------------------------------------------------------------------------
@@ -410,8 +412,8 @@ ggplot(
     aes(x = season, y = temp)
   ) +
   stat_summary(
-    fun.data = mean_se, ## the default
-    geom = "pointrange"  ## the default
+    fun.data = mean_se, # default
+    geom = "pointrange"  # default
   ) 
 
 
@@ -459,7 +461,7 @@ ggplot(
   aes(x = season, y = temp)
 ) +
   stat_summary(
-    fun.data = "mean_sdl", 
+    fun.data = mean_sdl, 
     fun.args = list(mult = 1)
   )
 

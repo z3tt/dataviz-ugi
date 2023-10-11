@@ -490,7 +490,7 @@ ggplot(bikes, aes(temp, count)) +
     strip.text = element_text(face = "bold" , size = rel(1.15)),
     panel.grid.major.x = element_blank(),
     panel.grid.minor = element_blank(),
-    panel.spacing = unit(1.2, "lines"),
+    panel.spacing = unit(2.5, "lines"),
     legend.position = "top",
     legend.text = element_text(size = rel(1)),
     ## for fitting my slide background
@@ -504,15 +504,21 @@ ggplot(bikes, aes(temp, count)) +
 
 # Setup
 
+
+
 ##  {background-image="img/concepts/tidyverse-packages.png" background-position="center" background-size="100%"}
 
 ::: footer
 :::
 
+
+
 ##  {background-image="img/concepts/tidyverse-packages-ggplot.png" background-position="center" background-size="100%"}
 
 ::: footer
 :::
+
+
 
 ## The ggplot2 Package
 
@@ -1160,7 +1166,7 @@ mpg |>
 #| code-line-numbers: "3|5"
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_histogram()
 ```
@@ -1175,11 +1181,11 @@ ggplot(
 #| code-line-numbers: "5,6,7,8"
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_histogram(
     bins = 100 
-    # binwidth = 500
+    # binwidth = 1
   )
 ```
 
@@ -1193,7 +1199,7 @@ ggplot(
 #| code-line-numbers: "5,6,7"
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_histogram(
     aes(fill = day_night)
@@ -1210,7 +1216,7 @@ ggplot(
 #| code-line-numbers: "5,6,7"
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night)
@@ -1227,7 +1233,7 @@ ggplot(
 #| code-line-numbers: "6,7|6,7,8"
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night,
@@ -1246,7 +1252,7 @@ ggplot(
 #| code-line-numbers: "9"
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night,
@@ -1266,7 +1272,7 @@ ggplot(
 #| code-line-numbers: "9"
 ggplot(
     bikes, 
-    aes(x = count)
+    aes(x = humidity)
   ) +
   geom_density(
     aes(color = day_night,
@@ -1560,7 +1566,7 @@ ggplot(
 #| fig-height: 5.1
 #| code-line-numbers: "2"
 ggplot(bikes, aes(x = date, y = temp)) +
-  geom_point(stat = "identity")
+  geom_point(stat = "identity") # default
 ```
 
 ::: fragment
@@ -1570,7 +1576,7 @@ ggplot(bikes, aes(x = date, y = temp)) +
 #| fig-height: 5.1
 #| code-line-numbers: "2"
 ggplot(bikes, aes(x = date, y = temp)) +
-  stat_identity(geom = "point")
+  stat_identity(geom = "point") # default
 ```
 :::
 :::
@@ -1585,7 +1591,7 @@ ggplot(bikes, aes(x = date, y = temp)) +
 #| fig-height: 5.1
 #| code-line-numbers: "2"
 ggplot(bikes, aes(x = weather_type)) +
-  geom_bar(stat = "count")
+  geom_bar(stat = "count") # default
 ```
 
 ```{r}
@@ -1593,7 +1599,7 @@ ggplot(bikes, aes(x = weather_type)) +
 #| fig-height: 5.1
 #| code-line-numbers: "2"
 ggplot(bikes, aes(x = weather_type)) +
-  geom_bar(stat = "count")
+  stat_count(geom = "bar") # default
 ```
 :::
 
@@ -1607,7 +1613,7 @@ ggplot(bikes, aes(x = weather_type)) +
 #| fig-height: 5.1
 #| code-line-numbers: "2"
 ggplot(bikes, aes(x = temp, y = count)) +
-  geom_smooth(stat = "smooth")
+  geom_smooth(stat = "smooth") # default
 ```
 
 ```{r}
@@ -1615,7 +1621,7 @@ ggplot(bikes, aes(x = temp, y = count)) +
 #| fig-height: 5.1
 #| code-line-numbers: "2"
 ggplot(bikes, aes(x = temp, y = count)) +
-  stat_smooth(geom = "smooth")
+  stat_smooth(geom = "smooth") # default
 ```
 :::
 
@@ -1648,8 +1654,8 @@ ggplot(
     aes(x = season, y = temp)
   ) +
   stat_summary(
-    fun.data = mean_se, ## the default
-    geom = "pointrange"  ## the default
+    fun.data = mean_se, # default
+    geom = "pointrange"  # default
   ) 
 ```
 
@@ -1727,7 +1733,7 @@ ggplot(
     aes(x = season, y = temp)
   ) +
   stat_summary(
-    fun.data = "mean_sdl", 
+    fun.data = mean_sdl, 
     fun.args = list(mult = 1)
   )
 ```
