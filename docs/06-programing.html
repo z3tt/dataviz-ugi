@@ -414,15 +414,13 @@
 <span id="cb1-6"><a href="#cb1-6"></a>  <span class="at">col_types =</span> <span class="st">"Dcfffilllddddc"</span></span>
 <span id="cb1-7"><a href="#cb1-7"></a>)</span>
 <span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a>bikes<span class="sc">$</span>season <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_inorder</span>(bikes<span class="sc">$</span>season)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">theme_set</span>(<span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>, <span class="at">base_family =</span> <span class="st">"Asap SemiCondensed"</span>))</span>
 <span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">theme_set</span>(<span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>, <span class="at">base_family =</span> <span class="st">"Asap SemiCondensed"</span>))</span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">theme_update</span>(</span>
-<span id="cb1-14"><a href="#cb1-14"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb1-15"><a href="#cb1-15"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb1-16"><a href="#cb1-16"></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">theme_update</span>(</span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section>
@@ -794,7 +792,7 @@
             half_line, half_line, half_line), complete = TRUE)
     ggplot_global$theme_all_null %+replace% t
 }
-&lt;bytecode: 0x12b77ddd0&gt;
+&lt;bytecode: 0x10d2abc48&gt;
 &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 </div>
@@ -814,7 +812,7 @@
             panel.border = element_blank(), strip.background = element_blank(), 
             plot.background = element_blank(), complete = TRUE)
 }
-&lt;bytecode: 0x13f4494e8&gt;
+&lt;bytecode: 0x15b3f64b0&gt;
 &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 </div>

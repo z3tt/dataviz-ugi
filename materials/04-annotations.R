@@ -21,8 +21,6 @@ bikes <- readr::read_csv(
   col_types = "Dcfffilllddddc"
 )
 
-bikes$season <- forcats::fct_inorder(bikes$season)
-
 theme_set(theme_light(base_size = 14, base_family = "Asap SemiCondensed"))
 
 theme_update(

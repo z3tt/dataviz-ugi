@@ -792,14 +792,12 @@ Explanation
 </div>
 <p><br></p>
 <div class="fragment">
-<div class="cell" data-hash="02-concepts-pt1_cache/revealjs/data-import_d815d072f434137fd7dfc7858e4f30ab">
+<div class="cell" data-hash="02-concepts-pt1_cache/revealjs/data-import_26f1ce2888fea08fce1ada9461c4843d">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>bikes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb3-2"><a href="#cb3-2"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"london-bikes-custom.csv"</span>),</span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="do">## or: "https://raw.githubusercontent.com/z3tt/graphic-design-ggplot2/main/data/london-bikes-custom.csv"</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a>  <span class="at">col_types =</span> <span class="st">"Dcfffilllddddc"</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a>bikes<span class="sc">$</span>season <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_inorder</span>(bikes<span class="sc">$</span>season)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -2978,9 +2976,7 @@ NULL</code></pre>
 <span id="cb120-4"><a href="#cb120-4"></a>bikes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb120-5"><a href="#cb120-5"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"london-bikes-custom.csv"</span>),</span>
 <span id="cb120-6"><a href="#cb120-6"></a>  <span class="at">col_types =</span> <span class="st">"Dcfffilllddddc"</span></span>
-<span id="cb120-7"><a href="#cb120-7"></a>)</span>
-<span id="cb120-8"><a href="#cb120-8"></a></span>
-<span id="cb120-9"><a href="#cb120-9"></a>bikes<span class="sc">$</span>season <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_inorder</span>(bikes<span class="sc">$</span>season)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb120-7"><a href="#cb120-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="scatterplot-counts-vs.-date" class="slide level2">
@@ -3413,15 +3409,13 @@ NULL</code></pre>
 </section>
 <section id="import-data-if-not-yet" class="slide level2">
 <h2>Import Data (if not yet)</h2>
-<div class="cell" data-hash="02-concepts-pt1_cache/revealjs/import-data-exercise-2_c0d86b53522d67404f9cab8a80acf0ba">
+<div class="cell" data-hash="02-concepts-pt1_cache/revealjs/import-data-exercise-2_5dd4cbe54c85b04707a6a6791f270a27">
 <div class="sourceCode cell-code" id="cb138"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb138-2"><a href="#cb138-2"></a></span>
 <span id="cb138-3"><a href="#cb138-3"></a>bikes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb138-4"><a href="#cb138-4"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"london-bikes-custom.csv"</span>),</span>
 <span id="cb138-5"><a href="#cb138-5"></a>  <span class="at">col_types =</span> <span class="st">"Dcfffilllddddc"</span></span>
-<span id="cb138-6"><a href="#cb138-6"></a>)</span>
-<span id="cb138-7"><a href="#cb138-7"></a></span>
-<span id="cb138-8"><a href="#cb138-8"></a>bikes<span class="sc">$</span>season <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_inorder</span>(bikes<span class="sc">$</span>season)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb138-6"><a href="#cb138-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="boxplot-of-counts-vs.-weather-type" class="slide level2">

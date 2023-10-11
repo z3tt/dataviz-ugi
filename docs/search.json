@@ -4,7 +4,7 @@
     "href": "04-annotations.html#setup",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Setup",
-    "text": "Setup\n\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(stringr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  legend.position = \"top\"\n)"
+    "text": "Setup\n\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(stringr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  legend.position = \"top\"\n)"
   },
   {
     "objectID": "04-annotations.html#working-with-labels",
@@ -557,7 +557,7 @@
     "href": "03-concepts-pt2.html#preparation",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Preparation",
-    "text": "Preparation\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  plot.title = element_text(face = \"bold\"),\n  legend.position = \"top\",\n  plot.title.position = \"plot\"\n)"
+    "text": "Preparation\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  plot.title = element_text(face = \"bold\"),\n  legend.position = \"top\",\n  plot.title.position = \"plot\"\n)"
   },
   {
     "objectID": "03-concepts-pt2.html#facets-1",
@@ -1663,7 +1663,7 @@
     "href": "02-concepts-pt1.html#the-data",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "The Data",
-    "text": "The Data\nBike sharing counts in London, UK, powered by TfL Open Data\n\n\ncovers the years 2015 and 2016\nincl. weather data acquired from freemeteo.com\nprepared by Hristo Mavrodiev for Kaggle\nfurther modification by myself\n\n\n\n\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  ## or: \"https://raw.githubusercontent.com/z3tt/graphic-design-ggplot2/main/data/london-bikes-custom.csv\"\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)"
+    "text": "The Data\nBike sharing counts in London, UK, powered by TfL Open Data\n\n\ncovers the years 2015 and 2016\nincl. weather data acquired from freemeteo.com\nprepared by Hristo Mavrodiev for Kaggle\nfurther modification by myself\n\n\n\n\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  ## or: \"https://raw.githubusercontent.com/z3tt/graphic-design-ggplot2/main/data/london-bikes-custom.csv\"\n  col_types = \"Dcfffilllddddc\"\n)"
   },
   {
     "objectID": "02-concepts-pt1.html#ggplot2ggplot",
@@ -2035,6 +2035,27 @@
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Statistical Summaries",
     "text": "Statistical Summaries\n\n\nggplot(\n    bikes, \n    aes(x = season, y = temp)\n  ) +\n  stat_summary(\n    geom = \"errorbar\", \n    fun.max = function(y) mean(y) + sd(y), \n    fun.min = function(y) mean(y) - sd(y),\n    width = .3\n  ) +\n  stat_summary(\n    geom = \"point\",\n    fun = mean,\n    size = 2\n  ) +\n  stat_summary(\n    geom = \"text\",\n    fun = mean,\n    aes(label = after_stat(y))\n  )"
+  },
+  {
+    "objectID": "02-concepts-pt1.html#statistical-summaries-8",
+    "href": "02-concepts-pt1.html#statistical-summaries-8",
+    "title": "Engaging & Reproducible Data Visualization",
+    "section": "Statistical Summaries",
+    "text": "Statistical Summaries\n\n\nggplot(\n    bikes, \n    aes(x = season, y = temp)\n  ) +\n  stat_summary(\n    geom = \"errorbar\", \n    fun.max = function(y) mean(y) + sd(y), \n    fun.min = function(y) mean(y) - sd(y),\n    width = .3\n  ) +\n  stat_summary(\n    geom = \"point\",\n    fun = mean,\n    size = 2\n  ) +\n  stat_summary(\n    geom = \"text\",\n    fun = mean,\n    aes(label = after_stat(\n      sprintf(\"%2.1f\", y)\n    )),\n    hjust = -.3\n  )"
+  },
+  {
+    "objectID": "02-concepts-pt1.html#statistical-summaries-9",
+    "href": "02-concepts-pt1.html#statistical-summaries-9",
+    "title": "Engaging & Reproducible Data Visualization",
+    "section": "Statistical Summaries",
+    "text": "Statistical Summaries\n\n\nggplot(\n    bikes, \n    aes(x = season,  \n        y = weather_type, \n        z = count)\n  ) +\n  stat_summary_2d()"
+  },
+  {
+    "objectID": "02-concepts-pt1.html#statistical-summaries-10",
+    "href": "02-concepts-pt1.html#statistical-summaries-10",
+    "title": "Engaging & Reproducible Data Visualization",
+    "section": "Statistical Summaries",
+    "text": "Statistical Summaries\n\n\nggplot(\n    bikes, \n    aes(x = season,  \n        y = weather_type, \n        z = count)\n  ) +\n  stat_summary_2d(\n    geom = \"tile\", \n    fun = \"sum\", \n    color = \"white\", \n    linewidth = .7\n  )"
   },
   {
     "objectID": "02-concepts-pt1.html#store-a-ggplot-as-object",
@@ -2412,7 +2433,7 @@
     "href": "02-concepts-pt1.html#import-the-data-set",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Import the Data Set",
-    "text": "Import the Data Set\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)"
+    "text": "Import the Data Set\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)"
   },
   {
     "objectID": "02-concepts-pt1.html#scatterplot-counts-vs.-date",
@@ -2538,7 +2559,7 @@
     "href": "02-concepts-pt1.html#import-data-if-not-yet",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Import Data (if not yet)",
-    "text": "Import Data (if not yet)\n\nlibrary(ggplot2)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)"
+    "text": "Import Data (if not yet)\n\nlibrary(ggplot2)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)"
   },
   {
     "objectID": "02-concepts-pt1.html#boxplot-of-counts-vs.-weather-type",
@@ -3623,7 +3644,7 @@
     "href": "05-layout.html#setup",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Setup",
-    "text": "Setup\n\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(stringr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  plot.title = element_text(face = \"bold\"),\n  plot.title.position = \"plot\"\n)"
+    "text": "Setup\n\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(stringr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  plot.title = element_text(face = \"bold\"),\n  plot.title.position = \"plot\"\n)"
   },
   {
     "objectID": "05-layout.html#discrete-legend",
@@ -4015,7 +4036,7 @@
     "href": "06-programing.html#setup",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Setup",
-    "text": "Setup\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\nbikes$season <- forcats::fct_inorder(bikes$season)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  plot.title = element_text(face = \"bold\"),\n  plot.title.position = \"plot\"\n)"
+    "text": "Setup\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nbikes <- readr::read_csv(\n  here::here(\"data\", \"london-bikes-custom.csv\"),\n  col_types = \"Dcfffilllddddc\"\n)\n\ntheme_set(theme_light(base_size = 14, base_family = \"Asap SemiCondensed\"))\n\ntheme_update(\n  panel.grid.minor = element_blank(),\n  plot.title = element_text(face = \"bold\"),\n  plot.title.position = \"plot\"\n)"
   },
   {
     "objectID": "06-programing.html#conditional-components",
@@ -4183,14 +4204,14 @@
     "href": "06-programing.html#complete-themes-whats-inside",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Complete Themes: What’s Inside?",
-    "text": "Complete Themes: What’s Inside?\n\ntheme_grey\n\nfunction (base_size = 11, base_family = \"\", base_line_size = base_size/22, \n    base_rect_size = base_size/22) \n{\n    half_line <- base_size/2\n    t <- theme(line = element_line(colour = \"black\", linewidth = base_line_size, \n        linetype = 1, lineend = \"butt\"), rect = element_rect(fill = \"white\", \n        colour = \"black\", linewidth = base_rect_size, linetype = 1), \n        text = element_text(family = base_family, face = \"plain\", \n            colour = \"black\", size = base_size, lineheight = 0.9, \n            hjust = 0.5, vjust = 0.5, angle = 0, margin = margin(), \n            debug = FALSE), axis.line = element_blank(), axis.line.x = NULL, \n        axis.line.y = NULL, axis.text = element_text(size = rel(0.8), \n            colour = \"grey30\"), axis.text.x = element_text(margin = margin(t = 0.8 * \n            half_line/2), vjust = 1), axis.text.x.top = element_text(margin = margin(b = 0.8 * \n            half_line/2), vjust = 0), axis.text.y = element_text(margin = margin(r = 0.8 * \n            half_line/2), hjust = 1), axis.text.y.right = element_text(margin = margin(l = 0.8 * \n            half_line/2), hjust = 0), axis.ticks = element_line(colour = \"grey20\"), \n        axis.ticks.length = unit(half_line/2, \"pt\"), axis.ticks.length.x = NULL, \n        axis.ticks.length.x.top = NULL, axis.ticks.length.x.bottom = NULL, \n        axis.ticks.length.y = NULL, axis.ticks.length.y.left = NULL, \n        axis.ticks.length.y.right = NULL, axis.title.x = element_text(margin = margin(t = half_line/2), \n            vjust = 1), axis.title.x.top = element_text(margin = margin(b = half_line/2), \n            vjust = 0), axis.title.y = element_text(angle = 90, \n            margin = margin(r = half_line/2), vjust = 1), axis.title.y.right = element_text(angle = -90, \n            margin = margin(l = half_line/2), vjust = 0), legend.background = element_rect(colour = NA), \n        legend.spacing = unit(2 * half_line, \"pt\"), legend.spacing.x = NULL, \n        legend.spacing.y = NULL, legend.margin = margin(half_line, \n            half_line, half_line, half_line), legend.key = element_rect(fill = \"grey95\", \n            colour = NA), legend.key.size = unit(1.2, \"lines\"), \n        legend.key.height = NULL, legend.key.width = NULL, legend.text = element_text(size = rel(0.8)), \n        legend.text.align = NULL, legend.title = element_text(hjust = 0), \n        legend.title.align = NULL, legend.position = \"right\", \n        legend.direction = NULL, legend.justification = \"center\", \n        legend.box = NULL, legend.box.margin = margin(0, 0, 0, \n            0, \"cm\"), legend.box.background = element_blank(), \n        legend.box.spacing = unit(2 * half_line, \"pt\"), panel.background = element_rect(fill = \"grey92\", \n            colour = NA), panel.border = element_blank(), panel.grid = element_line(colour = \"white\"), \n        panel.grid.minor = element_line(linewidth = rel(0.5)), \n        panel.spacing = unit(half_line, \"pt\"), panel.spacing.x = NULL, \n        panel.spacing.y = NULL, panel.ontop = FALSE, strip.background = element_rect(fill = \"grey85\", \n            colour = NA), strip.clip = \"inherit\", strip.text = element_text(colour = \"grey10\", \n            size = rel(0.8), margin = margin(0.8 * half_line, \n                0.8 * half_line, 0.8 * half_line, 0.8 * half_line)), \n        strip.text.x = NULL, strip.text.y = element_text(angle = -90), \n        strip.text.y.left = element_text(angle = 90), strip.placement = \"inside\", \n        strip.placement.x = NULL, strip.placement.y = NULL, strip.switch.pad.grid = unit(half_line/2, \n            \"pt\"), strip.switch.pad.wrap = unit(half_line/2, \n            \"pt\"), plot.background = element_rect(colour = \"white\"), \n        plot.title = element_text(size = rel(1.2), hjust = 0, \n            vjust = 1, margin = margin(b = half_line)), plot.title.position = \"panel\", \n        plot.subtitle = element_text(hjust = 0, vjust = 1, margin = margin(b = half_line)), \n        plot.caption = element_text(size = rel(0.8), hjust = 1, \n            vjust = 1, margin = margin(t = half_line)), plot.caption.position = \"panel\", \n        plot.tag = element_text(size = rel(1.2), hjust = 0.5, \n            vjust = 0.5), plot.tag.position = \"topleft\", plot.margin = margin(half_line, \n            half_line, half_line, half_line), complete = TRUE)\n    ggplot_global$theme_all_null %+replace% t\n}\n<bytecode: 0x12b77ddd0>\n<environment: namespace:ggplot2>"
+    "text": "Complete Themes: What’s Inside?\n\ntheme_grey\n\nfunction (base_size = 11, base_family = \"\", base_line_size = base_size/22, \n    base_rect_size = base_size/22) \n{\n    half_line <- base_size/2\n    t <- theme(line = element_line(colour = \"black\", linewidth = base_line_size, \n        linetype = 1, lineend = \"butt\"), rect = element_rect(fill = \"white\", \n        colour = \"black\", linewidth = base_rect_size, linetype = 1), \n        text = element_text(family = base_family, face = \"plain\", \n            colour = \"black\", size = base_size, lineheight = 0.9, \n            hjust = 0.5, vjust = 0.5, angle = 0, margin = margin(), \n            debug = FALSE), axis.line = element_blank(), axis.line.x = NULL, \n        axis.line.y = NULL, axis.text = element_text(size = rel(0.8), \n            colour = \"grey30\"), axis.text.x = element_text(margin = margin(t = 0.8 * \n            half_line/2), vjust = 1), axis.text.x.top = element_text(margin = margin(b = 0.8 * \n            half_line/2), vjust = 0), axis.text.y = element_text(margin = margin(r = 0.8 * \n            half_line/2), hjust = 1), axis.text.y.right = element_text(margin = margin(l = 0.8 * \n            half_line/2), hjust = 0), axis.ticks = element_line(colour = \"grey20\"), \n        axis.ticks.length = unit(half_line/2, \"pt\"), axis.ticks.length.x = NULL, \n        axis.ticks.length.x.top = NULL, axis.ticks.length.x.bottom = NULL, \n        axis.ticks.length.y = NULL, axis.ticks.length.y.left = NULL, \n        axis.ticks.length.y.right = NULL, axis.title.x = element_text(margin = margin(t = half_line/2), \n            vjust = 1), axis.title.x.top = element_text(margin = margin(b = half_line/2), \n            vjust = 0), axis.title.y = element_text(angle = 90, \n            margin = margin(r = half_line/2), vjust = 1), axis.title.y.right = element_text(angle = -90, \n            margin = margin(l = half_line/2), vjust = 0), legend.background = element_rect(colour = NA), \n        legend.spacing = unit(2 * half_line, \"pt\"), legend.spacing.x = NULL, \n        legend.spacing.y = NULL, legend.margin = margin(half_line, \n            half_line, half_line, half_line), legend.key = element_rect(fill = \"grey95\", \n            colour = NA), legend.key.size = unit(1.2, \"lines\"), \n        legend.key.height = NULL, legend.key.width = NULL, legend.text = element_text(size = rel(0.8)), \n        legend.text.align = NULL, legend.title = element_text(hjust = 0), \n        legend.title.align = NULL, legend.position = \"right\", \n        legend.direction = NULL, legend.justification = \"center\", \n        legend.box = NULL, legend.box.margin = margin(0, 0, 0, \n            0, \"cm\"), legend.box.background = element_blank(), \n        legend.box.spacing = unit(2 * half_line, \"pt\"), panel.background = element_rect(fill = \"grey92\", \n            colour = NA), panel.border = element_blank(), panel.grid = element_line(colour = \"white\"), \n        panel.grid.minor = element_line(linewidth = rel(0.5)), \n        panel.spacing = unit(half_line, \"pt\"), panel.spacing.x = NULL, \n        panel.spacing.y = NULL, panel.ontop = FALSE, strip.background = element_rect(fill = \"grey85\", \n            colour = NA), strip.clip = \"inherit\", strip.text = element_text(colour = \"grey10\", \n            size = rel(0.8), margin = margin(0.8 * half_line, \n                0.8 * half_line, 0.8 * half_line, 0.8 * half_line)), \n        strip.text.x = NULL, strip.text.y = element_text(angle = -90), \n        strip.text.y.left = element_text(angle = 90), strip.placement = \"inside\", \n        strip.placement.x = NULL, strip.placement.y = NULL, strip.switch.pad.grid = unit(half_line/2, \n            \"pt\"), strip.switch.pad.wrap = unit(half_line/2, \n            \"pt\"), plot.background = element_rect(colour = \"white\"), \n        plot.title = element_text(size = rel(1.2), hjust = 0, \n            vjust = 1, margin = margin(b = half_line)), plot.title.position = \"panel\", \n        plot.subtitle = element_text(hjust = 0, vjust = 1, margin = margin(b = half_line)), \n        plot.caption = element_text(size = rel(0.8), hjust = 1, \n            vjust = 1, margin = margin(t = half_line)), plot.caption.position = \"panel\", \n        plot.tag = element_text(size = rel(1.2), hjust = 0.5, \n            vjust = 0.5), plot.tag.position = \"topleft\", plot.margin = margin(half_line, \n            half_line, half_line, half_line), complete = TRUE)\n    ggplot_global$theme_all_null %+replace% t\n}\n<bytecode: 0x10d2abc48>\n<environment: namespace:ggplot2>"
   },
   {
     "objectID": "06-programing.html#complete-themes-whats-inside-1",
     "href": "06-programing.html#complete-themes-whats-inside-1",
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Complete Themes: What’s Inside?",
-    "text": "Complete Themes: What’s Inside?\n\ntheme_minimal\n\nfunction (base_size = 11, base_family = \"\", base_line_size = base_size/22, \n    base_rect_size = base_size/22) \n{\n    theme_bw(base_size = base_size, base_family = base_family, \n        base_line_size = base_line_size, base_rect_size = base_rect_size) %+replace% \n        theme(axis.ticks = element_blank(), legend.background = element_blank(), \n            legend.key = element_blank(), panel.background = element_blank(), \n            panel.border = element_blank(), strip.background = element_blank(), \n            plot.background = element_blank(), complete = TRUE)\n}\n<bytecode: 0x13f4494e8>\n<environment: namespace:ggplot2>"
+    "text": "Complete Themes: What’s Inside?\n\ntheme_minimal\n\nfunction (base_size = 11, base_family = \"\", base_line_size = base_size/22, \n    base_rect_size = base_size/22) \n{\n    theme_bw(base_size = base_size, base_family = base_family, \n        base_line_size = base_line_size, base_rect_size = base_rect_size) %+replace% \n        theme(axis.ticks = element_blank(), legend.background = element_blank(), \n            legend.key = element_blank(), panel.background = element_blank(), \n            panel.border = element_blank(), strip.background = element_blank(), \n            plot.background = element_blank(), complete = TRUE)\n}\n<bytecode: 0x15b3f64b0>\n<environment: namespace:ggplot2>"
   },
   {
     "objectID": "06-programing.html#create-a-custom-theme",
@@ -4450,26 +4471,5 @@
     "title": "Engaging & Reproducible Data Visualization",
     "section": "Custom Theme",
     "text": "Custom Theme\n\ntheme_nba <- function(base_size = 18, base_family = \"College Block\", \n                      base_line_size = base_size/22, base_rect_size = base_size/22,\n                      team = \"Bulls\") {\n  \n  if(!team %in% c(\"Bulls\", \"Lakers\", \"Nuggets\", \"Celtics\", \"Knicks\", \"Heat\", \"Hornets\", \"Sixers\", \"Timberwolves\", \"Pelicans\", \"Suns\")) stop('team should be one of \"Bulls\", \"Lakers\", \"Nuggets\", \"Celtics\", \"Knicks\", \"Heat\", \"Hornets\", \"Sixers\", \"Timberwolves\", \"Pelicans\", or \"Suns\".')\n  \n  colors <- data.frame(\n    Bulls = c(\"#CE1141\", \"#FFFFFF\", \"#000000\"),\n    Lakers = c(\"#552583\", \"#FDB927\", \"#000000\"),\n    Nuggets = c(\"#8B2131\", \"#FEC524\", \"#0E2240\"),\n    Celtics = c(\"#007A33\", \"#FFFFFF\", \"#BA9653\"),\n    Knicks = c(\"#006BB6\", \"#F58426\", \"#BEC0C2\"),\n    Heat = c(\"#000000\", \"#F9A01B\", \"#98002E\"),\n    Hornets = c(\"#1D1160\", \"#A1A1A4\", \"#00788C\"),\n    Sixers = c(\"#006BB6\", \"#ED174C\", \"#002B5C\"),\n    Timberwolves = c(\"#0C2340\", \"#78BE20\", \"#9EA2A2\"),\n    Pelicans = c(\"#0C2340\", \"#C8102E\", \"#85714D\"),\n    Suns = c(\"#1D1160\", \"#E56020\", \"#63727A\")\n  )\n  colors <- unname(colors[, team])\n  \n  theme_minimal(base_size = base_size, base_family = base_family, \n           base_line_size = base_line_size, base_rect_size = base_rect_size) + \n    theme( \n      plot.title = element_text(size = rel(2), color = colors[2], margin = margin(b = base_size/2)),\n      plot.subtitle = element_text(color = colors[3], margin = margin(t = -base_size/4, b = base_size/2)),\n      plot.caption = element_text(color = colors[3], size = rel(.7), hjust = 0),\n      plot.title.position = \"plot\",\n      plot.caption.position = \"plot\",\n      axis.title = element_text(color = colors[2]),\n      axis.title.x = element_text(hjust = 1, margin = margin(t = base_size/2)),\n      axis.title.y = element_text(hjust = 1, margin = margin(r = base_size/2)),\n      axis.text = element_text(color = colors[3]),\n      axis.ticks = element_line(color = colors[3]),\n      panel.background = element_rect(fill = \"#dfbb85\", color = \"white\", linewidth = base_size/4), \n      panel.border = element_rect(fill = NA, color = colors[3], linewidth = base_size/10), \n      plot.background = element_rect(fill = colors[1], color = colors[3], linewidth = base_size/4), \n      legend.background = element_rect(fill = \"transparent\", color = colors[3]),\n      legend.justification = \"top\",\n      strip.text = element_text(size = rel(1.25), color = colors[2]),\n      panel.grid.major = element_line(color = \"white\"),\n      panel.grid.minor = element_blank(),\n      plot.margin = margin(rep(base_size, 4))\n    )\n}"
-  },
-  {
-    "objectID": "02-concepts-pt1.html#statistical-summaries-8",
-    "href": "02-concepts-pt1.html#statistical-summaries-8",
-    "title": "Engaging & Reproducible Data Visualization",
-    "section": "Statistical Summaries",
-    "text": "Statistical Summaries\n\n\nggplot(\n    bikes, \n    aes(x = season, y = temp)\n  ) +\n  stat_summary(\n    geom = \"errorbar\", \n    fun.max = function(y) mean(y) + sd(y), \n    fun.min = function(y) mean(y) - sd(y),\n    width = .3\n  ) +\n  stat_summary(\n    geom = \"point\",\n    fun = mean,\n    size = 2\n  ) +\n  stat_summary(\n    geom = \"text\",\n    fun = mean,\n    aes(label = after_stat(\n      sprintf(\"%2.1f\", y)\n    )),\n    hjust = -.3\n  )"
-  },
-  {
-    "objectID": "02-concepts-pt1.html#statistical-summaries-9",
-    "href": "02-concepts-pt1.html#statistical-summaries-9",
-    "title": "Engaging & Reproducible Data Visualization",
-    "section": "Statistical Summaries",
-    "text": "Statistical Summaries\n\n\nggplot(\n    bikes, \n    aes(x = season,  \n        y = weather_type, \n        z = count)\n  ) +\n  stat_summary_2d()"
-  },
-  {
-    "objectID": "02-concepts-pt1.html#statistical-summaries-10",
-    "href": "02-concepts-pt1.html#statistical-summaries-10",
-    "title": "Engaging & Reproducible Data Visualization",
-    "section": "Statistical Summaries",
-    "text": "Statistical Summaries\n\n\nggplot(\n    bikes, \n    aes(x = season,  \n        y = weather_type, \n        z = count)\n  ) +\n  stat_summary_2d(\n    geom = \"tile\", \n    fun = \"sum\", \n    color = \"white\", \n    linewidth = .7\n  )"
   }
 ]

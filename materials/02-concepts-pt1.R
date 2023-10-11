@@ -16,9 +16,6 @@
 library(ggplot2)
 
 
-1+1
-
-
 ## -----------------------------------------------------------------------------
 # install.packages("tidyverse")
 # library(tidyverse)
@@ -30,8 +27,6 @@ bikes <- readr::read_csv(
   ## or: "https://raw.githubusercontent.com/z3tt/graphic-design-ggplot2/main/data/london-bikes-custom.csv"
   col_types = "Dcfffilllddddc"
 )
-
-bikes$season <- forcats::fct_inorder(bikes$season)
 
 
 ## -----------------------------------------------------------------------------

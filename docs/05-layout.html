@@ -405,7 +405,7 @@
 </section>
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
-<div class="cell" data-hash="05-layout_cache/revealjs/prep_33a06230e6358c06a77ffe9da6acd8e1">
+<div class="cell" data-hash="05-layout_cache/revealjs/prep_a78f3c1f3d543e1386f8accd593b888d">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(stringr)</span>
@@ -415,15 +415,13 @@
 <span id="cb1-7"><a href="#cb1-7"></a>  <span class="at">col_types =</span> <span class="st">"Dcfffilllddddc"</span></span>
 <span id="cb1-8"><a href="#cb1-8"></a>)</span>
 <span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a>bikes<span class="sc">$</span>season <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_inorder</span>(bikes<span class="sc">$</span>season)</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">theme_set</span>(<span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>, <span class="at">base_family =</span> <span class="st">"Asap SemiCondensed"</span>))</span>
 <span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">theme_set</span>(<span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>, <span class="at">base_family =</span> <span class="st">"Asap SemiCondensed"</span>))</span>
-<span id="cb1-13"><a href="#cb1-13"></a></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="fu">theme_update</span>(</span>
-<span id="cb1-15"><a href="#cb1-15"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb1-16"><a href="#cb1-16"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb1-17"><a href="#cb1-17"></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">theme_update</span>(</span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-15"><a href="#cb1-15"></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section>
