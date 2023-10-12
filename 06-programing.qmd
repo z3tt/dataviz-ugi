@@ -1568,6 +1568,8 @@ plot_team <- function(id = NULL, style = id, label = style) {
     aes(shape = Team == id, size = Team == id)
   ) +
   facet_wrap(~ Year) +
+  scale_x_continuous(expand = c(.1, .1)) +
+  scale_y_continuous(expand = c(.08, .08), breaks = seq(40, 56, by = 2)) +
   scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
   scale_size_manual(values = c(2, 7), guide = "none") +
   labs(
@@ -1580,7 +1582,7 @@ plot_team <- function(id = NULL, style = id, label = style) {
   theme_nba(team = style)
 }
 
-plot_team("Bulls")
+plot_team("Chicago", style = "Bulls")
 ```
 
 
