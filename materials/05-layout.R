@@ -13,6 +13,8 @@
 
 ## -----------------------------------------------------------------------------
 library(ggplot2)
+library(dplyr)
+library(stringr)
 
 bikes <- readr::read_csv(
   here::here("data", "london-bikes-custom.csv"),
