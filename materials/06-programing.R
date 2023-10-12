@@ -238,7 +238,7 @@ theme_asap <- function(base_size = 13, base_family = "Asap SemiCondensed",
                        base_line_size = base_size/22, base_rect_size = base_size/22) {
   
   theme_minimal(base_size = base_size, base_family = base_family, 
-                base_line_size = base_line_size, base_rect_size = base_rect_size) +
+                base_line_size = base_line_size, base_rect_size = base_rect_size) %replace%
     theme(
       plot.title = element_text(size = rel(1.3), margin = margin(b = base_size/2),
                                 family = "Asap SemiCondensed Extrabold", hjust = 0),
@@ -266,6 +266,30 @@ g <-
   scale_color_manual(values = c(day = "#FFA200", night = "#757BC7")) +
   theme_minimal(base_size = 14, base_family = "Asap SemiCondensed") +
   theme(panel.grid.minor = element_blank())
+
+
+## -----------------------------------------------------------------------------
+theme_asap <- function(base_size = 13, base_family = "Asap SemiCondensed", 
+                            base_line_size = base_size/22, base_rect_size = base_size/22) {
+  
+  theme_minimal(base_size = base_size, base_family = base_family, 
+                base_line_size = base_line_size, base_rect_size = base_rect_size) + 
+    theme( 
+      plot.title = element_text(size = rel(1.3), hjust = 0,
+                                family = "Asap SemiCondensed Extrabold"),
+      plot.title.position = "plot",
+      plot.caption = element_text(color = "grey30", margin = margin(t = base_size)),
+      plot.caption.position = "plot",
+      axis.title.x = element_text(hjust = 0, margin = margin(t = base_size/3)),
+      axis.title.y = element_text(hjust = 1, margin = margin(r = base_size/3)),
+      panel.background = element_rect(fill = "white", color = "grey20"), 
+      panel.border = element_rect(fill = NA, color = "grey20"), 
+      plot.background = element_rect(fill = "grey85", color = NA), 
+      legend.justification = "top",
+      strip.text = element_text(size = rel(1.05), margin = margin(base_size/2, 0, base_size/2, 0)),
+      panel.grid.minor = element_blank()
+    )
+}
 
 
 ## -----------------------------------------------------------------------------

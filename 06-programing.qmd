@@ -48,7 +48,7 @@ bikes <- readr::read_csv(
   col_types = "Dcfffilllddddc"
 )
 
-theme_set(theme_light(base_size = 14, base_family = "Asap SemiCondensed"))
+theme_set(theme_minimal(base_size = 14, base_family = "Asap SemiCondensed"))
 
 theme_update(
   panel.grid.minor = element_blank(),
@@ -465,7 +465,7 @@ theme_asap <- function(base_size = 13, base_family = "Asap SemiCondensed",
                        base_line_size = base_size/22, base_rect_size = base_size/22) {
   
   theme_minimal(base_size = base_size, base_family = base_family, 
-                base_line_size = base_line_size, base_rect_size = base_rect_size)  %+replace%
+                base_line_size = base_line_size, base_rect_size = base_rect_size) %+replace%
     theme(
       # add your theme changes here
     )
@@ -504,30 +504,6 @@ theme_asap <- function(base_size = 13, base_family = "Asap SemiCondensed",
 ```
 
 
-## Apply the Custom Theme
-
-```{r}
-#| label: apply-theme-ggobject
-g <- 
-  ggplot(bikes, aes(x = temp, y = count, color = day_night)) +
-  geom_point(alpha = .3, size = 2) +
-  scale_color_manual(values = c(day = "#FFA200", night = "#757BC7")) +
-  theme_minimal(base_size = 14, base_family = "Asap SemiCondensed") +
-  theme(panel.grid.minor = element_blank())
-```
-
-
-## Apply the Custom Theme
-
-```{r}
-#| label: apply-theme-asap-default
-#| output-location: column
-#| code-line-numbers: "2"
-g + 
-  theme_asap()
-```
-
-
 ## Modify an Existing Theme
 
 <br>
@@ -549,8 +525,8 @@ g +
 ```{r}
 #| label: code-theme-asap-update
 #| cache: false
-#| code-line-numbers: "5|7,8,10,12,13"
-theme_asap_plus <- function(base_size = 13, base_family = "Asap SemiCondensed", 
+#| code-line-numbers: "4,5|7,8,10,12,13"
+theme_asap <- function(base_size = 13, base_family = "Asap SemiCondensed", 
                             base_line_size = base_size/22, base_rect_size = base_size/22) {
   
   theme_minimal(base_size = base_size, base_family = base_family, 
@@ -574,52 +550,28 @@ theme_asap_plus <- function(base_size = 13, base_family = "Asap SemiCondensed",
 ```
 
 
-## + versus %+replace%
+## Apply the Custom Theme
 
 ```{r}
-#| label: code-theme-asap-replace-non-complete
-#| echo: false
-#| cache: false
-theme_asap_replace <- function(base_size = 13, base_family = "Asap SemiCondensed", 
-                            base_line_size = base_size/22, base_rect_size = base_size/22) {
-  
-  theme_minimal(base_size = base_size, base_family = base_family, 
-                base_line_size = base_line_size, base_rect_size = base_rect_size) %+replace% 
-    theme( 
-      plot.title = element_text(size = rel(1.3), hjust = 0,
-                                family = "Asap SemiCondensed Extrabold"),
-      plot.title.position = "plot",
-      plot.caption = element_text(color = "grey30", margin = margin(t = base_size)),
-      plot.caption.position = "plot",
-      axis.title.x = element_text(hjust = 0, margin = margin(t = base_size/3)),
-      axis.title.y = element_text(hjust = 1, margin = margin(r = base_size/3)),
-      panel.background = element_rect(fill = "white", color = "grey20"), 
-      panel.border = element_rect(fill = NA, color = "grey20"), 
-      plot.background = element_rect(fill = "grey85", color = NA), 
-      legend.justification = "top",
-      strip.text = element_text(size = rel(1.05), margin = margin(base_size/2, 0, base_size/2, 0)),
-      panel.grid.minor = element_blank()
-    )
-}
+#| label: apply-theme-ggobject
+g <- 
+  ggplot(bikes, aes(x = temp, y = count, color = day_night)) +
+  geom_point(alpha = .3, size = 2) +
+  scale_color_manual(values = c(day = "#FFA200", night = "#757BC7")) +
+  theme_minimal(base_size = 14, base_family = "Asap SemiCondensed") +
+  theme(panel.grid.minor = element_blank())
 ```
 
-::: {layout-ncol="2"}
-```{r}
-#| label: apply-theme-asap-plus
-#| fig-width: 5.5
-#| fig-height: 6
-g + theme_asap_plus()
-```
 
-::: fragment
+## Apply the Custom Theme
+
 ```{r}
-#| label: apply-theme-asap-replace
-#| fig-width: 5.5
-#| fig-height: 6
-g + theme_asap_replace()
+#| label: apply-theme-asap-default
+#| output-location: column
+#| code-line-numbers: "2"
+g + 
+  theme_asap()
 ```
-:::
-:::
 
 
 ## Modify the Custom Theme
@@ -1120,7 +1072,7 @@ g +
 #| code-line-numbers: "1|3|5|6,7,8|9,10,11,12|13,14,15,16,17|18|19,20"
 # install.packages("gapminder")
 
-(gm2007 <- filter(gapminder::gapminder, year == 2007))
+gm2007 <- filter(gapminder::gapminder, year == 2007)
 
 ggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) +
   geom_point( 
@@ -1146,6 +1098,9 @@ ggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) +
 #| label: gapminder-plot-template
 #| echo: false
 #| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 ```
 
 
@@ -1177,6 +1132,17 @@ ggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) +
 
 
 # Solution Exercise 1 {background-color="#e6d9f2"}
+
+
+
+## Exercise 1
+
+::: question
+-  **Create a function that plots the famous Gapminder chart, highlighting one of the continents.**
+   -  Extend the following code in to annotate a continent your choice of with {ggforce}.
+   -  Turn the code into a function with the utility to annotate any continent.
+   -  Optional: Create a second function to highlight a country.
+:::
 
 
 
@@ -1219,6 +1185,10 @@ ggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) +
 ```{r}
 #| label: exercise-1-2-gapminder-0-template
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 ```
 
 
@@ -1261,6 +1231,10 @@ ggplot(gm2007, aes(x = gdpPercap, y = lifeExp)) +
 ```{r}
 #| label: exercise-1-2-gapminder-1-geom-hull
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 ```
 
 
@@ -1306,6 +1280,10 @@ draw_gp_continent <- function(grp) {
 
 ```{r}
 #| label: exercise-1-2-gapminder-3-example-americas
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 draw_gp_continent("Americas")
 ```
 
@@ -1314,6 +1292,10 @@ draw_gp_continent("Americas")
 
 ```{r}
 #| label: exercise-1-2-gapminder-4-example-africa
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 draw_gp_continent("Africa")
 ```
 
@@ -1322,6 +1304,10 @@ draw_gp_continent("Africa")
 
 ```{r}
 #| label: exercise-1-2-gapminder-5-example-europe
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 draw_gp_continent("Europe")
 ```
 
@@ -1331,6 +1317,7 @@ draw_gp_continent("Europe")
 ```{r}
 #| label: exercise-1-2-gapminder-6-function-country
 #| cache: false
+#| purl: false
 #| code-line-numbers: "1,30|7,8,9,10,11,12|8|9,10|13,14,15,16|14|15"
 draw_gp_country <- function(grp) {
   
@@ -1369,6 +1356,10 @@ draw_gp_country <- function(grp) {
 
 ```{r}
 #| label: exercise-1-2-gapminder-7-example-usa
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 draw_gp_country("United States")
 ```
 
@@ -1377,6 +1368,10 @@ draw_gp_country("United States")
 
 ```{r}
 #| label: exercise-1-2-gapminder-8-example-germany
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 draw_gp_country("Germany")
 ```
 
@@ -1385,6 +1380,10 @@ draw_gp_country("Germany")
 
 ```{r}
 #| label: exercise-1-2-gapminder-9-example-india
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 draw_gp_country("India")
 ```
 
@@ -1393,6 +1392,10 @@ draw_gp_country("India")
 
 ```{r}
 #| label: exercise-1-2-gapminder-10-example-zambia
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
+#| fig-align: center
 draw_gp_country("Zambia")
 ```
 
@@ -1421,6 +1424,7 @@ draw_gp_country("Zambia")
 
 ```{r}
 #| label: preparation
+#| purl: false
 library(ggplot2)
 ```
 
@@ -1430,6 +1434,7 @@ library(ggplot2)
 ```{r}
 #| label: code-theme-bulls
 #| cache: false
+#| purl: false
 theme_bulls <- function(base_size = 18, base_family = "College Block", 
                         base_line_size = base_size/22, base_rect_size = base_size/22) {
   
@@ -1465,6 +1470,7 @@ theme_bulls <- function(base_size = 18, base_family = "College Block",
 ```{r}
 #| label: plot-theme-bulls
 #| eval: false
+#| purl: false
 data <- readr::read_csv("https://query.data.world/s/cejs4o4gdt6autofsse7whhqnnmaii?dws=00000")
 
 ggplot(filter(data, Team == "Chicago"), aes(x = Pts, y = Reb)) +
@@ -1480,6 +1486,9 @@ ggplot(filter(data, Team == "Chicago"), aes(x = Pts, y = Reb)) +
 ```{r}
 #| label: plot-theme-bulls
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
 ```
 
@@ -1490,6 +1499,7 @@ ggplot(filter(data, Team == "Chicago"), aes(x = Pts, y = Reb)) +
 ```{r}
 #| label: code-theme-nba
 #| cache: false
+#| purl: false
 #| code-line-numbers: "3|5|7,8,9,10,11,12,13,14,15,16,17,18,19|20|25,26,27,30,33,34,36,37,40"
 theme_nba <- function(base_size = 18, base_family = "College Block", 
                       base_line_size = base_size/22, base_rect_size = base_size/22,
@@ -1544,18 +1554,33 @@ theme_nba <- function(base_size = 18, base_family = "College Block",
 ```{r}
 #| label: plot-theme-nba-bulls
 #| echo: false
+#| cache: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Chicago"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
+plot_team <- function(id = NULL, style = id, label = style) {
+  ggplot(
+    dplyr::filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),     
+    aes(x = Pts, y = Reb)
+  ) +
+  geom_point(
+    aes(shape = Team == id, size = Team == id)
+  ) +
   facet_wrap(~ Year) +
   scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
   scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Bulls! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Bulls")
+  labs(
+    title = paste("Let's Go ", label, "! ⛹️️"),
+    x = "Points scored", 
+    y = "Rebounds", 
+    caption = "Data: hoopsstats.com",
+    subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams."
+  ) +
+  theme_nba(team = style)
+}
+
+plot_team("Bulls")
 ```
 
 
@@ -1564,18 +1589,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-lakers
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "L.A.Lakers"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Lakers! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Lakers")
+plot_team("L.A.Lakers", style = "Lakers")
 ```
 
 
@@ -1584,18 +1602,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-nuggets
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Denver"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Nuggets! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Nuggets")
+plot_team("Denver", style = "Nuggets")
 ```
 
 
@@ -1604,18 +1615,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-celtics
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Boston"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Celtics! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Celtics")
+plot_team("Boston", style = "Celtics")
 ```
 
 
@@ -1624,18 +1628,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-knicks
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "New York"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Knicks! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Knicks")
+plot_team("New York", style = "Knicks")
 ```
 
 
@@ -1644,18 +1641,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-miami
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Miami"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Heat! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Heat")
+plot_team("Miami", style = "Heat")
 ```
 
 
@@ -1664,18 +1654,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-pelicans
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "New Orleans"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Pelicans! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Pelicans")
+plot_team("New Orleans", style = "Pelicans")
 ```
 
 
@@ -1684,18 +1667,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-hornets
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Charlotte"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Hornets! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Hornets")
+plot_team("Charlotte", style = "Hornets")
 ```
 
 
@@ -1704,18 +1680,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-sixers
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Philadelphia"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go 76ers! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Sixers")
+plot_team("Philadelphia", style = "Sixers", label = "76ers")
 ```
 
 
@@ -1724,18 +1693,11 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-timberwolves
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Milwaukee"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Timberwolves! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Timberwolves")
+plot_team("Milwaukee", style = "Timberwolves")
 ```
 
 
@@ -1744,16 +1706,15 @@ ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")),
 ```{r}
 #| label: plot-theme-nba-suns
 #| echo: false
+#| purl: false
+#| fig-width: 10
+#| fig-height: 6.2
 #| fig-align: center
-team <- "Phoenix"
-ggplot(filter(data, Year %in% c("2019-2020", "2020-2021", "2021-2022")), 
-       aes(x = Pts, y = Reb)) +
-  geom_point(aes(shape = Team == team, size = Team == team)) +
-  facet_wrap(~ Year) +
-  scale_shape_manual(values = c("⚫", "🏀"), guide = "none") +
-  scale_size_manual(values = c(2, 7), guide = "none") +
-  labs(title = "Let's Go Suns! ⛹️️", x = "Points scored", y = "Rebounds", 
-       caption = "Data: hoopsstats.com",
-       subtitle = "Team statistics for the last 3 NBA seasons in comparison with all other teams.") +
-  theme_nba(team = "Suns")
+plot_team("Phoenix", style = "Suns")
 ```
+
+
+
+# <span style='line-height:1.3;'>That's it 👏<br></span> {background-color="#000000"}
+
+<div style='font-family:Asap;font-stretch:87.5%;font-size:2em;font-weight:700;font-style:normal;color:#efefef;text-align:center;'>Thank you very much!</div>
